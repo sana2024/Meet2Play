@@ -679,38 +679,9 @@ public class Piece : MonoBehaviour
 
         // log played moves for undo
         movesPlayedList.Add(new Move { piece = this, from = currentSlot, to = to, step = stepPlayed, action = action });
-        var state = MatchDataJson.SetPieceStack(this.name, currentSlot.name , to.name , stepPlayed.ToString(), action.ToString());
+        var state = MatchDataJson.SetPieceStack(this.name, currentSlot.name , to.name , stepPlayed.ToString(), action.ToString(), "move");
         movedWithDrag = true;
-
-       /*
-        foreach(var move in movesPlayedList)
-        {
-           
-            if(GameManager.instance.BigDice == move.step)
-            {
-                if(GameManager.instance.BigDice == GameManager.instance.SmallDice)
-                {
-                    if(MoveCounter == 4)
-                    {
-                        GameManager.instance.BigPlayed = true;
-                    }
-                }
-                else
-                {
-                    GameManager.instance.BigPlayed = true;
-                }
  
-            }
-
-            if (GameManager.instance.SmallDice == move.step)
-            {
-                GameManager.instance.SmallPlayed = true;
-            }
-
-
-        
-        }
-       */
         SendMatchState(OpCodes.stack, state);
 
         //---------------------------------------

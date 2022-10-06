@@ -56,6 +56,7 @@ public class Slot : MonoBehaviour
         {
             case 18:
 
+
                 GameObject ClickPieceGB = GameObject.Find(state["PeiceID"]);
                 Piece ClickPiece = ClickPieceGB.GetComponent<Piece>();
 
@@ -69,7 +70,18 @@ public class Slot : MonoBehaviour
 
                 int Steps = int.Parse(state["Steps"]);
 
-                toSlot.addPiece(ClickPiece , false , true);
+                var moveType = "";
+                if(state["MoveType"] == "hit")
+                {
+                    moveType = "hit";
+                }
+                else if (state["MoveType"] == "move")
+                {
+                    moveType = "move";
+                }
+
+                toSlot.addPiece(ClickPiece, moveType , true);
+                fromSlot.pieces.Remove(ClickPiece);
                // toSlot.pieces.Add(ClickPiece);
 
                // MoveActionTypes moveActionTypes = (MoveActionTypes)Enum.Parse(typeof(MoveActionTypes), state["ActionType"]);
@@ -173,11 +185,24 @@ public class Slot : MonoBehaviour
     #region Move Piece With Click
 
     // adds pieces to the slot
-    public void addPiece(Piece piece, bool undo, bool recive)
+    public void addPiece(Piece piece, string MoveType, bool recive)
     {
+ 
+
         if (piece.gameObject.GetComponentInParent<Slot>() != this)
         {
+
             var from = piece.gameObject.GetComponentInParent<Slot>();
+
+            if (from.slotType == SlotType.Bar)
+            {
+                if(this.pieces.Count > 0)
+                {
+                   this.pieces.Remove(this.pieces.First());
+                }
+
+            }
+
             double add = -(0.1 * this.howManyPieces() + 1);
             piece.move(this.transform, this);
             pieces.Add(piece);
@@ -186,22 +211,41 @@ public class Slot : MonoBehaviour
 
             var movesPlayedList = GameManager.instance.currentPlayer.movesPlayed;
 
+            foreach(var moves in GameManager.instance.currentPlayer.movesPlayed)
+
             MovedWithClick = true;
 
-            if (undo == false)
+            if (MoveType == "move")
             {
+                Debug.Log(MoveType);
                 movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = Math.Abs(steps), action = MoveActionTypes.Move });
 
                 if (recive == false)
                 {
-                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, steps.ToString(), MoveActionTypes.Move.ToString());
+                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, Math.Abs(steps).ToString(), MoveActionTypes.Move.ToString(), "move");
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
+                Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
             }
+            else if(MoveType == "hit")
+            {
+                var step = 0;
+ 
+                if (recive == false)
+                {
 
-            Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move);
+                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, step.ToString(), MoveActionTypes.Move.ToString(), "move");
+                    GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
+
+                }
+                Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " +  step + " action type " + MoveActionTypes.Move + "move type " + MoveType);
+
+            }
+ 
         }
+
+
     }
 
     public int howManyPieces()
