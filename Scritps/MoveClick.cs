@@ -116,8 +116,11 @@ public class MoveClick : MonoBehaviour
             if (notInHousePieces == 0)
                 checkIfCanRemove = canRemoveAPiece();
             if ((smallDieWasUsed && bigDieWasUsed) || (BCount + mCount + MCount == 0 && checkIfCanRemove == -1))
+            {
+             //   ButtonController.Instance.doneButton.SetActive(true);
+            }
 
-                ButtonController.Instance.doneButton.SetActive(true);
+
  
             if (curMoves[0] == 0 && curMoves[1] == 0 && curMoves[2] == 0 && curMoves[3] == 0)
             {
@@ -305,7 +308,10 @@ public class MoveClick : MonoBehaviour
         else
             smallDieWasUsed = true;
         if (bigDieWasUsed && smallDieWasUsed)
-            ButtonController.Instance.doneButton.SetActive(true);
+        {
+          //  ButtonController.Instance.doneButton.SetActive(true);
+        }
+
     }
 
     public void organizeMakeAutomaticMoves()
@@ -762,9 +768,9 @@ public class MoveClick : MonoBehaviour
         }
 
 
-        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), true, false);
+        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false);
         if (eatenOrigin[eatenOrigin.Count - 1])
-            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  true, false);
+            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false);
 
         if (destination[destination.Count - 1].getIndx() != 24)
         {
@@ -788,12 +794,16 @@ public class MoveClick : MonoBehaviour
         eatenOrigin.RemoveAt(eatenOrigin.Count - 1);
 
         ButtonController.Instance.doneButton.SetActive(false);
-     //   if (whichDie.Count == 0)
-      //      ButtonController.Instance.undoButton.SetActive(false);
+         if (whichDie.Count == 0)
+            ButtonController.Instance.undoButton.SetActive(false);
 
         var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
 
         GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
+
+
+        var state = MatchDataJson.SetPieceStack(lastMove.piece.name, lastMove.to.name , lastMove.from.name, lastMove.step.ToString(), lastMove.action.ToString() , "undo");
+        GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
     }
 
@@ -973,13 +983,15 @@ public class MoveClick : MonoBehaviour
         {
             if (slots[targetIndx].getColor() == otherPlayer)
             {
-                hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), false, false);
+                hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), "hit", false);
                 if (alreadyRolled)
                     eatenOrigin.Add(slots[targetIndx]);
+                Debug.Log(hitted[otherPlayer]);
             }
             else
                 eatenOrigin.Add(null);
-            slots[targetIndx].addPiece(curslot.removePiece(), false , false);
+                slots[targetIndx].addPiece(curslot.removePiece(), "move", false);
+            Debug.Log(slots[targetIndx].name);
             if (alreadyRolled)
             {
                 ButtonController.Instance.undoButton.SetActive(true);
@@ -1003,7 +1015,10 @@ public class MoveClick : MonoBehaviour
             if (notInHousePieces == 0)
                 check = canRemoveAPiece();
             if ((mCount + BCount == 0 && bigDieWasUsed && check != 0) || (MCount + BCount == 0 && smallDieWasUsed && check == -1) || (mCount + MCount + BCount == 0 && check == -1))
-                ButtonController.Instance.doneButton.SetActive(true);
+            {
+       
+            }
+
         }
         curslot = null;
     }
