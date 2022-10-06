@@ -1,0 +1,551 @@
+fileFormatVersion: 2
+guid: da736f4ddfdb24f18a057ad3e72ac8fe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1434618980618434102
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_0
+  - first:
+      213: 4047055788502603763
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_1
+  - first:
+      213: -7784766964173287350
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_2
+  - first:
+      213: -4032045121114743312
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_3
+  - first:
+      213: 5620531856195643620
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_4
+  - first:
+      213: -7936461968899811008
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_5
+  - first:
+      213: 3557271039257408085
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_6
+  - first:
+      213: 7526965390650488273
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_7
+  - first:
+      213: 660361657593895377
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_8
+  - first:
+      213: 8357981612389629187
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_9
+  - first:
+      213: 6388000913932091622
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_10
+  - first:
+      213: -4524342814374372463
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_11
+  - first:
+      213: 6105644738475888017
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_12
+  - first:
+      213: -7817152479294994889
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_13
+  - first:
+      213: -3590968259577762770
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_14
+  - first:
+      213: -325585985398241817
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_15
+  - first:
+      213: -6386579443895548549
+    second: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_16
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6367bc7ac5ac8e310800000000000000
+      internalID: 1434618980618434102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f7d2e32cc70a2830800000000000000
+      internalID: 4047055788502603763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a40514901b3f6f390800000000000000
+      internalID: -7784766964173287350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fddb95335c4b08c0800000000000000
+      internalID: -4032045121114743312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e8ee41c1f3200e40800000000000000
+      internalID: 5620531856195643620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_5
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 049545273e50cd190800000000000000
+      internalID: -7936461968899811008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_6
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 552f8b8b927fd5130800000000000000
+      internalID: 3557271039257408085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_7
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d5b16aa427257860800000000000000
+      internalID: 7526965390650488273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_8
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d91c28cd631a2900800000000000000
+      internalID: 660361657593895377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_9
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30dfab57ef38df370800000000000000
+      internalID: 8357981612389629187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_10
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e00bc37cfcb6a850800000000000000
+      internalID: 6388000913932091622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_11
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19bdf1b6e2e4631c0800000000000000
+      internalID: -4524342814374372463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_12
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19d86916a8b9bb450800000000000000
+      internalID: 6105644738475888017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_13
+      rect:
+        serializedVersion: 2
+        x: 1300
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 736ce84bc35e38390800000000000000
+      internalID: -7817152479294994889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_14
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2c2a28c4615a2ec0800000000000000
+      internalID: -3590968259577762770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_15
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 700
+        width: 100
+        height: 1000
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e50e7475494b7bf0800000000000000
+      internalID: -325585985398241817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_13: -7817152479294994889
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_5: -7936461968899811008
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_0: 1434618980618434102
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_15: -325585985398241817
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_4: 5620531856195643620
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_3: -4032045121114743312
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_10: 6388000913932091622
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_12: 6105644738475888017
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_9: 8357981612389629187
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_11: -4524342814374372463
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_8: 660361657593895377
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_14: -3590968259577762770
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_6: 3557271039257408085
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_2: -7784766964173287350
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_7: 7526965390650488273
+      depositphotos_150419248-stock-photo-collection-of-different-caucasian-women_1: 4047055788502603763
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
