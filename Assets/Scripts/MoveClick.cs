@@ -81,6 +81,30 @@ public class MoveClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (aboutToBeDeleted.howManyPieces() > 0)
+        {
+            piecesStillAlive[player] -= aboutToBeDeleted.howManyPieces();
+            // aboutToBeDeleted.deletePiecesInTile();
+            if (player == 1)
+            {
+                while (aboutToBeDeleted.pieces.Count > 0)
+                    slots[27].addPiece(aboutToBeDeleted.removePiece(), "move" , false);
+
+            }
+
+
+            if (player == 0)
+            {
+
+                while (aboutToBeDeleted.pieces.Count > 0)
+                    slots[28].addPiece(aboutToBeDeleted.removePiece(), "move", false);
+
+            }
+
+        }
+
+
         Player.text ="player "+ player.ToString();
  
         if (curMoves[0] == -1 && curMoves[1] == -1)
@@ -90,7 +114,7 @@ public class MoveClick : MonoBehaviour
  
         else if (!alreadyRolled)
         {
-           // Debug.Log(player);
+ 
 
             adjustDice();
             movesMap = makeMovesMap();
@@ -290,11 +314,7 @@ public class MoveClick : MonoBehaviour
     public void endTurn()
     {
         curMoves[0] = curMoves[1] = curMoves[2] = curMoves[3] = 0;
-        if (aboutToBeDeleted.howManyPieces() > 0)
-        {
-            piecesStillAlive[player] -= aboutToBeDeleted.howManyPieces();
-            aboutToBeDeleted.deletePiecesInTile();
-        }
+ 
     }
 
     public void updateRolls(int[] rolls, char tar)
@@ -793,10 +813,12 @@ public class MoveClick : MonoBehaviour
         destination.RemoveAt(destination.Count - 1);
         eatenOrigin.RemoveAt(eatenOrigin.Count - 1);
 
+        /*
         ButtonController.Instance.doneButton.SetActive(false);
          if (whichDie.Count == 0)
             ButtonController.Instance.undoButton.SetActive(false);
 
+        */
         var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
 
         GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
@@ -823,7 +845,6 @@ public class MoveClick : MonoBehaviour
             else if (output[i] == 'M')
             {
                 MCount += slots[i].howManyPieces();
-                Debug.Log(MCount);
             }
             else if (output[i] == 'm')
                 mCount += slots[i].howManyPieces();
@@ -919,11 +940,12 @@ public class MoveClick : MonoBehaviour
 
     public void makeAutomaticMovesForEaten()
     {
+        Debug.Log("make automatic moves for eaten");
         if (eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0)
             smallDieWasUsed = bigDieWasUsed = true;
         if (bigDieWasUsed && smallDieWasUsed)
         {
-
+           
         }
         else
         {
@@ -944,6 +966,7 @@ public class MoveClick : MonoBehaviour
             }
             if (hitted[player].howManyPieces() > 1 && eatenMovesMap == 'B')
             {
+ 
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 curslot = hitted[player];
@@ -952,12 +975,14 @@ public class MoveClick : MonoBehaviour
             }
             else if (hitted[player].howManyPieces() == 1 && eatenMovesMap == 'B' && curMoves[0] == curMoves[1])
             {
+         
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[0] + adjust - 1));
                 bigDieWasUsed = true;
             }
             else if (hitted[player].howManyPieces() > 0 && eatenMovesMap == 'M')
             {
+    
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 bigDieWasUsed = true;
@@ -966,6 +991,7 @@ public class MoveClick : MonoBehaviour
             }
             else if (hitted[player].howManyPieces() > 0 && eatenMovesMap == 'm')
             {
+ 
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
                 smallDieWasUsed = true;
@@ -986,12 +1012,12 @@ public class MoveClick : MonoBehaviour
                 hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), "hit", false);
                 if (alreadyRolled)
                     eatenOrigin.Add(slots[targetIndx]);
-                Debug.Log(hitted[otherPlayer]);
+ 
             }
             else
                 eatenOrigin.Add(null);
                 slots[targetIndx].addPiece(curslot.removePiece(), "move", false);
-            Debug.Log(slots[targetIndx].name);
+ 
             if (alreadyRolled)
             {
                 ButtonController.Instance.undoButton.SetActive(true);
