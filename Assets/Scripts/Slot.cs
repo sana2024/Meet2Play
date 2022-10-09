@@ -23,9 +23,10 @@ public class Slot : MonoBehaviour
 
     UnityMainThreadDispatcher mainThread;
 
+    [SerializeField] Sprite BlackOut;
+    [SerializeField] Sprite WhiteOut;
 
-
-
+    
     // the distance between pieces in a slot when insantiated
     float distance = 0.68f;
     //checks whatever the piece is on tiop side of board or botton side
@@ -46,6 +47,16 @@ public class Slot : MonoBehaviour
         isocket = PassData.isocket;
         mainThread = UnityMainThreadDispatcher.Instance();
         isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
+
+        if(PassData.Match.Self.UserId == GameManager.instance.playerBlack.UserId)
+        {
+            Debug.Log("this player is black");
+            if(this.slotType == SlotType.AboutTobeDeleted)
+            {
+                Debug.Log("black player slot");
+                slotId = 25;
+            }
+        }
     }
 
     private async Task OnReceivedMatchState(IMatchState matchState)
@@ -187,7 +198,19 @@ public class Slot : MonoBehaviour
     // adds pieces to the slot
     public void addPiece(Piece piece, string MoveType, bool recive)
     {
- 
+
+        if (this.indx == 27)
+        {
+            piece.gameObject.GetComponent<SpriteRenderer>().sprite = WhiteOut;
+        }
+
+        else
+
+        if (this.indx == 28)
+        {
+            piece.gameObject.GetComponent<SpriteRenderer>().sprite = BlackOut;
+        }
+
 
         if (piece.gameObject.GetComponentInParent<Slot>() != this)
         {
@@ -209,6 +232,11 @@ public class Slot : MonoBehaviour
 
             int steps = from.slotId - this.slotId;
 
+            if(from.slotType == SlotType.AboutTobeDeleted)
+            {
+                steps = 0; 
+            }
+
             var movesPlayedList = GameManager.instance.currentPlayer.movesPlayed;
 
             foreach(var moves in GameManager.instance.currentPlayer.movesPlayed)
@@ -217,7 +245,7 @@ public class Slot : MonoBehaviour
 
             if (MoveType == "move")
             {
-                Debug.Log(MoveType);
+ 
                 movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = Math.Abs(steps), action = MoveActionTypes.Move });
 
                 if (recive == false)
@@ -226,7 +254,7 @@ public class Slot : MonoBehaviour
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
-                Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
+                 Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
             }
             else if(MoveType == "hit")
             {
@@ -239,7 +267,7 @@ public class Slot : MonoBehaviour
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
-                Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " +  step + " action type " + MoveActionTypes.Move + "move type " + MoveType);
+               // Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " +  step + " action type " + MoveActionTypes.Move + "move type " + MoveType);
 
             }
  
