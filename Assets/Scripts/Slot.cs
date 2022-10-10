@@ -198,6 +198,7 @@ public class Slot : MonoBehaviour
     // adds pieces to the slot
     public void addPiece(Piece piece, string MoveType, bool recive)
     {
+        var move = MoveActionTypes.Move;
 
         if (this.indx == 27)
         {
@@ -234,6 +235,7 @@ public class Slot : MonoBehaviour
 
             if(from.slotType == SlotType.AboutTobeDeleted)
             {
+                move = MoveActionTypes.Bear;
                 steps = 0; 
             }
 
@@ -243,21 +245,23 @@ public class Slot : MonoBehaviour
 
             MovedWithClick = true;
 
+
             if (MoveType == "move")
             {
  
-                movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = Math.Abs(steps), action = MoveActionTypes.Move });
+                movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = Math.Abs(steps), action = move });
 
                 if (recive == false)
                 {
-                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, Math.Abs(steps).ToString(), MoveActionTypes.Move.ToString(), "move");
+                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, Math.Abs(steps).ToString(), move.ToString(), "move");
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
-                 Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
+                  Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
             }
             else if(MoveType == "hit")
             {
+                move = MoveActionTypes.Hit;
                 var step = 0;
  
                 if (recive == false)
@@ -272,6 +276,8 @@ public class Slot : MonoBehaviour
             }
  
         }
+
+ 
 
 
     }

@@ -105,7 +105,9 @@ public class DiceController : MonoBehaviour
 
                  }
 
-                await Task.Delay(5000);
+               // await Task.Delay(5000);
+
+                /*
 
                 foreach (var dice in rollingDices)
                 {
@@ -117,7 +119,7 @@ public class DiceController : MonoBehaviour
 
                 }
 
-
+                */
 
                 break;
 
@@ -202,7 +204,7 @@ public class DiceController : MonoBehaviour
 
         if (animationFinished)
         {
-           StartCoroutine(HideRollingDices());
+            Invoke("HideRollingDices", 2f);
         }
     }
 
@@ -219,17 +221,12 @@ public class DiceController : MonoBehaviour
         SendMatchState(OpCodes.Show_dice, state);
     }
 
-    private IEnumerator HideRollingDices()
+    public void HideRollingDices()
     {
-        yield return new WaitForSeconds(2f);
-
-
         foreach (var dice in rollingDices)
  
-            dice.gameObject.SetActive(false);
- 
-
-
+        dice.gameObject.SetActive(false);
+  
         rollingDices = null;
     }
 
@@ -258,7 +255,7 @@ public class DiceController : MonoBehaviour
 
         // set move speed
         firstDice.moveSpeed = speed;
-        secondDice.moveSpeed = speed + Random.Range(.75f, 3f);
+        secondDice.moveSpeed = speed;
 
         // throw from position
         firstDice.Throw(values[0], pos);
@@ -424,16 +421,30 @@ public class DiceController : MonoBehaviour
         var list = GetMovesList().ToList();
 
 
+ 
+      
         foreach (var step in playedSteps)
         {
-                 Debug.Log(list.Count);
+            if (list.Contains(step))
+            {
+                Debug.Log("element found");
                 list.RemoveAt(list.FindIndex(x => x == step));
+            }
+            else
+            {
+                Debug.Log("element not found");
+            }
 
- 
+
+
+
         }
         return list;
 
     }
 
-    #endregion
 }
+
+
+    #endregion
+
