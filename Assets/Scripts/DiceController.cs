@@ -42,6 +42,9 @@ public class DiceController : MonoBehaviour
 
     ISocket isocket;
 
+    int BigDice;
+    int smalldice;
+
  
     UnityMainThreadDispatcher mainThread;
     [SerializeField] GameManager gameManager;
@@ -420,22 +423,75 @@ public class DiceController : MonoBehaviour
     {
         var list = GetMovesList().ToList();
 
+        if(values[0]> values[1])
+        {
+            BigDice = values[0];
+            smalldice = values[1];
+        }
+        if (values[1] > values[0])
+        {
+            BigDice = values[1];
+            smalldice = values[0];
+        }
 
+        if( values[0] == values[1])
+        {
+            BigDice = smalldice = values[0];
+        }
+
+
+        var StepHolder = 0;
  
-      
         foreach (var step in playedSteps)
         {
-            if (list.Contains(step))
+            StepHolder = step;
+
+            if (StepHolder != 0)
             {
-                Debug.Log("element found");
-                list.RemoveAt(list.FindIndex(x => x == step));
-            }
-            else
-            {
-                Debug.Log("element not found");
+                Debug.Log("big dice " + BigDice);
+                Debug.Log("small dice " + smalldice);
+
+                foreach (var move in GameManager.instance.currentPlayer.movesPlayed)
+                {
+                    if (move.action == MoveActionTypes.Bear)
+                    {
+                        if (MoveClick.instance.bigDieWasUsed == true && MoveClick.instance.smallDieWasUsed == false)
+                        {
+
+                            Debug.Log("big dice was used");
+                            if (BigDice > StepHolder)
+                            {
+                                StepHolder = BigDice;
+                                Debug.Log("Step holder big " + StepHolder);
+                            }
+                        }
+                        if (MoveClick.instance.smallDieWasUsed == true && MoveClick.instance.bigDieWasUsed == true)
+                        {
+                            Debug.Log("small dice was used");
+                            if (smalldice > StepHolder)
+                            {
+                                StepHolder = smalldice;
+                                Debug.Log("Step holder small " + StepHolder);
+
+                            }
+                        }
+                    }
+                }
             }
 
+            if (StepHolder> 0)
+            {
+                if (list.Contains(StepHolder))
+                {
+                   // Debug.Log("element found");
+                    list.RemoveAt(list.FindIndex(x => x == StepHolder));
+                }
+                else
+                {
+                   // Debug.Log("element not found");
+                }
 
+            }
 
 
         }
