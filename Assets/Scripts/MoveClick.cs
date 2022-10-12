@@ -91,7 +91,7 @@ public class MoveClick : MonoBehaviour
             if (player == 1)
             {
                 while (aboutToBeDeleted.pieces.Count > 0)
-                    slots[27].addPiece(aboutToBeDeleted.removePiece(), "move" , false);
+                    slots[27].addPiece(aboutToBeDeleted.removePiece(), "move" , false, CurentMove);
 
             }
 
@@ -100,7 +100,7 @@ public class MoveClick : MonoBehaviour
             {
 
                 while (aboutToBeDeleted.pieces.Count > 0)
-                    slots[28].addPiece(aboutToBeDeleted.removePiece(), "move", false);
+                    slots[28].addPiece(aboutToBeDeleted.removePiece(), "move", false, CurentMove);
 
             }
 
@@ -222,6 +222,7 @@ public class MoveClick : MonoBehaviour
                     updateRolls(curMoves, 'M');
                     if (alreadyRolled)
                         whichDie.Add('M');
+                    CurentMove = curMoves[1];
                     return longIndx;
                 }
                 else if (!smallDieWasUsed)
@@ -229,6 +230,7 @@ public class MoveClick : MonoBehaviour
                     updateRolls(curMoves, 'm');
                     if (alreadyRolled)
                         whichDie.Add('m');
+                    CurentMove = curMoves[0];
                     return shortIndx;
                 }
                 break;
@@ -238,6 +240,7 @@ public class MoveClick : MonoBehaviour
                     updateRolls(curMoves, 'M');
                     if (alreadyRolled)
                         whichDie.Add('M');
+                    CurentMove = curMoves[1];
                     return longIndx;
                 }
                 break;
@@ -247,6 +250,7 @@ public class MoveClick : MonoBehaviour
                     updateRolls(curMoves, 'm');
                     if (alreadyRolled)
                         whichDie.Add('m');
+                    CurentMove = curMoves[0];
                     return shortIndx;
                 }
                 break;
@@ -793,9 +797,9 @@ public class MoveClick : MonoBehaviour
         }
 
 
-        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false);
+        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false, CurentMove );
         if (eatenOrigin[eatenOrigin.Count - 1])
-            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false);
+            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false,CurentMove);
 
         if (destination[destination.Count - 1].getIndx() != 24)
         {
@@ -1014,14 +1018,14 @@ public class MoveClick : MonoBehaviour
         {
             if (slots[targetIndx].getColor() == otherPlayer)
             {
-                hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), "hit", false);
+                hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), "hit", false, CurentMove);
                 if (alreadyRolled)
                     eatenOrigin.Add(slots[targetIndx]);
  
             }
             else
                 eatenOrigin.Add(null);
-                slots[targetIndx].addPiece(curslot.removePiece(), "move", false);
+                slots[targetIndx].addPiece(curslot.removePiece(), "move", false, CurentMove);
  
             if (alreadyRolled)
             {
@@ -1143,6 +1147,7 @@ public class MoveClick : MonoBehaviour
         if (move != -1)
         {
             CurentMove = curMoves[move];
+ 
             int adjust = 0, startTileIndx;
             if (player == 0)
                 adjust = 25;

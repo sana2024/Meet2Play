@@ -77,6 +77,8 @@ public class Slot : MonoBehaviour
                 GameObject fromSlotGB = GameObject.Find(state["From"]);
                 Slot fromSlot = fromSlotGB.GetComponent<Slot>();
 
+   
+
                 // fromSlot.pieces.Remove(ClickPiece);
 
                 GameObject toSlotGB = GameObject.Find(state["To"]);
@@ -94,7 +96,7 @@ public class Slot : MonoBehaviour
                     moveType = "move";
                 }
 
-                toSlot.addPiece(ClickPiece, moveType , true);
+                toSlot.addPiece(ClickPiece, moveType , true, Steps);
                 fromSlot.pieces.Remove(ClickPiece);
                // toSlot.pieces.Add(ClickPiece);
 
@@ -199,8 +201,9 @@ public class Slot : MonoBehaviour
     #region Move Piece With Click
 
     // adds pieces to the slot
-    public void addPiece(Piece piece, string MoveType, bool recive)
+    public void addPiece(Piece piece, string MoveType, bool recive , int CurrentMove)
     {
+       // Debug.Log("current move " + CurrentMove);
         var move = MoveActionTypes.Move;
 
         if (this.indx == 27)
@@ -247,49 +250,16 @@ public class Slot : MonoBehaviour
             foreach(var moves in GameManager.instance.currentPlayer.movesPlayed)
 
             MovedWithClick = true;
-            /*
-            if(DiceController.instance.values[0] > DiceController.instance.values[1])
-            {
-                BigDice = DiceController.instance.values[0];
-                smallDice = DiceController.instance.values[1];
 
-            }else if (DiceController.instance.values[1] > DiceController.instance.values[0])
-            {
-                BigDice = DiceController.instance.values[1];
-                smallDice = DiceController.instance.values[0];
-            }
-            if (move == MoveActionTypes.Bear)
-            {
-                Debug.Log("bear action");
-
-                if (MoveClick.instance.bigDieWasUsed == true && MoveClick.instance.smallDieWasUsed == false)
-                {
-                    Debug.Log("big used");
-                    if (BigDice > steps)
-                    {
-                        steps = BigDice;
-                    }
-                }
-
-                if (MoveClick.instance.bigDieWasUsed == true && MoveClick.instance.smallDieWasUsed == true)
-                {
-                    Debug.Log("small used");
-                    if (smallDice > steps)
-                    {
-                        steps = smallDice;
-                    }
-                }
-            }
-            */
 
             if (MoveType == "move")
             {
  
-                movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = Math.Abs(steps), action = move });
+                movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = CurrentMove, action = move });
 
                 if (recive == false)
                 {
-                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, Math.Abs(steps).ToString(), move.ToString(), "move");
+                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, CurrentMove.ToString(), move.ToString(), "move");
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
