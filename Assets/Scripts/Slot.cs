@@ -19,6 +19,9 @@ public class Slot : MonoBehaviour
 
     public int indx;
 
+    int smallDice;
+    int BigDice;
+
     ISocket isocket;
 
     UnityMainThreadDispatcher mainThread;
@@ -244,7 +247,40 @@ public class Slot : MonoBehaviour
             foreach(var moves in GameManager.instance.currentPlayer.movesPlayed)
 
             MovedWithClick = true;
+            /*
+            if(DiceController.instance.values[0] > DiceController.instance.values[1])
+            {
+                BigDice = DiceController.instance.values[0];
+                smallDice = DiceController.instance.values[1];
 
+            }else if (DiceController.instance.values[1] > DiceController.instance.values[0])
+            {
+                BigDice = DiceController.instance.values[1];
+                smallDice = DiceController.instance.values[0];
+            }
+            if (move == MoveActionTypes.Bear)
+            {
+                Debug.Log("bear action");
+
+                if (MoveClick.instance.bigDieWasUsed == true && MoveClick.instance.smallDieWasUsed == false)
+                {
+                    Debug.Log("big used");
+                    if (BigDice > steps)
+                    {
+                        steps = BigDice;
+                    }
+                }
+
+                if (MoveClick.instance.bigDieWasUsed == true && MoveClick.instance.smallDieWasUsed == true)
+                {
+                    Debug.Log("small used");
+                    if (smallDice > steps)
+                    {
+                        steps = smallDice;
+                    }
+                }
+            }
+            */
 
             if (MoveType == "move")
             {
@@ -257,7 +293,7 @@ public class Slot : MonoBehaviour
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
-                  Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
+                 // Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
             }
             else if(MoveType == "hit")
             {

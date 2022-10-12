@@ -8,7 +8,7 @@ public class MoveClick : MonoBehaviour
 {
     // All tiles including outsides
     [SerializeField]
-    private Slot[] slots = new Slot[26];
+    public Slot[] slots = new Slot[26];
 
     //black bar and white bar
     [SerializeField]
@@ -34,7 +34,7 @@ public class MoveClick : MonoBehaviour
     public int[] curMoves = new int[4];
    [SerializeField]
     private int BCount = 0, MCount = 0, mCount = 0;
-    [SerializeField]
+    [SerializeField] public
     int notInHousePieces;
 
     [SerializeField]
@@ -43,19 +43,21 @@ public class MoveClick : MonoBehaviour
     private char eatenMovesMap;
 
     [SerializeField]
-    private bool alreadyRolled = false;
+    public bool alreadyRolled = false;
     private bool alreadyMoved;
     private bool canDeletePieces;
     [SerializeField]
-    private bool bigDieWasUsed;
+    public bool bigDieWasUsed;
     [SerializeField]
-    private bool smallDieWasUsed;
+    public bool smallDieWasUsed;
     [SerializeField]
     private int[] piecesStillAlive = { 15, 15 };
     [SerializeField]
     private int checkIfCanRemove;
 
     public static MoveClick instance;
+
+    public int CurentMove;
 
     [SerializeField] Text Player;
 
@@ -141,7 +143,7 @@ public class MoveClick : MonoBehaviour
                 checkIfCanRemove = canRemoveAPiece();
             if ((smallDieWasUsed && bigDieWasUsed) || (BCount + mCount + MCount == 0 && checkIfCanRemove == -1))
             {
-             //   ButtonController.Instance.doneButton.SetActive(true);
+                GameManager.instance.nextTurnButton.interactable = true;
             }
 
 
@@ -378,6 +380,7 @@ public class MoveClick : MonoBehaviour
 
     public void makeAutomaticMovesForDouble(int times)
     {
+        Debug.Log("automatic move for double");
         int adjust = 1;
         if (player == 1)
             adjust = -1;
@@ -410,6 +413,7 @@ public class MoveClick : MonoBehaviour
 
     public void makeAutomaticMovesForOneDie()
     {
+        Debug.Log("automatic move of one dice");
         int adjust = 1;
         if (player == 1)
             adjust = -1;
@@ -449,6 +453,7 @@ public class MoveClick : MonoBehaviour
 
     public void makeAutomaticMovesForTwoDice()
     {
+        Debug.Log("automatic move of two dices");
         int adjust = 1, check = -1, solutionCount = 0, whatMoveToMake = 0;
         if (player == 1)
             adjust = -1;
@@ -1135,9 +1140,9 @@ public class MoveClick : MonoBehaviour
 
     private void makeRemoveAPiece(int move)
     {
-        Debug.Log(move);
         if (move != -1)
         {
+            CurentMove = curMoves[move];
             int adjust = 0, startTileIndx;
             if (player == 0)
                 adjust = 25;
