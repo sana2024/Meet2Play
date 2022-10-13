@@ -29,6 +29,8 @@ public class Slot : MonoBehaviour
     [SerializeField] Sprite BlackOut;
     [SerializeField] Sprite WhiteOut;
 
+ 
+
     
     // the distance between pieces in a slot when insantiated
     float distance = 0.68f;
@@ -96,7 +98,7 @@ public class Slot : MonoBehaviour
                     moveType = "move";
                 }
 
-                toSlot.addPiece(ClickPiece, moveType , true, Steps);
+                toSlot.addPiece(ClickPiece, moveType , true);
                 fromSlot.pieces.Remove(ClickPiece);
                // toSlot.pieces.Add(ClickPiece);
 
@@ -201,9 +203,10 @@ public class Slot : MonoBehaviour
     #region Move Piece With Click
 
     // adds pieces to the slot
-    public void addPiece(Piece piece, string MoveType, bool recive , int CurrentMove)
+    public void addPiece(Piece piece, string MoveType, bool recive)
     {
-       // Debug.Log("current move " + CurrentMove);
+        var currentMove = MoveClick.instance.CurentMove;
+         Debug.Log("current move " + currentMove);
         var move = MoveActionTypes.Move;
 
         if (this.indx == 27)
@@ -237,12 +240,13 @@ public class Slot : MonoBehaviour
             piece.move(this.transform, this);
             pieces.Add(piece);
 
-            int steps = from.slotId - this.slotId;
+            GameManager.instance.CheckRoundFinish();
+      
 
             if(from.slotType == SlotType.AboutTobeDeleted)
             {
                 move = MoveActionTypes.Bear;
-                steps = 0; 
+      
             }
 
             var movesPlayedList = GameManager.instance.currentPlayer.movesPlayed;
@@ -255,11 +259,11 @@ public class Slot : MonoBehaviour
             if (MoveType == "move")
             {
  
-                movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = CurrentMove, action = move });
+                movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = currentMove, action = move });
 
                 if (recive == false)
                 {
-                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, CurrentMove.ToString(), move.ToString(), "move");
+                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, currentMove.ToString(), move.ToString(), "move");
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }

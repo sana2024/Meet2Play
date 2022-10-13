@@ -91,7 +91,7 @@ public class MoveClick : MonoBehaviour
             if (player == 1)
             {
                 while (aboutToBeDeleted.pieces.Count > 0)
-                    slots[27].addPiece(aboutToBeDeleted.removePiece(), "move" , false, CurentMove);
+                    slots[27].addPiece(aboutToBeDeleted.removePiece(), "move" , false );
 
             }
 
@@ -100,7 +100,7 @@ public class MoveClick : MonoBehaviour
             {
 
                 while (aboutToBeDeleted.pieces.Count > 0)
-                    slots[28].addPiece(aboutToBeDeleted.removePiece(), "move", false, CurentMove);
+                    slots[28].addPiece(aboutToBeDeleted.removePiece(), "move", false );
 
             }
 
@@ -126,8 +126,11 @@ public class MoveClick : MonoBehaviour
                 makeAutomaticMovesForEaten();
             }
             if (notInHousePieces == 0)
-                makeAutomaticRemovalOfPieces();
-            organizeMakeAutomaticMoves();
+            {
+                // makeAutomaticRemovalOfPieces();
+                //organizeMakeAutomaticMoves();
+            }
+
             alreadyRolled = true;
             if (notInHousePieces == 0)
                 checkIfCanRemove = canRemoveAPiece();
@@ -275,6 +278,7 @@ public class MoveClick : MonoBehaviour
             canMoveSmallDie = true;
         if (!onlyBig && canMoveSmallDie && !smallDieWasUsed && (curMoves[0] == Mathf.Abs(adjust - curTile.getIndx()) + 1 || canMoveToAboutToBeDeleted(curTile.getIndx())))
         {
+            CurentMove = curMoves[0];
             updateRolls(curMoves, 'm');
             if (alreadyRolled)
                 whichDie.Add('m');
@@ -282,6 +286,7 @@ public class MoveClick : MonoBehaviour
         }
         else if (canMoveBigDie && !bigDieWasUsed && (curMoves[1] == Mathf.Abs(adjust - curTile.getIndx()) + 1 || canMoveToAboutToBeDeleted(curTile.getIndx())))
         {
+            CurentMove = curMoves[1];
             updateRolls(curMoves, 'M');
             if (alreadyRolled)
                 whichDie.Add('M');
@@ -320,6 +325,7 @@ public class MoveClick : MonoBehaviour
     public void endTurn()
     {
         curMoves[0] = curMoves[1] = curMoves[2] = curMoves[3] = 0;
+        CurentMove = 0;
  
     }
 
@@ -364,10 +370,15 @@ public class MoveClick : MonoBehaviour
     private void makeAutomaticRemovalOfPieces()
     {
         int i = canRemoveAPiece();
-        while (i != -1)
+        if (curMoves[0] != curMoves[1])
         {
-            makeRemoveAPiece(i);
-            i = canRemoveAPiece();
+
+            while (i != -1)
+            {
+                makeRemoveAPiece(i);
+                i = canRemoveAPiece();
+            }
+
         }
     }
 
@@ -375,7 +386,10 @@ public class MoveClick : MonoBehaviour
     {
         alreadyRolled = true;
         if (curMoves[0] == curMoves[1])
-            makeAutomaticMovesForDouble(times);
+        {
+        //   makeAutomaticMovesForDouble(times);
+        }
+ 
         else if (times == 2)
             makeAutomaticMovesForTwoDice();
         else if (times == 1)
@@ -384,7 +398,6 @@ public class MoveClick : MonoBehaviour
 
     public void makeAutomaticMovesForDouble(int times)
     {
-        Debug.Log("automatic move for double");
         int adjust = 1;
         if (player == 1)
             adjust = -1;
@@ -403,6 +416,7 @@ public class MoveClick : MonoBehaviour
                 whichDie.Add('m');
             }
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             counter++;
             t--;
         }
@@ -427,12 +441,14 @@ public class MoveClick : MonoBehaviour
             {
                 curslot = slots[getIndxFromMoveMap('B')];
                 makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+                CurentMove = curMoves[1];
                 bigDieWasUsed = true;
             }
             if (BCount == 0 && MCount == 1 && mCount == 0)
             {
                 curslot = slots[getIndxFromMoveMap('M')];
                 makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+                CurentMove = curMoves[1];
                 bigDieWasUsed = true;
             }
 
@@ -443,12 +459,14 @@ public class MoveClick : MonoBehaviour
             {
                 curslot = slots[getIndxFromMoveMap('B')];
                 makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+                CurentMove = curMoves[0];
                 smallDieWasUsed = true;
             }
             if (BCount == 0 && mCount == 1 && MCount == 0)
             {
                 curslot = slots[getIndxFromMoveMap('m')];
                 makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+                CurentMove = curMoves[0];
                 smallDieWasUsed = true;
             }
         }
@@ -457,7 +475,6 @@ public class MoveClick : MonoBehaviour
 
     public void makeAutomaticMovesForTwoDice()
     {
-        Debug.Log("automatic move of two dices");
         int adjust = 1, check = -1, solutionCount = 0, whatMoveToMake = 0;
         if (player == 1)
             adjust = -1;
@@ -467,6 +484,7 @@ public class MoveClick : MonoBehaviour
             solutionCount++;
             curslot = slots[getIndxFromMoveMap('m')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = true;
             whichDie.Add('m');
             if (notInHousePieces == 0)
@@ -484,6 +502,7 @@ public class MoveClick : MonoBehaviour
             smallDieWasUsed = false;
             curslot = slots[getIndxFromMoveMap('M')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             whichDie.Add('M');
             if (notInHousePieces == 0)
@@ -508,6 +527,7 @@ public class MoveClick : MonoBehaviour
             solutionCount++;
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = true;
             whichDie.Add('m');
             if (notInHousePieces == 0)
@@ -525,6 +545,7 @@ public class MoveClick : MonoBehaviour
             smallDieWasUsed = false;
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             whichDie.Add('M');
             if (notInHousePieces == 0)
@@ -542,6 +563,7 @@ public class MoveClick : MonoBehaviour
             bigDieWasUsed = false;
             curslot = slots[getIndxFromMoveMap('m')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = true;
             whichDie.Add('m');
             if (notInHousePieces == 0)
@@ -566,6 +588,7 @@ public class MoveClick : MonoBehaviour
             solutionCount++;
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = true;
             whichDie.Add('m');
             if (notInHousePieces == 0)
@@ -583,6 +606,7 @@ public class MoveClick : MonoBehaviour
             smallDieWasUsed = false;
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             whichDie.Add('M');
             if (notInHousePieces == 0)
@@ -600,6 +624,7 @@ public class MoveClick : MonoBehaviour
             bigDieWasUsed = false;
             curslot = slots[getIndxFromMoveMap('M')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             whichDie.Add('M');
             if (notInHousePieces == 0)
@@ -622,6 +647,7 @@ public class MoveClick : MonoBehaviour
         {
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = true;
             whichDie.Add('m');
             if (notInHousePieces == 0)
@@ -639,6 +665,7 @@ public class MoveClick : MonoBehaviour
             smallDieWasUsed = false;
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             whichDie.Add('M');
             if (notInHousePieces == 0)
@@ -664,6 +691,7 @@ public class MoveClick : MonoBehaviour
             alreadyRolled = false;
             curslot = slots[getIndxFromMoveMap('M')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             alreadyRolled = true;
             if (notInHousePieces == 0)
@@ -676,11 +704,13 @@ public class MoveClick : MonoBehaviour
             {
                 curslot = slots[getIndxFromMoveMap('m')];
                 makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+                CurentMove = curMoves[0];
             }
             else if (BCount == 1)
             {
                 curslot = slots[getIndxFromMoveMap('B')];
                 makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+                CurentMove = curMoves[0];
             }
             else
                 makeRemoveAPiece(check);
@@ -691,6 +721,7 @@ public class MoveClick : MonoBehaviour
             alreadyRolled = false;
             curslot = slots[getIndxFromMoveMap('m')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = true;
             alreadyRolled = true;
             if (notInHousePieces == 0)
@@ -703,11 +734,13 @@ public class MoveClick : MonoBehaviour
             {
                 curslot = slots[getIndxFromMoveMap('M')];
                 makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+                CurentMove = curMoves[1];
             }
             else if (BCount == 1)
             {
                 curslot = slots[getIndxFromMoveMap('B')];
                 makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+                CurentMove = curMoves[1];
             }
             else
                 makeRemoveAPiece(check);
@@ -725,6 +758,7 @@ public class MoveClick : MonoBehaviour
         {
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = true;
 
             if (moveCode % 10 == 1)
@@ -733,6 +767,7 @@ public class MoveClick : MonoBehaviour
             {
                 curslot = slots[getIndxFromMoveMap('M')];
                 makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+                CurentMove = curMoves[1];
             }
             bigDieWasUsed = true;
         }
@@ -740,6 +775,7 @@ public class MoveClick : MonoBehaviour
         {
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             if (moveCode % 10 == 1)
                 makeRemoveAPiece(canRemoveAPiece());
@@ -747,6 +783,7 @@ public class MoveClick : MonoBehaviour
             {
                 curslot = slots[getIndxFromMoveMap('m')];
                 makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+                CurentMove = curMoves[0];
             }
             smallDieWasUsed = true;
         }
@@ -754,6 +791,7 @@ public class MoveClick : MonoBehaviour
         {
             curslot = slots[getIndxFromMoveMap('B')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             bigDieWasUsed = true;
             if (moveCode % 10 == 1)
                 makeRemoveAPiece(canRemoveAPiece());
@@ -761,6 +799,7 @@ public class MoveClick : MonoBehaviour
             {
                 curslot = slots[getIndxFromMoveMap('m')];
                 makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+                CurentMove = curMoves[0];
             }
             smallDieWasUsed = true;
         }
@@ -768,8 +807,10 @@ public class MoveClick : MonoBehaviour
         {
             curslot = slots[getIndxFromMoveMap('M')];
             makeMove(curslot.getIndx() + (curMoves[1] * adjust) );
+            CurentMove = curMoves[1];
             curslot = slots[getIndxFromMoveMap('m')];
             makeMove(curslot.getIndx() + (curMoves[0] * adjust) );
+            CurentMove = curMoves[0];
             smallDieWasUsed = bigDieWasUsed = true;
         }
     }
@@ -797,9 +838,9 @@ public class MoveClick : MonoBehaviour
         }
 
 
-        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false, CurentMove );
+        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false );
         if (eatenOrigin[eatenOrigin.Count - 1])
-            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false,CurentMove);
+            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false );
 
         if (destination[destination.Count - 1].getIndx() != 24)
         {
@@ -966,20 +1007,24 @@ public class MoveClick : MonoBehaviour
                 curMoves[3] = 0;
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+                CurentMove = curMoves[1];
             }
             if (hitted[player].howManyPieces() > 0 && eatenMovesMap != 'n' && curMoves[0] == curMoves[1])
             {
                 curMoves[2] = 0;
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+                CurentMove = curMoves[1];
             }
             if (hitted[player].howManyPieces() > 1 && eatenMovesMap == 'B')
             {
  
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+                CurentMove = curMoves[1];
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
+                CurentMove = curMoves[0];
                 smallDieWasUsed = bigDieWasUsed = true;
             }
             else if (hitted[player].howManyPieces() == 1 && eatenMovesMap == 'B' && curMoves[0] == curMoves[1])
@@ -987,6 +1032,7 @@ public class MoveClick : MonoBehaviour
          
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[0] + adjust - 1));
+                CurentMove = curMoves[0];
                 bigDieWasUsed = true;
             }
             else if (hitted[player].howManyPieces() > 0 && eatenMovesMap == 'M')
@@ -994,6 +1040,7 @@ public class MoveClick : MonoBehaviour
     
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+                CurentMove = curMoves[1];
                 bigDieWasUsed = true;
                 if (hitted[player].howManyPieces() > 0)
                     smallDieWasUsed = true;
@@ -1003,6 +1050,7 @@ public class MoveClick : MonoBehaviour
  
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
+                CurentMove = curMoves[0];
                 smallDieWasUsed = true;
                 if (hitted[player].howManyPieces() > 0)
                     bigDieWasUsed = true;
@@ -1018,14 +1066,14 @@ public class MoveClick : MonoBehaviour
         {
             if (slots[targetIndx].getColor() == otherPlayer)
             {
-                hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), "hit", false, CurentMove);
+                hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), "hit", false );
                 if (alreadyRolled)
                     eatenOrigin.Add(slots[targetIndx]);
  
             }
             else
                 eatenOrigin.Add(null);
-                slots[targetIndx].addPiece(curslot.removePiece(), "move", false, CurentMove);
+                slots[targetIndx].addPiece(curslot.removePiece(), "move", false);
  
             if (alreadyRolled)
             {

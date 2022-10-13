@@ -84,7 +84,10 @@ public class GameManager : MonoBehaviour
     bool InternetConnected;
     bool ReconnectFlag = false;
     public bool ReconnectSocket = false;
-    
+
+    [SerializeField] Slot BlackOutside;
+    [SerializeField] Slot WhiteOutside;
+
 
 
 
@@ -115,6 +118,8 @@ public class GameManager : MonoBehaviour
         {
             resizeSlots.rotate();
             MyPlayer = playerBlack;
+
+           
 
         }
         if (PassData.Match.Self.UserId == playerWhite.UserId)
@@ -192,6 +197,9 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 6:
+
+                DiceController.instance.HideRollingDices();
+                
 
                 MoveClick.instance.endTurn();
 
