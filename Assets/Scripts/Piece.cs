@@ -424,9 +424,15 @@ public class Piece : MonoBehaviour
     {
         MovedWithClick = true;
         transform.parent = parentTrans;
-        var posY = slot.pieces.Count * 0.7f * slot.up;
+ 
+        var posY = slot.pieces.Count * GetOffsetMultiplier(slot.slotType) * slot.up;
+ 
+ 
+ 
         target = new Vector3(0, posY, 0);
         movedWithDrag = false;
+
+ 
 
     }
 
