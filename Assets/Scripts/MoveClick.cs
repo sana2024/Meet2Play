@@ -26,7 +26,7 @@ public class MoveClick : MonoBehaviour
     private List<Slot> origin, destination, eatenOrigin;
 
     [SerializeField]
-    private List<char> whichDie = null;
+    public List<char> whichDie = null;
     float clickTime = 0;
 
     Player currentPlayer;
@@ -84,14 +84,33 @@ public class MoveClick : MonoBehaviour
     void Update()
     {
 
+        if (destination.Contains(aboutToBeDeleted))
+        {
+            destination.Remove(aboutToBeDeleted);
+            if (player == 1)
+            {
+                destination.Add(slots[27]);
+            }
+            if (player == 0)
+            {
+                destination.Add(slots[28]);
+            }
+        }
+
+
         if (aboutToBeDeleted.howManyPieces() > 0)
         {
+
+
+
             piecesStillAlive[player] -= aboutToBeDeleted.howManyPieces();
             // aboutToBeDeleted.deletePiecesInTile();
             if (player == 1)
             {
                 while (aboutToBeDeleted.pieces.Count > 0)
                     slots[27].addPiece(aboutToBeDeleted.removePiece(), "move" , false );
+
+ 
 
             }
 
@@ -101,6 +120,9 @@ public class MoveClick : MonoBehaviour
 
                 while (aboutToBeDeleted.pieces.Count > 0)
                     slots[28].addPiece(aboutToBeDeleted.removePiece(), "move", false );
+
+ 
+
 
             }
 
@@ -836,7 +858,10 @@ public class MoveClick : MonoBehaviour
             else
                 bigDieWasUsed = false;
         }
-
+ 
+            ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
+         
+        
 
         origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false );
         if (eatenOrigin[eatenOrigin.Count - 1])
@@ -863,12 +888,12 @@ public class MoveClick : MonoBehaviour
         destination.RemoveAt(destination.Count - 1);
         eatenOrigin.RemoveAt(eatenOrigin.Count - 1);
 
-        /*
+       /*
         ButtonController.Instance.doneButton.SetActive(false);
          if (whichDie.Count == 0)
             ButtonController.Instance.undoButton.SetActive(false);
-
-        */
+       */
+         
         var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
 
         GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
