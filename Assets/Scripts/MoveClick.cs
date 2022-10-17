@@ -860,20 +860,23 @@ public class MoveClick : MonoBehaviour
         }
  
             ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
-         
         
 
         origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false );
         if (eatenOrigin[eatenOrigin.Count - 1])
             eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false );
 
-        if (destination[destination.Count - 1].getIndx() != 24)
+        Debug.Log("destination " + destination[destination.Count - 1].getIndx());
+
+        if (destination[destination.Count - 1].getIndx() < 24)
         {
-            updateTheCount(movesMap[destination[destination.Count - 1].getIndx()], -1);
-            movesMap[destination[destination.Count - 1].getIndx()] = availableMoves(destination[destination.Count - 1]);
+            Debug.Log("destination");
+            updateTheCount(movesMap[destination.Last().getIndx()], -1);
+            movesMap[destination.Last().getIndx()] = availableMoves(destination.Last());
         }
         if (origin[origin.Count - 1].getIndx() < 24)
         {
+            Debug.Log("origin");
             movesMap[origin[origin.Count - 1].getIndx()] = availableMoves(origin[origin.Count - 1]);
             updateTheCount(movesMap[origin[origin.Count - 1].getIndx()], 1);
         }
@@ -888,11 +891,11 @@ public class MoveClick : MonoBehaviour
         destination.RemoveAt(destination.Count - 1);
         eatenOrigin.RemoveAt(eatenOrigin.Count - 1);
 
-       /*
-        ButtonController.Instance.doneButton.SetActive(false);
+       
+        ButtonController.Instance.doneButton.GetComponent<Button>().interactable = false;
          if (whichDie.Count == 0)
-            ButtonController.Instance.undoButton.SetActive(false);
-       */
+            ButtonController.Instance.doneButton.GetComponent<Button>().interactable = false;
+       
          
         var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
 
