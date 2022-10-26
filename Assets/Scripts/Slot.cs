@@ -79,14 +79,14 @@ public class Slot : MonoBehaviour
                 GameObject fromSlotGB = GameObject.Find(state["From"]);
                 Slot fromSlot = fromSlotGB.GetComponent<Slot>();
 
-   
-
                 // fromSlot.pieces.Remove(ClickPiece);
 
                 GameObject toSlotGB = GameObject.Find(state["To"]);
                 Slot toSlot = toSlotGB.GetComponent<Slot>();
 
                 int Steps = int.Parse(state["Steps"]);
+
+                ConvertPieceOutside.instance.FromOutToSlot(ClickPiece);
 
                 var moveType = "";
                 if(state["MoveType"] == "hit")
@@ -206,7 +206,7 @@ public class Slot : MonoBehaviour
     public void addPiece(Piece piece, string MoveType, bool recive)
     {
         var currentMove = MoveClick.instance.CurentMove;
-         Debug.Log("current move " + currentMove);
+        // Debug.Log("current move " + currentMove);
         var move = MoveActionTypes.Move;
 
         if (this.indx == 27)
@@ -267,7 +267,7 @@ public class Slot : MonoBehaviour
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
-                 // Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + Math.Abs(steps) + " action type " + MoveActionTypes.Move + "move type " + MoveType);
+                 // Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + currentMove.ToString() + " action type " + MoveActionTypes.Move + "move type " + MoveType);
             }
             else if(MoveType == "hit")
             {

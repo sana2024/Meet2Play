@@ -862,17 +862,21 @@ public class MoveClick : MonoBehaviour
             ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
         
 
-        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false );
+        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "move", false );
         if (eatenOrigin[eatenOrigin.Count - 1])
             eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false );
+
 
         Debug.Log("destination " + destination[destination.Count - 1].getIndx());
 
         if (destination[destination.Count - 1].getIndx() < 24)
         {
-            Debug.Log("destination");
-            updateTheCount(movesMap[destination.Last().getIndx()], -1);
-            movesMap[destination.Last().getIndx()] = availableMoves(destination.Last());
+ 
+                    Debug.Log("destination");
+                    updateTheCount(movesMap[destination.Last().getIndx()], -1);
+                    movesMap[destination.Last().getIndx()] = availableMoves(destination.Last());
+      
+
         }
         if (origin[origin.Count - 1].getIndx() < 24)
         {
@@ -895,16 +899,13 @@ public class MoveClick : MonoBehaviour
         ButtonController.Instance.doneButton.GetComponent<Button>().interactable = false;
          if (whichDie.Count == 0)
             ButtonController.Instance.doneButton.GetComponent<Button>().interactable = false;
-       
          
         var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
 
+      //  var state = MatchDataJson.SetPieceStack(lastMove.piece.name, lastMove.to.name , lastMove.from.name, lastMove.step.ToString(), lastMove.action.ToString() , "move");
+      //  GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
+
         GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
-
-
-        var state = MatchDataJson.SetPieceStack(lastMove.piece.name, lastMove.to.name , lastMove.from.name, lastMove.step.ToString(), lastMove.action.ToString() , "undo");
-        GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
-
     }
 
 
