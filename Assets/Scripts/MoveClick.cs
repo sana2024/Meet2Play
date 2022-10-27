@@ -40,7 +40,7 @@ public class MoveClick : MonoBehaviour
     [SerializeField]
     private char[] movesMap = new char[24];
     [SerializeField]
-    private char eatenMovesMap;
+    public char eatenMovesMap;
 
     [SerializeField]
     public bool alreadyRolled = false;
@@ -145,7 +145,13 @@ public class MoveClick : MonoBehaviour
             if (hitted[player].howManyPieces() > 0)
             {
                 eatenMovesMap = makeEatenMovesMap();
-                makeAutomaticMovesForEaten();
+                // makeAutomaticMovesForEaten();
+
+                if(eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0)
+                {
+                    StartCoroutine(GameManager.instance.ShowNoMovePanel());
+                    GameManager.instance.nextTurnButton.interactable = true;
+                }
             }
             if (notInHousePieces == 0)
             {
@@ -862,7 +868,7 @@ public class MoveClick : MonoBehaviour
             ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
         
 
-        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "move", false );
+        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false );
         if (eatenOrigin[eatenOrigin.Count - 1])
             eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false );
 
@@ -901,10 +907,6 @@ public class MoveClick : MonoBehaviour
             ButtonController.Instance.doneButton.GetComponent<Button>().interactable = false;
          
         var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
-
-      //  var state = MatchDataJson.SetPieceStack(lastMove.piece.name, lastMove.to.name , lastMove.from.name, lastMove.step.ToString(), lastMove.action.ToString() , "move");
-      //  GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
-
         GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
     }
 
@@ -1028,11 +1030,13 @@ public class MoveClick : MonoBehaviour
         }
         else
         {
+            Debug.Log("how many pieces " + hitted[player].howManyPieces() + " moves map " + eatenMovesMap);
             int adjust = 0;
             if (player == 1)
                 adjust = -23;
             if (hitted[player].howManyPieces() > 0 && eatenMovesMap != 'n' && curMoves[0] == curMoves[1])
             {
+                Debug.Log("not n 1");
                 curMoves[3] = 0;
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
@@ -1040,6 +1044,7 @@ public class MoveClick : MonoBehaviour
             }
             if (hitted[player].howManyPieces() > 0 && eatenMovesMap != 'n' && curMoves[0] == curMoves[1])
             {
+                Debug.Log("not n 2");
                 curMoves[2] = 0;
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
@@ -1047,7 +1052,7 @@ public class MoveClick : MonoBehaviour
             }
             if (hitted[player].howManyPieces() > 1 && eatenMovesMap == 'B')
             {
- 
+                Debug.Log("B");
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 CurentMove = curMoves[1];
@@ -1058,7 +1063,7 @@ public class MoveClick : MonoBehaviour
             }
             else if (hitted[player].howManyPieces() == 1 && eatenMovesMap == 'B' && curMoves[0] == curMoves[1])
             {
-         
+                Debug.Log("B Double");
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[0] + adjust - 1));
                 CurentMove = curMoves[0];
@@ -1066,7 +1071,7 @@ public class MoveClick : MonoBehaviour
             }
             else if (hitted[player].howManyPieces() > 0 && eatenMovesMap == 'M')
             {
-    
+                Debug.Log("M");
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 CurentMove = curMoves[1];
@@ -1076,7 +1081,7 @@ public class MoveClick : MonoBehaviour
             }
             else if (hitted[player].howManyPieces() > 0 && eatenMovesMap == 'm')
             {
- 
+                Debug.Log("m");
                 curslot = hitted[player];
                 makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
                 CurentMove = curMoves[0];
@@ -1095,15 +1100,19 @@ public class MoveClick : MonoBehaviour
         {
             if (slots[targetIndx].getColor() == otherPlayer)
             {
+                Debug.Log("hit");
                 hitted[otherPlayer].addPiece(slots[targetIndx].removePiece(), "hit", false );
                 if (alreadyRolled)
                     eatenOrigin.Add(slots[targetIndx]);
  
             }
             else
+            {
                 eatenOrigin.Add(null);
                 slots[targetIndx].addPiece(curslot.removePiece(), "move", false);
  
+            }
+
             if (alreadyRolled)
             {
                 ButtonController.Instance.undoButton.SetActive(true);
