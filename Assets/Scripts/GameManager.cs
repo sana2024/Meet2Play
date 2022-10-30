@@ -416,10 +416,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    IEnumerator ShowNoMovePanel()
+   public IEnumerator ShowNoMovePanel()
     {
         NoMoveExistsPanel.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         NoMoveExistsPanel.SetActive(false);
     }
 
@@ -524,7 +524,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (turnPlayer.IsMoveLeft())
+        if (turnPlayer.IsMoveLeft() && MoveClick.instance.NoMoveAfterHit == false)
         {
  
             Debug.Log("You have to move");
@@ -623,27 +623,19 @@ public class GameManager : MonoBehaviour
  
     private IEnumerator AfterRolledDice()
     {
-        if (currentPlayer.IsPlayableMoveExist())
-        {
-        }
+         nextTurnButton.interactable = false;
 
-
-        nextTurnButton.interactable = false;
-
-        if (!currentPlayer.IsPlayableMoveExist())
+        if (!currentPlayer.IsMoveLeft())
         {
-            StartCoroutine(ShowNoMovePanel());
-        }
-        
-        yield return new WaitForSeconds(3f);
-        if (currentPlayer.IsMoveLeft())
-        {
-           // NextTurn();
         }
         else
         {
             nextTurnButton.interactable = true;
         }
+
+        yield return new WaitForSeconds(0);
+   
+
     }
 
     private void HideDiceValues()
@@ -791,6 +783,8 @@ public class GameManager : MonoBehaviour
 
             return;
         }
+
+        MoveClick.instance.NoMoveAfterHit = false;
  
 
     }

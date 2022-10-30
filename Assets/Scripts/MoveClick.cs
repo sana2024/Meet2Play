@@ -15,7 +15,7 @@ public class MoveClick : MonoBehaviour
     private Slot[] hitted = new Slot[2];
     // current slot
     [SerializeField]
-    private Slot curslot = null;
+     Slot curslot = null;
 
     //automatic movement to outside
     [SerializeField]
@@ -64,7 +64,9 @@ public class MoveClick : MonoBehaviour
     //players in int values
     public int player;
     int oppontent;
+ 
 
+    public bool NoMoveAfterHit = false;
     private void Awake()
     {
         if(instance == null)
@@ -83,6 +85,15 @@ public class MoveClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0 && alreadyRolled == true)
+        {
+            Debug.Log("no move to play");
+            NoMoveAfterHit = true;
+            smallDieWasUsed = bigDieWasUsed = true;
+            GameManager.instance.nextTurnButton.interactable = true;
+
+        }
+
 
         if (destination.Contains(aboutToBeDeleted))
         {
@@ -144,14 +155,10 @@ public class MoveClick : MonoBehaviour
             movesMap = makeMovesMap();
             if (hitted[player].howManyPieces() > 0)
             {
+                Debug.Log("hitted pieces");
                 eatenMovesMap = makeEatenMovesMap();
-                // makeAutomaticMovesForEaten();
-
-                if(eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0)
-                {
-                    StartCoroutine(GameManager.instance.ShowNoMovePanel());
-                    GameManager.instance.nextTurnButton.interactable = true;
-                }
+               // makeAutomaticMovesForEaten();
+ 
             }
             if (notInHousePieces == 0)
             {
@@ -940,6 +947,8 @@ public class MoveClick : MonoBehaviour
     public char makeEatenMovesMap()
     {
         curslot = getSlot(player);
+        Debug.Log("slot " + getSlot(player));
+
         int adjust = 0;
         if (player == 1)
             adjust = -23;
@@ -1039,7 +1048,7 @@ public class MoveClick : MonoBehaviour
                 Debug.Log("not n 1");
                 curMoves[3] = 0;
                 curslot = hitted[player];
-                makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+               // makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 CurentMove = curMoves[1];
             }
             if (hitted[player].howManyPieces() > 0 && eatenMovesMap != 'n' && curMoves[0] == curMoves[1])
@@ -1047,17 +1056,17 @@ public class MoveClick : MonoBehaviour
                 Debug.Log("not n 2");
                 curMoves[2] = 0;
                 curslot = hitted[player];
-                makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+               // makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 CurentMove = curMoves[1];
             }
             if (hitted[player].howManyPieces() > 1 && eatenMovesMap == 'B')
             {
                 Debug.Log("B");
                 curslot = hitted[player];
-                makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+               // makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 CurentMove = curMoves[1];
                 curslot = hitted[player];
-                makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
+               // makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
                 CurentMove = curMoves[0];
                 smallDieWasUsed = bigDieWasUsed = true;
             }
@@ -1065,7 +1074,7 @@ public class MoveClick : MonoBehaviour
             {
                 Debug.Log("B Double");
                 curslot = hitted[player];
-                makeMove(Mathf.Abs(curMoves[0] + adjust - 1));
+              //  makeMove(Mathf.Abs(curMoves[0] + adjust - 1));
                 CurentMove = curMoves[0];
                 bigDieWasUsed = true;
             }
@@ -1073,7 +1082,7 @@ public class MoveClick : MonoBehaviour
             {
                 Debug.Log("M");
                 curslot = hitted[player];
-                makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
+               // makeMove(Mathf.Abs(curMoves[1] + adjust - 1) );
                 CurentMove = curMoves[1];
                 bigDieWasUsed = true;
                 if (hitted[player].howManyPieces() > 0)
@@ -1083,7 +1092,7 @@ public class MoveClick : MonoBehaviour
             {
                 Debug.Log("m");
                 curslot = hitted[player];
-                makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
+               // makeMove(Mathf.Abs(curMoves[0] + adjust - 1) );
                 CurentMove = curMoves[0];
                 smallDieWasUsed = true;
                 if (hitted[player].howManyPieces() > 0)
@@ -1107,12 +1116,9 @@ public class MoveClick : MonoBehaviour
  
             }
             else
-            {
                 eatenOrigin.Add(null);
                 slots[targetIndx].addPiece(curslot.removePiece(), "move", false);
  
-            }
-
             if (alreadyRolled)
             {
                 ButtonController.Instance.undoButton.SetActive(true);
