@@ -64,7 +64,9 @@ public class MoveClick : MonoBehaviour
     //players in int values
     public int player;
     int oppontent;
- 
+
+    bool hitPiecesBiggerThanOne;
+
 
     public bool NoMoveAfterHit = false;
     private void Awake()
@@ -92,6 +94,36 @@ public class MoveClick : MonoBehaviour
             smallDieWasUsed = bigDieWasUsed = true;
             GameManager.instance.nextTurnButton.interactable = true;
 
+        }
+
+        if(hitted[player].howManyPieces() > 1)
+        {
+            hitPiecesBiggerThanOne = true;
+        }
+
+        if(eatenMovesMap == 'm' && hitPiecesBiggerThanOne == true && alreadyRolled == true){
+            Debug.Log("Hit m");
+            if (smallDieWasUsed == true)
+            {
+                Debug.Log("small was used");
+                bigDieWasUsed = true;
+                NoMoveAfterHit = true;
+                GameManager.instance.nextTurnButton.interactable = true;
+                hitPiecesBiggerThanOne = false;
+            }
+        }
+
+        if (eatenMovesMap == 'M' && hitPiecesBiggerThanOne == true && alreadyRolled == true)
+        {
+            Debug.Log("Hit M");
+            if (bigDieWasUsed == true)
+            {
+                Debug.Log("big was used");
+                smallDieWasUsed = true;
+                NoMoveAfterHit = true;
+                GameManager.instance.nextTurnButton.interactable = true;
+                hitPiecesBiggerThanOne = false;
+            }
         }
 
 
@@ -155,7 +187,7 @@ public class MoveClick : MonoBehaviour
             movesMap = makeMovesMap();
             if (hitted[player].howManyPieces() > 0)
             {
-                Debug.Log("hitted pieces");
+  
                 eatenMovesMap = makeEatenMovesMap();
                // makeAutomaticMovesForEaten();
  

@@ -479,7 +479,7 @@ public class GameManager : MonoBehaviour
             ShowDiceValues();
         }
 
-        if (turnPlayer.IsMoveLeft() || turnPlayer.rolledDice == false)
+        if (turnPlayer.IsMoveLeft()&& MoveClick.instance.NoMoveAfterHit == false || turnPlayer.rolledDice == false)
         {
             nextTurnButton.interactable = false;
         }
@@ -736,7 +736,6 @@ public class GameManager : MonoBehaviour
 
     public void NextTurn()
     {
-
         Debug.Log(currentPlayer.id + " " + currentPlayer.UserId + " " + currentPlayer.pieceType);
 
 
@@ -764,8 +763,8 @@ public class GameManager : MonoBehaviour
 
             var state = MatchDataJson.SetCurrentPlayer("Black");
               SendMatchState(OpCodes.current_player, state);
+            MoveClick.instance.NoMoveAfterHit = false;
 
-           
 
             return;
         }
@@ -780,11 +779,12 @@ public class GameManager : MonoBehaviour
 
             var state = MatchDataJson.SetCurrentPlayer("White");
             SendMatchState(OpCodes.current_player, state);
+            MoveClick.instance.NoMoveAfterHit = false;
 
             return;
         }
 
-        MoveClick.instance.NoMoveAfterHit = false;
+ 
  
 
     }

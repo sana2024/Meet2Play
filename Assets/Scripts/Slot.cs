@@ -229,7 +229,7 @@ public class Slot : MonoBehaviour
 
             if (from.slotType == SlotType.Bar)
             {
-                if(this.pieces.Count > 0)
+                if(this.pieces.Count > 0 && this.getColor() != MoveClick.instance.player)
                 {
                    this.pieces.Remove(this.pieces.First());
                 }
@@ -267,8 +267,21 @@ public class Slot : MonoBehaviour
                     GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
 
                 }
-                 // Debug.Log("piece" + piece + " from " + from + " to" + this + " steps " + currentMove.ToString() + " action type " + MoveActionTypes.Move + "move type " + MoveType);
+                 
             }
+
+            if (MoveType == "undo")
+            {
+                if (recive == false)
+                {
+                    var state = MatchDataJson.SetPieceStack(piece.name, from.name, this.name, currentMove.ToString(), move.ToString(), "move");
+                    GameManager.instance.SendMatchState(OpCodes.Move_Click, state);
+
+                }
+
+            }
+
+
             else if(MoveType == "hit")
             {
                 move = MoveActionTypes.Hit;

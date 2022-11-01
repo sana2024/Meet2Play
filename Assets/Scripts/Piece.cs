@@ -35,6 +35,9 @@ public class Piece : MonoBehaviour
     private Vector3 velocity = Vector3.one;
     Vector3 target;
     int MoveCounter = 0;
+    Slot CurSlot = null;
+    float offset = 1f; // Arbitrary number to choose based on what looks good
+    float multiplier = 0.3f; // The higher this number, the less each item in list affects offset
 
 
 
@@ -217,7 +220,25 @@ public class Piece : MonoBehaviour
         if (MovedWithClick)
         {
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
- 
+
+
+            if (CurSlot != null)
+            {
+                if (CurSlot.pieces.Count > 5)
+                {
+
+                    foreach (Piece p in CurSlot.pieces)
+                    {
+
+
+                        p.transform.localPosition = new Vector2(0, (offset / (CurSlot.pieces.Count * multiplier) * CurSlot.pieces.IndexOf(p) * CurSlot.up));
+                        p.GetComponent<SpriteRenderer>().sortingOrder = CurSlot.pieces.IndexOf(p);
+
+
+
+                    }
+                }
+            }
         }
          if(transform.localPosition == target)
          {
@@ -334,7 +355,7 @@ public class Piece : MonoBehaviour
         switch(type)
         {
             case SlotType.Board:
-                return .7f;
+                return .64f;
             case SlotType.Bar:
                 return .1f;
             case SlotType.Outside:
@@ -355,15 +376,8 @@ public class Piece : MonoBehaviour
         // if piece reached the last slot length
 
  
-        if (slot.pieces.Count > 4 && slot.slotType != SlotType.Outside)
-        {
-            posY = 0.3f;
-            posY += (slot.pieces.Count-5) * GetOffsetMultiplier(slot.slotType);
-        }
-        else
-        {
             posY = slot.pieces.Count * GetOffsetMultiplier(slot.slotType);
-        }
+       
 
 
 
@@ -401,10 +415,27 @@ public class Piece : MonoBehaviour
 //else
       //  {
             transform.localPosition = new Vector3(0, posY, 0);
-      //  }
 
 
-       // target = new Vector3(0, posY, 0);
+
+       
+            if (slot.pieces.Count > 5)
+            {
+
+                foreach (Piece p in slot.pieces)
+                {
+
+
+                    p.transform.localPosition = new Vector2(0, (offset / (slot.pieces.Count * multiplier) * slot.pieces.IndexOf(p) * slot.up));
+                    p.GetComponent<SpriteRenderer>().sortingOrder = slot.pieces.IndexOf(p);
+
+
+
+                }
+           
+        }
+
+
         this.GetComponent<SpriteRenderer>().sortingOrder = slot.pieces.Count;
  
     }
@@ -432,6 +463,7 @@ public class Piece : MonoBehaviour
         target = new Vector3(0, posY, 0);
         movedWithDrag = false;
 
+        CurSlot = slot;
  
 
     }
