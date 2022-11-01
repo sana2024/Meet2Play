@@ -70,7 +70,7 @@ public class Piece : MonoBehaviour
     private float offsetY;
 
     // flag indicating moving this piece
-    private bool isBeingHeld = false;
+    public bool isBeingHeld = false;
 
     [HideInInspector]
     public Slot currentSlot = null;
@@ -217,6 +217,14 @@ public class Piece : MonoBehaviour
 
     void Update()
     {
+
+        if (isBeingHeld == true) {
+
+            MoveClick.instance.IsBeingHeld = true;
+        }
+ 
+
+
         if (MovedWithClick)
         {
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
@@ -253,53 +261,24 @@ public class Piece : MonoBehaviour
             gameManager.ReconnectSocket = false;
         }
 
-        //checks whatever player is performing long prees on the mouse to drag the piece
-        if (Input.GetMouseButtonDown(0))
-        {
-            temps = Time.time;
-            click = true;
-        }
-
-        if (click == true)
+        if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
         {
 
-            if ((Time.time - temps) > 0.2)
-            {
-
-                if (IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
-                {
-
-                    OnPieceClick();
-                }
-
-            }
-
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-           if (isBeingHeld )
-            {
-                OnPieceRelease();
-
-                var state = MatchDataJson.SetPeicePos(pieceId, transform);
-                SendMatchState(OpCodes.Peice_Pos, state);
-
-
-
-            }
-
-
-            click = false;
-
-            if ((Time.time - temps) < 0.2)
-            {
-
-            }
+            OnPieceClick();
         }
 
 
-         
+        else if (isBeingHeld && Input.GetButtonUp("Fire1"))
+        {
+            OnPieceRelease();
+
+            var state = MatchDataJson.SetPeicePos(pieceId, transform);
+            SendMatchState(OpCodes.Peice_Pos, state);
+
+
+
+        }
+
 
         if (isBeingHeld)
         {
@@ -595,6 +574,8 @@ public class Piece : MonoBehaviour
     {
         // reset holding flag
         isBeingHeld = false;
+ 
+
 
         // for easing placing
         IncreaseColliderRadius();
@@ -610,6 +591,7 @@ public class Piece : MonoBehaviour
 
         // reset offset of hold
         offsetY = 0;
+
     }
 
     private bool IsBarEmpty()
@@ -690,6 +672,8 @@ public class Piece : MonoBehaviour
                         OnFailedMove(error);
  
                     }
+
+                    MoveClick.instance.IsBeingHeld = false;
 
                 }
             }

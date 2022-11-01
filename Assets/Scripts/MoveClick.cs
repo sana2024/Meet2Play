@@ -67,6 +67,8 @@ public class MoveClick : MonoBehaviour
 
     bool hitPiecesBiggerThanOne;
 
+    public bool IsBeingHeld = false;
+
 
     public bool NoMoveAfterHit = false;
     private void Awake()
@@ -87,6 +89,10 @@ public class MoveClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(IsBeingHeld == true)
+        {
+            Debug.Log("is being held");
+        }
         if (eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0 && alreadyRolled == true)
         {
             Debug.Log("no move to play");
@@ -231,7 +237,7 @@ public class MoveClick : MonoBehaviour
             }
             else if (Input.GetMouseButton(0))
             {
-                if (alreadyMoved == false)
+                if (alreadyMoved == false && IsBeingHeld == false)
                 {
                     if (Time.time - clickTime > 0.5f)
                     {
@@ -243,7 +249,7 @@ public class MoveClick : MonoBehaviour
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                if (alreadyMoved == false)
+                if (alreadyMoved == false && IsBeingHeld == false)
                 {
                     makeMove(makeTargetIndx(true) );
                     alreadyMoved = true;
@@ -1135,7 +1141,7 @@ public class MoveClick : MonoBehaviour
 
     public void makeMove(int targetIndx)
     {
- 
+        
         int otherPlayer = ((player + 1) % 2), check = -1;
         if (targetIndx != -1)
         {

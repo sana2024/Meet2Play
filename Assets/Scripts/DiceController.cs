@@ -423,78 +423,48 @@ public class DiceController : MonoBehaviour
     {
         var list = GetMovesList().ToList();
 
-        if(values[0]> values[1])
-        {
-            BigDice = values[0];
-            smalldice = values[1];
-        }
-        if (values[1] > values[0])
-        {
-            BigDice = values[1];
-            smalldice = values[0];
-        }
-
-        if( values[0] == values[1])
-        {
-            BigDice = smalldice = values[0];
-        }
-
-
-        var StepHolder = 0;
- 
         foreach (var step in playedSteps)
         {
-            StepHolder = step;
-
-            if (StepHolder != 0)
+ 
+            if (step> 0)
             {
-                Debug.Log("big dice " + BigDice);
-                Debug.Log("small dice " + smalldice);
+                
 
-                foreach (var move in GameManager.instance.currentPlayer.movesPlayed)
+                if (list.Contains(step))
                 {
-                    if (move.action == MoveActionTypes.Bear)
+                    if (MoveClick.instance.alreadyRolled)
                     {
-                        if (MoveClick.instance.bigDieWasUsed == true && MoveClick.instance.smallDieWasUsed == false)
+                        if (MoveClick.instance.curMoves[0] != MoveClick.instance.curMoves[1])
                         {
 
-                            Debug.Log("big dice was used");
-                            if (BigDice > StepHolder)
+                            if (step == MoveClick.instance.curMoves[1])
                             {
-                                StepHolder = BigDice;
-                                Debug.Log("Step holder big " + StepHolder);
+                                Debug.Log("big dice moved ");
                             }
-                        }
-                        if (MoveClick.instance.smallDieWasUsed == true && MoveClick.instance.bigDieWasUsed == true)
-                        {
-                            Debug.Log("small dice was used");
-                            if (smalldice > StepHolder)
-                            {
-                                StepHolder = smalldice;
-                                Debug.Log("Step holder small " + StepHolder);
 
+                            if (step == MoveClick.instance.curMoves[0])
+                            {
+                                Debug.Log("small dice was used ");
                             }
                         }
+
+                    list.RemoveAt(list.FindIndex(x => x == step));
                     }
-                }
-            }
+                    else
+                    {
+                        
+                    }
 
-            if (StepHolder> 0)
-            {
-                if (list.Contains(StepHolder))
-                {
-                   // Debug.Log("element found");
-                    list.RemoveAt(list.FindIndex(x => x == StepHolder));
                 }
                 else
                 {
-                   // Debug.Log("element not found");
+                     
                 }
 
             }
 
 
-        }
+}
         return list;
 
     }
