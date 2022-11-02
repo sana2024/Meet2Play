@@ -91,11 +91,10 @@ public class MoveClick : MonoBehaviour
     {
         if(IsBeingHeld == true)
         {
-            Debug.Log("is being held");
         }
         if (eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0 && alreadyRolled == true)
         {
-            Debug.Log("no move to play");
+ 
             NoMoveAfterHit = true;
             smallDieWasUsed = bigDieWasUsed = true;
             GameManager.instance.nextTurnButton.interactable = true;
@@ -108,10 +107,10 @@ public class MoveClick : MonoBehaviour
         }
 
         if(eatenMovesMap == 'm' && hitPiecesBiggerThanOne == true && alreadyRolled == true){
-            Debug.Log("Hit m");
+ 
             if (smallDieWasUsed == true)
             {
-                Debug.Log("small was used");
+ 
                 bigDieWasUsed = true;
                 NoMoveAfterHit = true;
                 GameManager.instance.nextTurnButton.interactable = true;
@@ -121,10 +120,10 @@ public class MoveClick : MonoBehaviour
 
         if (eatenMovesMap == 'M' && hitPiecesBiggerThanOne == true && alreadyRolled == true)
         {
-            Debug.Log("Hit M");
+ 
             if (bigDieWasUsed == true)
             {
-                Debug.Log("big was used");
+ 
                 smallDieWasUsed = true;
                 NoMoveAfterHit = true;
                 GameManager.instance.nextTurnButton.interactable = true;

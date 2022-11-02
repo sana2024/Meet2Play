@@ -27,6 +27,7 @@ public class Piece : MonoBehaviour
     //----------------------------
 
     public static Piece instance;
+    int MoveCounter;
 
     //----------------------------
     // Move With Click
@@ -34,8 +35,9 @@ public class Piece : MonoBehaviour
     public float smoothTime = 0.2F;
     private Vector3 velocity = Vector3.one;
     Vector3 target;
-    int MoveCounter = 0;
     Slot CurSlot = null;
+    Slot preSlot = null;
+
     float offset = 1f; // Arbitrary number to choose based on what looks good
     float multiplier = 0.3f; // The higher this number, the less each item in list affects offset
 
@@ -95,6 +97,7 @@ public class Piece : MonoBehaviour
 
    public  bool movedWithDrag = false;
    public bool MovedWithClick = false;
+
  
 
     //----------------------------
@@ -230,7 +233,7 @@ public class Piece : MonoBehaviour
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
 
 
-            if (CurSlot != null)
+            if (CurSlot != null && CurSlot.slotType != SlotType.Outside)
             {
                 if (CurSlot.pieces.Count > 5)
                 {
@@ -247,6 +250,27 @@ public class Piece : MonoBehaviour
                     }
                 }
             }
+
+
+            if(preSlot != null && preSlot.slotType != SlotType.Outside)
+            {
+                if (preSlot.pieces.Count > 4)
+                {
+
+                    foreach (Piece p in preSlot.pieces)
+                    {
+
+
+                        p.transform.localPosition = new Vector2(0, (offset / (preSlot.pieces.Count * multiplier) * preSlot.pieces.IndexOf(p) * preSlot.up));
+                        p.GetComponent<SpriteRenderer>().sortingOrder = preSlot.pieces.IndexOf(p);
+
+
+
+                    }
+                }
+            }
+
+
         }
          if(transform.localPosition == target)
          {
@@ -430,7 +454,7 @@ public class Piece : MonoBehaviour
     }
 
 
-    public void move(Transform parentTrans, Slot slot)
+    public void move(Transform parentTrans, Slot slot ,Slot prevSlot)
     {
         MovedWithClick = true;
         transform.parent = parentTrans;
@@ -443,6 +467,7 @@ public class Piece : MonoBehaviour
         movedWithDrag = false;
 
         CurSlot = slot;
+        preSlot = prevSlot;
  
 
     }
@@ -592,6 +617,8 @@ public class Piece : MonoBehaviour
         // reset offset of hold
         offsetY = 0;
 
+        MoveClick.instance.IsBeingHeld = false;
+
     }
 
     private bool IsBarEmpty()
@@ -673,7 +700,7 @@ public class Piece : MonoBehaviour
  
                     }
 
-                    MoveClick.instance.IsBeingHeld = false;
+ 
 
                 }
             }

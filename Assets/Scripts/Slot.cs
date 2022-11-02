@@ -38,6 +38,7 @@ public class Slot : MonoBehaviour
     public int up;
 
     public static Slot instance;
+ 
 
     private void Awake()
     {
@@ -237,7 +238,7 @@ public class Slot : MonoBehaviour
             }
 
             double add = -(0.1 * this.howManyPieces() + 1);
-            piece.move(this.transform, this);
+            piece.move(this.transform, this , from);
             pieces.Add(piece);
 
             GameManager.instance.CheckRoundFinish();
