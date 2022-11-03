@@ -5,6 +5,7 @@ using Nakama;
 using Nakama.TinyJson;
 using System.Threading.Tasks;
 using System;
+using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
 public class Piece : MonoBehaviour
@@ -21,6 +22,9 @@ public class Piece : MonoBehaviour
     GameManager gameManager;
 
     public List<Piece> Circles = new List<Piece>();
+
+    float temps;
+    bool click = false;
 
     //----------------------------
     //  Class Instance
@@ -91,9 +95,7 @@ public class Piece : MonoBehaviour
 
     UnityMainThreadDispatcher mainThread;
 
-
-    float temps;
-    bool click = false;
+ 
 
    public  bool movedWithDrag = false;
    public bool MovedWithClick = false;
@@ -285,36 +287,49 @@ public class Piece : MonoBehaviour
             gameManager.ReconnectSocket = false;
         }
 
-        if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
+        if (Input.GetMouseButtonDown(0) && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
         {
-
-            OnPieceClick();
+            temps = Time.time;
+            click = true;
         }
 
-
-        else if (isBeingHeld && Input.GetButtonUp("Fire1"))
+        if (click == true)
         {
-            OnPieceRelease();
 
-            var state = MatchDataJson.SetPeicePos(pieceId, transform);
-            SendMatchState(OpCodes.Peice_Pos, state);
+            if ((Time.time - temps) > 0.2)
+            {
+ 
+                    OnPieceClick();
 
-
+            }
 
         }
 
+        if (Input.GetMouseButtonUp(0) && isBeingHeld)
+        {
+ 
+                OnPieceRelease();
 
+                var state = MatchDataJson.SetPeicePos(pieceId, transform);
+                SendMatchState(OpCodes.Peice_Pos, state);
+ 
+
+ 
+        }
+
+ 
         if (isBeingHeld)
         {
+            click = false;
             var mousePos = GetMousePos();
 
             gameObject.transform.position = new Vector3(mousePos.x, mousePos.y + (currentSlot.IsTopSlot() ? -offsetY : offsetY), 0);
 
-           // var state = new Dictionary<string, string> { { "PeiceID", pieceId.ToString() }, { "PeiceX", gameObject.transform.position.x.ToString() }, { "PeiceY", gameObject.transform.position.y.ToString() } }.ToJson();
-           // SendMatchState(1, state);
-           // Debug.Log(gameObject.transform.position);
+            // var state = new Dictionary<string, string> { { "PeiceID", pieceId.ToString() }, { "PeiceX", gameObject.transform.position.x.ToString() }, { "PeiceY", gameObject.transform.position.y.ToString() } }.ToJson();
+            // SendMatchState(1, state);
+            // Debug.Log(gameObject.transform.position);
 
-            var state = MatchDataJson.SetPeicePos(pieceId , transform);
+            var state = MatchDataJson.SetPeicePos(pieceId, transform);
             SendMatchState(OpCodes.Peice_Pos, state);
 
 
@@ -606,7 +621,7 @@ public class Piece : MonoBehaviour
         IncreaseColliderRadius();
     }
 
-    private void AfterRelease()
+     IEnumerator AfterRelease()
     {
         // reset current position
         startPos.x = 0;
@@ -616,6 +631,8 @@ public class Piece : MonoBehaviour
 
         // reset offset of hold
         offsetY = 0;
+
+        yield return new WaitForSeconds(1f);
 
         MoveClick.instance.IsBeingHeld = false;
 
@@ -636,8 +653,8 @@ public class Piece : MonoBehaviour
     private void OnPieceRelease()
     {
         BeforeRelease();
- 
 
+        Debug.Log("conlision slot " + collisionSlot);
         // if collision not happen
         if (collisionSlot == null)
         {
@@ -706,7 +723,7 @@ public class Piece : MonoBehaviour
             }
         }
 
-        AfterRelease();
+        StartCoroutine(AfterRelease());
     }
 
     private void OnFailedMove(MoveError error)
@@ -722,7 +739,7 @@ public class Piece : MonoBehaviour
 
     public void OnSuccessfulMove(Slot to, MoveActionTypes action, int stepPlayed)
     {
-
+        Debug.Log("step " +to);
         MoveCounter++;
         var movesPlayedList = GameManager.instance.currentPlayer.movesPlayed;
 
@@ -765,6 +782,8 @@ public class Piece : MonoBehaviour
         // place on new slot
         else
             PlaceOn(to);
+
+
     }
 
     private void OnReciveMove(Piece piece, Slot to, MoveActionTypes action, int stepPlayed)
