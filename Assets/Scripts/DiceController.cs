@@ -434,21 +434,36 @@ public class DiceController : MonoBehaviour
                 {
                     if (MoveClick.instance.alreadyRolled)
                     {
-                        if (MoveClick.instance.curMoves[0] != MoveClick.instance.curMoves[1])
+
+                        list.RemoveAt(list.FindIndex(x => x == step));
+
+
+                        
+                        if (!IsDoubleMove())
                         {
 
                             if (step == MoveClick.instance.curMoves[1])
                             {
-                                Debug.Log("big dice moved ");
+                                MoveClick.instance.bigDieWasUsed = true;
                             }
 
                             if (step == MoveClick.instance.curMoves[0])
                             {
-                                Debug.Log("small dice was used ");
+                               MoveClick.instance.smallDieWasUsed = true;
                             }
                         }
+                        else
+                        {
+                            //this part will check if its double movement, then it will make the last two indexes of the list 0
+                            if (list.Count > 1)
+                            {
+                                MoveClick.instance.curMoves[list.Count] = 0;
+                            }
 
-                    list.RemoveAt(list.FindIndex(x => x == step));
+                        }
+
+                        
+ 
                     }
                     else
                     {
