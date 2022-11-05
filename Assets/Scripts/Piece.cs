@@ -287,37 +287,34 @@ public class Piece : MonoBehaviour
             gameManager.ReconnectSocket = false;
         }
 
-        if (Input.GetMouseButtonDown(0) && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
+
+
+        if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
         {
             temps = Time.time;
             click = true;
-        }
 
-        if (click == true)
-        {
 
-            if ((Time.time - temps) > 0.2)
+            if(Time.time - temps > 0.5f)
             {
- 
-                    OnPieceClick();
-
+                OnPieceClick();
             }
 
+
         }
 
-        if (Input.GetMouseButtonUp(0) && isBeingHeld)
+
+        else if (isBeingHeld && Input.GetButtonUp("Fire1"))
         {
- 
-                OnPieceRelease();
+            OnPieceRelease();
 
-                var state = MatchDataJson.SetPeicePos(pieceId, transform);
-                SendMatchState(OpCodes.Peice_Pos, state);
- 
+            var state = MatchDataJson.SetPeicePos(pieceId, transform);
+            SendMatchState(OpCodes.Peice_Pos, state);
 
- 
+
+
         }
 
- 
         if (isBeingHeld)
         {
             click = false;
