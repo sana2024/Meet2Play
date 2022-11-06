@@ -424,7 +424,8 @@ public class Piece : MonoBehaviour
 
 
 
-       
+        if (slot != null && slot.slotType != SlotType.Outside)
+        {
             if (slot.pieces.Count > 5)
             {
 
@@ -438,28 +439,32 @@ public class Piece : MonoBehaviour
 
 
                 }
-           
+
             }
 
+
+        }
 
         if (prevSlot != null && prevSlot.slotType != SlotType.Outside)
         {
-            if (prevSlot.pieces.Count > 4)
+            if (prevSlot != null && prevSlot.slotType != SlotType.Outside)
             {
-
-                foreach (Piece p in prevSlot.pieces)
+                if (prevSlot.pieces.Count > 4)
                 {
 
-
-                    p.transform.localPosition = new Vector2(0, (offset / (prevSlot.pieces.Count * multiplier) * prevSlot.pieces.IndexOf(p) * prevSlot.up));
-                    p.GetComponent<SpriteRenderer>().sortingOrder = prevSlot.pieces.IndexOf(p);
-
+                    foreach (Piece p in prevSlot.pieces)
+                    {
 
 
+                        p.transform.localPosition = new Vector2(0, (offset / (prevSlot.pieces.Count * multiplier) * prevSlot.pieces.IndexOf(p) * prevSlot.up));
+                        p.GetComponent<SpriteRenderer>().sortingOrder = prevSlot.pieces.IndexOf(p);
+
+
+
+                    }
                 }
             }
         }
-
 
         this.GetComponent<SpriteRenderer>().sortingOrder = slot.pieces.Count;
  
