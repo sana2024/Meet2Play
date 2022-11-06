@@ -136,13 +136,14 @@ public class Piece : MonoBehaviour
 
 
     }
-
+    
     public bool IsTop()
     {
-        var top = Slot.IsTopPiece(this.currentSlot, this);
+        var top =Slot.IsTopPiece(currentSlot,this);
 
         return top;
     }
+  
 
     public async void SendMatchState(long opCode, string state)
     {
@@ -223,12 +224,6 @@ public class Piece : MonoBehaviour
     void Update()
     {
 
-        if (isBeingHeld == true) {
-
-            MoveClick.instance.IsBeingHeld = true;
-        }
- 
-
 
         if (MovedWithClick)
         {
@@ -288,24 +283,15 @@ public class Piece : MonoBehaviour
         }
 
 
-
         if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
         {
-            temps = Time.time;
-            click = true;
-
-
-            if(Time.time - temps > 0.5f)
-            {
-                OnPieceClick();
-            }
-
-
+            OnPieceClick();
         }
 
 
         else if (isBeingHeld && Input.GetButtonUp("Fire1"))
         {
+            temps = 0;
             OnPieceRelease();
 
             var state = MatchDataJson.SetPeicePos(pieceId, transform);
@@ -317,6 +303,10 @@ public class Piece : MonoBehaviour
 
         if (isBeingHeld)
         {
+            temps++;
+
+            if (temps > 7) {
+            MoveClick.instance.IsBeingHeld = true;
             click = false;
             var mousePos = GetMousePos();
 
@@ -329,7 +319,7 @@ public class Piece : MonoBehaviour
             var state = MatchDataJson.SetPeicePos(pieceId, transform);
             SendMatchState(OpCodes.Peice_Pos, state);
 
-
+        }
         }
     }
 
@@ -407,6 +397,7 @@ public class Piece : MonoBehaviour
         // if slot has been in another slot
         if (currentSlot != null)
             currentSlot.pieces.Remove(this);
+        var prevSlot = currentSlot;
 
         // change current slot
         currentSlot = slot;
@@ -448,6 +439,25 @@ public class Piece : MonoBehaviour
 
                 }
            
+            }
+
+
+        if (prevSlot != null && prevSlot.slotType != SlotType.Outside)
+        {
+            if (prevSlot.pieces.Count > 4)
+            {
+
+                foreach (Piece p in prevSlot.pieces)
+                {
+
+
+                    p.transform.localPosition = new Vector2(0, (offset / (prevSlot.pieces.Count * multiplier) * prevSlot.pieces.IndexOf(p) * prevSlot.up));
+                    p.GetComponent<SpriteRenderer>().sortingOrder = prevSlot.pieces.IndexOf(p);
+
+
+
+                }
+            }
         }
 
 
@@ -479,6 +489,7 @@ public class Piece : MonoBehaviour
         movedWithDrag = false;
 
         CurSlot = slot;
+        currentSlot = slot;
         preSlot = prevSlot;
  
 
@@ -540,7 +551,6 @@ public class Piece : MonoBehaviour
 
     private void OnPieceClick()
     {
-
         var HintShadow = this.GetComponentsInChildren<SpriteRenderer>();
         var tempColor = HintShadow[1].color;
         tempColor.a = 0f;
@@ -550,41 +560,41 @@ public class Piece : MonoBehaviour
         // if current player does not rolled the dice yet
         if (!IsCurrentPlayerRolled())
         {
- 
+
             BeforeRelease();
         }
 
         // if there is piece on bar, it must be placed on first
         else if (!IsBarEmpty() && currentSlot.slotType != SlotType.Bar)
         {
- 
+
             BeforeRelease();
         }
 
         else if (currentSlot.slotType == SlotType.Outside)
         {
- 
+
             BeforeRelease();
         }
 
-        // if it is not top piece
-        else if (!Slot.IsTopPiece(currentSlot, this))
-        {
-            if (!DiceController.instance.IsDoubleMove())
+            if (!Slot.IsTopPiece(currentSlot, this))
             {
- 
-                BeforeRelease();
-            }
+                if (!DiceController.instance.IsDoubleMove())
+                {
+                Debug.Log("is not top");
+                    BeforeRelease();
+                }
 
-            // TODO: if current dice has value to move above pieces
-            //look if above pieces can be moved ?
-            // yes => move above pieces at same time
-  
+                // TODO: if current dice has value to move above pieces
+                //look if above pieces can be moved ?
+                // yes => move above pieces at same time
+
+            
         }
-
 
         else
         {
+            Debug.Log("hold");
             Hold();
         }
     }
@@ -831,9 +841,9 @@ public class Piece : MonoBehaviour
         {
             print(hit.collider.name);
 
-            if (currentSlot.slotType == SlotType.Bar && Slot.IsTopPiece(currentSlot, this))
-                return true;
-
+                if (currentSlot.slotType == SlotType.Bar && Slot.IsTopPiece(currentSlot, this))
+                    return true;
+            
             if (hit.collider.name == name)
                 return true;
         }

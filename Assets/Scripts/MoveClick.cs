@@ -69,8 +69,9 @@ public class MoveClick : MonoBehaviour
 
     public bool IsBeingHeld = false;
 
+    //this boolean will be true if there is no playable moves exists for player to move
+    public bool NoMovePass = false;
 
-    public bool NoMoveAfterHit = false;
     private void Awake()
     {
         if(instance == null)
@@ -95,7 +96,7 @@ public class MoveClick : MonoBehaviour
         if (eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0 && alreadyRolled == true)
         {
  
-            NoMoveAfterHit = true;
+            NoMovePass = true;
             smallDieWasUsed = bigDieWasUsed = true;
             GameManager.instance.nextTurnButton.interactable = true;
 
@@ -112,7 +113,7 @@ public class MoveClick : MonoBehaviour
             {
  
                 bigDieWasUsed = true;
-                NoMoveAfterHit = true;
+                NoMovePass = true;
                 GameManager.instance.nextTurnButton.interactable = true;
                 hitPiecesBiggerThanOne = false;
             }
@@ -125,7 +126,7 @@ public class MoveClick : MonoBehaviour
             {
  
                 smallDieWasUsed = true;
-                NoMoveAfterHit = true;
+                NoMovePass = true;
                 GameManager.instance.nextTurnButton.interactable = true;
                 hitPiecesBiggerThanOne = false;
             }
@@ -227,31 +228,13 @@ public class MoveClick : MonoBehaviour
             {
                 prepareTurn();
             }
-            else if (Input.GetMouseButtonDown(0))
-            {
  
-                clickTime = Time.time;
-                alreadyMoved = false;
-
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                if (alreadyMoved == false && IsBeingHeld == false)
-                {
-                    if (Time.time - clickTime > 0.5f)
-                    {
-                        if(PassData.Match.Self.UserId == GameManager.instance.currentPlayer.UserId)
-                        makeMove(makeTargetIndx(false) );
-                        alreadyMoved = true;
-                    }
-                }
-            }
             else if (Input.GetMouseButtonUp(0))
             {
-                if (alreadyMoved == false && IsBeingHeld == false)
+                if ( IsBeingHeld == false)
                 {
                     makeMove(makeTargetIndx(true) );
-                    alreadyMoved = true;
+ 
                 }
             }
         }
@@ -413,11 +396,12 @@ public class MoveClick : MonoBehaviour
             smallDieWasUsed = true;
         if (bigDieWasUsed && smallDieWasUsed)
         {
-          //  ButtonController.Instance.doneButton.SetActive(true);
+            GameManager.instance.nextTurnButton.interactable = true;
         }
 
     }
 
+    
     public void organizeMakeAutomaticMoves()
     {
         if (smallDieWasUsed && bigDieWasUsed)
@@ -820,7 +804,7 @@ public class MoveClick : MonoBehaviour
         }
 
     }
-
+ 
     public void executeMove(int moveCode)
     {
         int adjust = 1;
@@ -887,6 +871,7 @@ public class MoveClick : MonoBehaviour
         }
     }
 
+    
 
     public void undo()
     {
@@ -1065,6 +1050,7 @@ public class MoveClick : MonoBehaviour
         }
     }
 
+    
     public void makeAutomaticMovesForEaten()
     {
         Debug.Log("make automatic moves for eaten");
@@ -1138,6 +1124,8 @@ public class MoveClick : MonoBehaviour
         }
     }
 
+   
+
     public void makeMove(int targetIndx)
     {
         
@@ -1180,7 +1168,9 @@ public class MoveClick : MonoBehaviour
                 check = canRemoveAPiece();
             if ((mCount + BCount == 0 && bigDieWasUsed && check != 0) || (MCount + BCount == 0 && smallDieWasUsed && check == -1) || (mCount + MCount + BCount == 0 && check == -1))
             {
-       
+                
+                GameManager.instance.nextTurnButton.interactable = true;
+                NoMovePass = true;
             }
 
         }

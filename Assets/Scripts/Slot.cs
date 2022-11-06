@@ -136,9 +136,22 @@ public class Slot : MonoBehaviour
 
     #region Static Methods
 
+
     public static bool IsTopPiece(Slot slot, Piece piece)
     {
-        return slot.pieces.Last() == piece;
+        if (slot.pieces.Count > 0)
+        {
+            Debug.Log("last "+slot);
+          return slot.pieces.LastOrDefault() == piece;
+        }
+        else
+        {
+            return false;
+        }
+
+        
+       
+
     }
 
     public static int GetRequiredStepCount(Slot from, Slot to)
