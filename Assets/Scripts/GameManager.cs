@@ -89,6 +89,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] Slot WhiteOutside;
 
 
+    //Auto Roll 
+    bool AutoRollDice = false;
+
+    [SerializeField] Button AutoRollDiceButon;
+    [SerializeField] Sprite ToggleOn;
+    [SerializeField] Sprite ToggleOff;
+
+    string AutoRollDiceActive;
 
 
     //Others
@@ -473,13 +481,32 @@ public class GameManager : MonoBehaviour
 
         }
 
+        if (currentPlayer.UserId == PassData.Match.Self.UserId)
+        {
 
-        if (DiceController.instance.animationStarted && !DiceController.instance.animationFinished)
+
+
+            if (AutoRollDiceActive == "True")
+            {
+
+
+                AutoRollDice = true;
+
+                RollDices();
+                buttonController.DissableRollButton();
+                buttonController.EnableUndoButton();
+                buttonController.DisableDoubleButton();
+
+
+            }
+        }
+
+            if (DiceController.instance.animationStarted && !DiceController.instance.animationFinished)
         {
             ShowDiceValues();
         }
 
-        if (turnPlayer.IsMoveLeft()&& MoveClick.instance.NoMoveAfterHit == false || turnPlayer.rolledDice == false)
+        if (turnPlayer.IsMoveLeft()&& MoveClick.instance.NoMovePass == false || turnPlayer.rolledDice == false)
         {
             nextTurnButton.interactable = false;
         }
@@ -524,7 +551,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (turnPlayer.IsMoveLeft() && MoveClick.instance.NoMoveAfterHit == false)
+        if (turnPlayer.IsMoveLeft() && MoveClick.instance.NoMovePass == false)
         {
  
             Debug.Log("You have to move");
@@ -763,7 +790,7 @@ public class GameManager : MonoBehaviour
 
             var state = MatchDataJson.SetCurrentPlayer("Black");
               SendMatchState(OpCodes.current_player, state);
-            MoveClick.instance.NoMoveAfterHit = false;
+            MoveClick.instance.NoMovePass = false;
 
 
             return;
@@ -779,7 +806,7 @@ public class GameManager : MonoBehaviour
 
             var state = MatchDataJson.SetCurrentPlayer("White");
             SendMatchState(OpCodes.current_player, state);
-            MoveClick.instance.NoMoveAfterHit = false;
+            MoveClick.instance.NoMovePass = false;
 
             return;
         }
@@ -866,6 +893,32 @@ public class GameManager : MonoBehaviour
           else
         {
             MoveClick.instance.undo();
+        }
+
+    }
+
+    public void AutoRoll()
+    {
+        AutoRollDice = !AutoRollDice;
+        PlayerPrefs.SetString("AutoRollDice", AutoRollDice.ToString());
+
+        AutoRollDiceActive = PlayerPrefs.GetString("AutoRollDice");
+        if (AutoRollDiceActive == "True")
+        {
+
+            AutoRollDiceButon.image.sprite = ToggleOn;
+            buttonController.DissableRollButton();
+            RollDices();
+            // Debug.Log("AutoRolled");
+        }
+
+        if (AutoRollDiceActive == "False")
+        {
+
+            AutoRollDiceButon.image.sprite = ToggleOff;
+            // buttonController.EnableRollButton();
+
+
         }
 
     }

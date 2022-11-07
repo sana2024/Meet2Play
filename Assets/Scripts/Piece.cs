@@ -293,6 +293,7 @@ public class Piece : MonoBehaviour
         {
             temps = 0;
             OnPieceRelease();
+            MoveClick.instance.ResetPossabilities();
 
             var state = MatchDataJson.SetPeicePos(pieceId, transform);
             SendMatchState(OpCodes.Peice_Pos, state);
@@ -306,6 +307,7 @@ public class Piece : MonoBehaviour
             temps++;
 
             if (temps > 7) {
+            MoveClick.instance.Possabilities();
             MoveClick.instance.IsBeingHeld = true;
             click = false;
             var mousePos = GetMousePos();
