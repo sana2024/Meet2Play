@@ -211,6 +211,8 @@ public class GameManager : MonoBehaviour
 
                 MoveClick.instance.endTurn();
 
+                Debug.Log("player "+MoveClick.instance.player);
+
                  buttonController.EnableRollButton();
                  
 
@@ -219,14 +221,12 @@ public class GameManager : MonoBehaviour
                  buttonController.EnableDoubleButton();
                 }
  
-                Debug.Log(state["Current_Player"]);
 
                 if(state["Current_Player"] == "Black")
                 {
                     currentPlayer = playerBlack;
                     turnPlayer = currentPlayer;
 
-                    Debug.Log(currentPlayer.id + " " + currentPlayer.UserId + " " + currentPlayer.pieceType);
 
                 }
 
@@ -324,7 +324,7 @@ public class GameManager : MonoBehaviour
             case 10:
 
               int time=  int.Parse(state["Timer"]);
-                Debug.Log(time);
+      
 
                 break;
 
@@ -483,12 +483,12 @@ public class GameManager : MonoBehaviour
 
         if (currentPlayer.UserId == PassData.Match.Self.UserId)
         {
-
+          // AutoRollDiceActive = PlayerPrefs.GetString("AutoRollDice");
 
 
             if (AutoRollDiceActive == "True")
             {
-
+                Debug.Log("auto roll");
 
                 AutoRollDice = true;
 
@@ -627,12 +627,12 @@ public class GameManager : MonoBehaviour
 
     private void RollDices()
     {
-        RollCounters ++;
+
          if(currentPlayer.UserId == PassData.Match.Self.UserId)
             {
         if (!currentPlayer.rolledDice)
         {
- 
+            RollCounters ++;
             DiceController.instance.ThrowDices();
             currentPlayer.rolledDice = true;
             StartCoroutine(AfterRolledDice());
@@ -640,10 +640,7 @@ public class GameManager : MonoBehaviour
                 buttonController.EnableDoneButton();
                 buttonController.EnableUndoButton();
         }
-        else
-        {
-            Debug.Log("Current player rolled the dice");
-        }
+   
         }
 
               }

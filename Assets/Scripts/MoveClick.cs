@@ -83,13 +83,12 @@ public class MoveClick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        player = 0;
         prepareTurn();
     }
     // Update is called once per frame
     void Update()
     {
+ 
         if(IsBeingHeld == true)
         {
         }
@@ -243,34 +242,36 @@ public class MoveClick : MonoBehaviour
 
     public void Possabilities()
     {
-        var longIndx = makeTileIndx(getTile(player).getIndx(), Mathf.Max(curMoves[1], curMoves[0]));
-        var shortIndx = makeTileIndx(getTile(player).getIndx(), Mathf.Min(curMoves[1], curMoves[0]));
-
-        if (getTile(player).pieces.Any() && getTile(player).pieces.Last().pieceType == GameManager.instance.currentPlayer.pieceType)
+        if (getTile(player) != null)
         {
+            var longIndx = makeTileIndx(getTile(player).getIndx(), Mathf.Max(curMoves[1], curMoves[0]));
+            var shortIndx = makeTileIndx(getTile(player).getIndx(), Mathf.Min(curMoves[1], curMoves[0]));
 
-            if (isAvailable(slots[longIndx]) && slots[longIndx] != slots[24] && slots[longIndx] != slots[25] && slots[longIndx] != slots[26] && bigDieWasUsed == false)
-            {
-                SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
-                BigSprite.color = new Color(BigSprite.color.r, BigSprite.color.g, BigSprite.color.b, 0.5f);
-
-                Debug.Log("long index " + slots[longIndx]);
-
-            }
-
-            if (isAvailable(slots[shortIndx]) && slots[shortIndx] != slots[24] && slots[shortIndx] != slots[25] && slots[shortIndx] != slots[26] && smallDieWasUsed == false)
+            if (getTile(player).pieces.Any() && getTile(player).pieces.Last().pieceType == GameManager.instance.currentPlayer.pieceType)
             {
 
-                SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
-                smallSprite.color = new Color(smallSprite.color.r, smallSprite.color.g, smallSprite.color.b, 0.5f);
+                if (isAvailable(slots[longIndx]) && slots[longIndx] != slots[24] && slots[longIndx] != slots[25] && slots[longIndx] != slots[26] && bigDieWasUsed == false)
+                {
+                    SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
+                    BigSprite.color = new Color(BigSprite.color.r, BigSprite.color.g, BigSprite.color.b, 0.5f);
 
-                Debug.Log("short index " + slots[shortIndx]);
+                    Debug.Log("long index " + slots[longIndx]);
+
+                }
+
+                if (isAvailable(slots[shortIndx]) && slots[shortIndx] != slots[24] && slots[shortIndx] != slots[25] && slots[shortIndx] != slots[26] && smallDieWasUsed == false)
+                {
+
+                    SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
+                    smallSprite.color = new Color(smallSprite.color.r, smallSprite.color.g, smallSprite.color.b, 0.5f);
+
+                    Debug.Log("short index " + slots[shortIndx]);
+
+                }
 
             }
 
         }
-
-
 
     }
 
