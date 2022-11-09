@@ -8,4 +8,7 @@ public class PlayerDataObj
     public string wins;
     public string Losses;
 
+    public string Queue;
+    public string BoardType;
+
 }

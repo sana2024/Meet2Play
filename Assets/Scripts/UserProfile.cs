@@ -1,3 +1,5 @@
+using System.Xml.Serialization;
+using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +21,7 @@ public class UserProfile : MonoBehaviour
 
 
     //USER DATAS
- 
+
     public int sendLevel = 1;
     int wins = 0;
     int losses = 0;
@@ -27,7 +29,10 @@ public class UserProfile : MonoBehaviour
     int BoardPrice;
     int OnlineCounter;
 
- 
+    string QueueUser = "true";
+    string Boardtype = "oslo";
+
+
 
 
     //USER TEXTFRIENDS
@@ -44,11 +49,35 @@ public class UserProfile : MonoBehaviour
     [SerializeField] Text LossText;
     [SerializeField] Text OnlineCounterText;
     [SerializeField] Text MatchUserName;
- 
+
     PersonData data;
 
 
- 
+
+    [SerializeField] Text parisText;
+    [SerializeField] Text osloText;
+    [SerializeField] Text romaText;
+    [SerializeField] Text dubaiText;
+    [SerializeField] Text moscoText;
+    [SerializeField] Text berlinText;
+    [SerializeField] Text newyorkText;
+    [SerializeField] Text londonText;
+    [SerializeField] Text tokoyoText;
+    [SerializeField] Text bostonText;
+
+    int counterparis = 0;
+    int counteroslo = 0;
+    int counterroma = 0;
+    int counterberlin = 0;
+    int countermosco = 0;
+    int counternewyork = 0;
+    int counterboston = 0;
+    int counterdubai = 0;
+    int counterlondon = 0;
+    int countertokoyo = 0;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,16 +87,19 @@ public class UserProfile : MonoBehaviour
 
         StartCoroutine(GetTexture());
 
- 
+
 
         getUserProfile();
 
- 
-       
-          Wallet();
 
-          rpc();
 
+        Wallet();
+
+        rpc();
+
+
+
+        Storageojectcounter();
     }
 
     public async void rpc()
@@ -76,7 +108,7 @@ public class UserProfile : MonoBehaviour
         var pokemonInfo = await client.RpcAsync(session, rpcid);
 
         string TrimedJson = pokemonInfo.Payload.Remove(11, 1);
- 
+
         data = JsonUtility.FromJson<PersonData>(TrimedJson);
 
         List<String> termsList = new List<String>();
@@ -89,16 +121,19 @@ public class UserProfile : MonoBehaviour
 
         }
 
- 
-       var result = await client.GetUsersAsync(session , termsList);
+
+        var result = await client.GetUsersAsync(session, termsList);
 
         List<bool> onlines = new List<bool>();
 
-        foreach ( var userId in result.Users)
+        foreach (var userId in result.Users)
         {
+
+            Debug.Log("meta data " + userId.Metadata);
+
             if (userId.Online)
             {
-               onlines.Add(userId.Online);
+                onlines.Add(userId.Online);
             }
 
         }
@@ -108,15 +143,23 @@ public class UserProfile : MonoBehaviour
     }
 
 
-    public async void WriteData(int levelvalue, int winsvalue , int LossValue)
+    public async void WriteData(int levelvalue, int winsvalue, int LossValue, string wating, string BoardType)
     {
 
         var Datas = new PlayerDataObj
         {
             Level = levelvalue.ToString(),
             wins = winsvalue.ToString(),
-            Losses = LossValue.ToString()
+            Losses = LossValue.ToString(),
+            Queue = wating.ToString(),
+            BoardType = BoardType.ToString(),
+
+
         };
+
+
+
+
 
         var Sendata = await client.WriteStorageObjectsAsync(session, new[] {
         new WriteStorageObject
@@ -124,13 +167,14 @@ public class UserProfile : MonoBehaviour
       Collection = "UserData",
       Key = "Data",
       Value = JsonWriter.ToJson(Datas),
-      Version = PassData.version
+      Version = PassData.version,
+      PermissionRead=2,
 
 
 
     }
 }); ;
- 
+
 
         Debug.Log(string.Join(",\n  ", Sendata));
 
@@ -151,24 +195,30 @@ public class UserProfile : MonoBehaviour
         {
             var storageObject = result.Objects.First();
             var datas = JsonParser.FromJson<PlayerDataObj>(storageObject.Value);
- 
 
-           sendLevel = int.Parse(datas.Level);
-           wins = int.Parse(datas.wins);
-           losses = int.Parse(datas.Losses);
+
+            sendLevel = int.Parse(datas.Level);
+            wins = int.Parse(datas.wins);
+            losses = int.Parse(datas.Losses);
+            QueueUser = datas.Queue;
+            Boardtype = datas.BoardType;
+
+
 
             PassData.version = storageObject.Version;
-
+            PassData.ReadPermission = storageObject.PermissionRead;
             PassData.wins = int.Parse(datas.wins);
             PassData.losses = int.Parse(datas.Losses);
             PassData.level = int.Parse(datas.Level);
+            PassData.Queue = datas.Queue;
+            PassData.Board = datas.BoardType;
 
         }
         else
         {
- 
-            WriteData(sendLevel, wins, losses);
-            
+
+            WriteData(sendLevel, wins, losses, QueueUser, Boardtype);
+
 
 
         }
@@ -179,7 +229,7 @@ public class UserProfile : MonoBehaviour
     public async void Wallet()
     {
 
- 
+
 
         var account = await client.GetAccountAsync(session);
         var wallet = JsonParser.FromJson<Dictionary<string, int>>(account.Wallet);
@@ -190,7 +240,7 @@ public class UserProfile : MonoBehaviour
             CoinUserPanelText.text = currency.ToString();
             walletMoney = currency;
             PassData.WalletMoney = currency;
-           
+
 
         }
     }
@@ -200,25 +250,25 @@ public class UserProfile : MonoBehaviour
         PassData.BoardPrice = coins;
         PassData.betAmount = Math.Abs(coins);
 
-        if(walletMoney >= Math.Abs(coins))
+        if (walletMoney >= Math.Abs(coins))
         {
-        var payload = JsonWriter.ToJson(new { coins = coins });
-        var rpcid = "Update_Wallet";
-        var WalletRPC = await client.RpcAsync(session, rpcid, payload);
-        Wallet();
-        }   
+            var payload = JsonWriter.ToJson(new { coins = coins });
+            var rpcid = "Update_Wallet";
+            var WalletRPC = await client.RpcAsync(session, rpcid, payload);
+            Wallet();
+        }
 
     }
 
     public async void BonusWallet(int coins)
     {
         PassData.BoardPrice = coins;
- 
-            var payload = JsonWriter.ToJson(new { coins = coins });
-            var rpcid = "Update_Wallet";
-            var WalletRPC = await client.RpcAsync(session, rpcid, payload);
-            Wallet();
- 
+
+        var payload = JsonWriter.ToJson(new { coins = coins });
+        var rpcid = "Update_Wallet";
+        var WalletRPC = await client.RpcAsync(session, rpcid, payload);
+        Wallet();
+
     }
 
 
@@ -237,7 +287,7 @@ public class UserProfile : MonoBehaviour
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
- 
+
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
                 Debug.Log("user reconnected");
@@ -246,16 +296,16 @@ public class UserProfile : MonoBehaviour
         }
         else
         {
- 
-               ReadData();
 
-    
+            ReadData();
+            //    ReadDataStatus();
+
+
 
         }
 
 
 
- 
     }
 
 
@@ -267,15 +317,17 @@ public class UserProfile : MonoBehaviour
         var ids = new[] { "071bb808-118f-40e6-a1ea-744584c69c91", "09121f55-5c50-4b94-9698-dd42e5bd4f32" };
         var result = await client.GetUsersAsync(session, ids);
 
-       
+
 
         foreach (var u in result.Users)
         {
-            
-            Debug.Log(u.Id +" "+u.Online);
+
+
+
+            Debug.Log(u.Id + " " + u.Online);
             System.Console.WriteLine("User id '{0}' username '{1}'", u.Id, u.Online);
 
-          
+
         }
 
 
@@ -298,40 +350,40 @@ public class UserProfile : MonoBehaviour
         UserPanel.SetActive(false);
     }
 
- 
 
- 
 
-        IEnumerator GetTexture()
+
+
+    IEnumerator GetTexture()
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(PassData.MyURL);
+
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
         {
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(PassData.MyURL);
- 
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-
-                ProfileImage.texture = myTexture;
-                ProfilePanel.texture = myTexture;
-                MatchImage.texture = myTexture;
-            }
-
+            Debug.Log(www.error);
         }
+        else
+        {
+            Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+
+            ProfileImage.texture = myTexture;
+            ProfilePanel.texture = myTexture;
+            MatchImage.texture = myTexture;
+        }
+
+    }
 
     [System.Serializable]
     public class Person
     {
         public string id;
-   
+
         public Person(string _id)
         {
             id = _id;
- 
+
         }
     }
 
@@ -340,8 +392,133 @@ public class UserProfile : MonoBehaviour
     {
         public List<Person> client;
     }
+ 
+    public async void Storageojectcounter()
+    {
+
+        var rpcid = "users";
+        var pokemonInfo = await client.RpcAsync(session, rpcid);
+
+        string TrimedJson = pokemonInfo.Payload.Remove(11, 1);
+
+        data = JsonUtility.FromJson<PersonData>(TrimedJson);
+
+        List<String> termsList = new List<String>();
+
+
+        foreach (var id in data.client)
+        {
+
+            termsList.Add(id.id);
+
+        }
+
+
+        var result = await client.GetUsersAsync(session, termsList);
+
+        foreach (var userId in result.Users)
+        {
+
+            const int limit = 10; // default is 10.
+            var result1 = await client.ListUsersStorageObjectsAsync(session, "UserData", userId.Id, limit);
+
+            foreach (var storage in result1.Objects)
+            {
+ 
+                if (storage.Value.Contains("true") && storage.Value.Contains("oslo"))
+                {
+                    counteroslo++;
+                    Debug.Log(storage);
+
+
+                    osloText.text = "Waiting Player" + " " + counteroslo;
+ 
+                }
+
+                if (storage.Value.Contains("true") && storage.Value.Contains("paris"))
+                {
+                    counterparis++;
+ 
+                    parisText.text = "Waiting Player " + " " + counterparis;
+ 
+
+                }
+
+                if (storage.Value.Contains("true") && storage.Value.Contains("mosco"))
+                {
+                    countermosco++;
+
+                    moscoText.text = "Waiting Player" + " " + countermosco;
+ 
+                }
+                if (storage.Value.Contains("true") && storage.Value.Contains("tokoyo"))
+                {
+                    countertokoyo++;
+
+                    tokoyoText.text = "Waiting Player" + " " + countertokoyo;
+ 
+                }
+                if (storage.Value.Contains("true") && storage.Value.Contains("berlin"))
+                {
+                    counterberlin++;
+
+                    berlinText.text = "Waiting Player" + " " + counterberlin;
+ 
+                }
+                if (storage.Value.Contains("true") && storage.Value.Contains("newyork"))
+                {
+                    counternewyork++;
+
+                    newyorkText.text = "Waiting  Player" + " " + counternewyork;
+ 
+                }
+                if (storage.Value.Contains("true") && storage.Value.Contains("london"))
+                {
+                    counterlondon++;
+
+                    londonText.text=" Waiting Player "+" " +counterlondon;
+ 
+                }
+                if (storage.Value.Contains("true") && storage.Value.Contains("boston"))
+                {
+                    counterboston++;
+
+                    bostonText.text = "Waiting Player " + " " + counterboston;
+ 
+                }
+                if (storage.Value.Contains("true") && storage.Value.Contains("dubai"))
+                {
+                    counterdubai++;
+
+                    dubaiText.text = "Waiting Player " + " " + counterdubai;
+ 
+                }
+                if (storage.Value.Contains("true") && storage.Value.Contains("roma"))
+                {
+                    counterroma++;
+
+                    romaText.text = " Waiting Player " + " " + counterroma;
+ 
+                }
+ 
+
+
+
+            }
+            Console.WriteLine("List objects: {0}", result);
+        }
+
+
+
+
+
+    }
 
 
 }
+
+
+
+
 
 
