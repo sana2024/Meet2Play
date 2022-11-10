@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public Player turnPlayer;
     public Player playerWonRound;
     public Player MyPlayer;
+    public Player OtherPlayer;
 
 
     //-----------------
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject RejectBetPanel;
     [SerializeField] GameObject RejectGamePanel;
     [SerializeField] GameObject NoMoveExistsPanel;
+    [SerializeField] GameObject RejectReplayPanel;
 
     [SerializeField] Text TimeoutDEbugger;
 
@@ -97,6 +99,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Sprite ToggleOff;
 
     string AutoRollDiceActive;
+
+    //play agaian
+    [SerializeField] GameObject PlayAgain;
+    HelloVideoAgora DisplaYVideo;
+ 
+
 
 
     //Others
@@ -126,6 +134,7 @@ public class GameManager : MonoBehaviour
         {
             resizeSlots.rotate();
             MyPlayer = playerBlack;
+            OtherPlayer = playerWhite;
 
            
 
@@ -133,6 +142,7 @@ public class GameManager : MonoBehaviour
         if (PassData.Match.Self.UserId == playerWhite.UserId)
         {
             MyPlayer = playerWhite;
+            OtherPlayer = playerBlack;
         }
  
     }
@@ -142,13 +152,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
-  
-
-
-       
-       
-
+ 
         isocket = PassData.isocket;
         iclient = PassData.iClient;
         isession = PassData.isession;
@@ -157,9 +161,20 @@ public class GameManager : MonoBehaviour
         isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
 
         HideGameEndScreen();
+
+        if (PassData.IsFirstRound == true)
+        {
+            currentPlayer = playerWhite;
+            turnPlayer = currentPlayer;
+
+        }
+        else
+        {
+            currentPlayer = PassData.PlayerWonRound;
+            turnPlayer = currentPlayer;
+        }
  
-        currentPlayer = playerWhite;
-        turnPlayer = currentPlayer;
+
         HideDiceValues();
 
         if (currentPlayer.UserId == PassData.Match.Self.UserId)
@@ -371,6 +386,7 @@ public class GameManager : MonoBehaviour
                 gameEndScreen.SetActive(true);
                 WinnerImage.SetActive(true);
                 EndGameBackground.sprite = GreenBackground;
+                playerWonRound = MyPlayer;
                 Reward.SetActive(true);
                 inGameData.updateWallet(PassData.betAmount);
                 PassData.wins++;
@@ -389,10 +405,32 @@ public class GameManager : MonoBehaviour
                     StartCoroutine(ShowRejectGamePanel());
 
                 }
-
- 
+                 
 
                     break;
+
+
+            case 19:
+
+                if (state["RequsetRematch"] == "RequestReplay")
+                {
+                    StartCoroutine(ShowPlayAgainRequest());
+                }
+
+                if (state["RequsetRematch"] == "RejectPlayAgain")
+                {
+                    ShowRejectReplay();
+                }
+
+                if (state["RequsetRematch"] == "AcceptReplay")
+                {
+                    OnNextRoundButtonClick();
+                }
+
+
+
+
+                break;
 
         }
 
@@ -424,7 +462,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-   public IEnumerator ShowNoMovePanel()
+    public void ShowRejectReplay()
+    {
+        RejectReplayPanel.SetActive(true);
+    }
+
+    public IEnumerator ShowNoMovePanel()
     {
         NoMoveExistsPanel.SetActive(true);
         yield return new WaitForSeconds(2);
@@ -905,7 +948,7 @@ public class GameManager : MonoBehaviour
 
             AutoRollDiceButon.image.sprite = ToggleOn;
             buttonController.DissableRollButton();
-            RollDices();
+            // RollDices();
             // Debug.Log("AutoRolled");
         }
 
@@ -917,6 +960,49 @@ public class GameManager : MonoBehaviour
 
 
         }
+
+    }
+
+    
+
+    public void OnNextRoundButtonClick()
+    {
+        PassData.IsFirstRound = false;
+        SceneManager.LoadScene(Constants.SCENE_GAME);
+
+        // increment current round
+        currentRound++;
+
+        // reset players
+        Player.ResetForNextRound(playerWhite);
+        Player.ResetForNextRound(playerBlack);
+
+        // who wins the round starts first
+        PassData.PlayerWonRound = playerWonRound;
+ 
+            HelloVideoAgora.instance.InitEngine();
+            HelloVideoAgora.instance.JoinChannel();
+            inGameData.updateWallet(PassData.BoardPrice);
+            Debug.Log("turn player " + playerWonRound);
+            RestartBoard();
+            HideGameEndScreen();
+            playerTimer.restart();
+ 
+    }
+
+    public void SendPlay_AgainRequest()
+    {
+        var state = MatchDataJson.SetRematch("RequestReplay");
+        SendMatchState(OpCodes.Play_Again, state);
+    }
+ 
+
+    IEnumerator ShowPlayAgainRequest()
+    {
+        PlayAgain.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5);
+        PlayAgain.gameObject.SetActive(false);
+
 
     }
 

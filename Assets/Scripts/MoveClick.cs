@@ -83,6 +83,21 @@ public class MoveClick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (PassData.IsFirstRound == false)
+        {
+            Debug.Log("its second round ");
+            if (PassData.PlayerWonRound == GameManager.instance.playerBlack)
+            {
+                player = 1;
+            }
+
+            if (PassData.PlayerWonRound == GameManager.instance.playerWhite)
+            {
+                player = 0;
+            }
+
+        }
+
         prepareTurn();
     }
     // Update is called once per frame
@@ -1064,7 +1079,9 @@ public class MoveClick : MonoBehaviour
     public void prepareTurn()
     {
         alreadyRolled = false;
+
         player = (player + 1) % 2;
+        
         curMoves[0] = -1;
         curMoves[1] = -1;
         checkIfCanRemove = -1;
