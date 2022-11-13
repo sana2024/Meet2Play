@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: New Nakama Connection
   m_EditorClassIdentifier: 
   scheme: http
-  host: 52.16.227.228
+  host: NakamaAppALB-1422208787.eu-west-1.elb.amazonaws.com
   port: 7350
   serverKey: defaultkey
