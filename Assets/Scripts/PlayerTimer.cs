@@ -16,6 +16,9 @@ public class PlayerTimer : MonoBehaviour
     [SerializeField] public Image MyTimer = null;
     [SerializeField] public Image OtherPlayerTimer = null;
 
+    [SerializeField] Image MyTimerMask = null;
+    [SerializeField] Image OtherPlayerTimerMask = null;
+
 
     [Header("Key Codes")]
     [SerializeField] private KeyCode selecKey = KeyCode.Mouse0;
@@ -27,7 +30,11 @@ public class PlayerTimer : MonoBehaviour
 
     [SerializeField] GameManager gameManager;
     [SerializeField] ButtonController buttonController;
-    
+
+    Color Red = new Color(1, 0.2f, 0, 1);
+    Color Orange = new Color(1, 0.6f, 0,1);
+    Color Yellow = new Color(1, 0.8f, 0 ,1);
+
     private AudioSource audioS;
 
     private bool shouldUpdate = false;
@@ -51,12 +58,12 @@ public class PlayerTimer : MonoBehaviour
 
                     if (MyTimer.fillAmount <= 0.50f)
                     {
-                        MyTimer.color = Color.white;
+                        MyTimerMask.color = Orange;
                     }
 
                         if (MyTimer.fillAmount <= 0.25f)
                     {
-                        MyTimer.color = Color.red;
+                        MyTimerMask.color =  Red;
                         // radialIndicator1.color = Color.red;
 
 
@@ -92,12 +99,12 @@ public class PlayerTimer : MonoBehaviour
 
                     if (OtherPlayerTimer.fillAmount <= 0.50f)
                     {
-                        OtherPlayerTimer.color = Color.white;
+                        OtherPlayerTimerMask.color = Orange;
                     }
 
                     if (OtherPlayerTimer.fillAmount <= 0.25f)
                     {
-                        OtherPlayerTimer.color = Color.red;
+                        OtherPlayerTimerMask.color = Red;
                         // radialIndicator1.color = Color.red;
 
 
@@ -125,9 +132,9 @@ public class PlayerTimer : MonoBehaviour
     public void restart()
     {
         MyTimer.fillAmount = 1;
-        MyTimer.color = Color.green;
+        MyTimerMask.color = Yellow;
         OtherPlayerTimer.fillAmount = 1;
-        OtherPlayerTimer.color = Color.green;
+        OtherPlayerTimerMask.color = Yellow;
 
 
     }

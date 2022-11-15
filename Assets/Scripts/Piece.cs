@@ -362,7 +362,7 @@ public class Piece : MonoBehaviour
         switch(type)
         {
             case SlotType.Board:
-                return .64f;
+                return .7f;
             case SlotType.Bar:
                 return .1f;
             case SlotType.Outside:
@@ -588,7 +588,7 @@ public class Piece : MonoBehaviour
             {
                 if (!DiceController.instance.IsDoubleMove())
                 {
-                Debug.Log("is not top");
+ 
                     BeforeRelease();
                 }
 
@@ -601,7 +601,6 @@ public class Piece : MonoBehaviour
 
         else
         {
-            Debug.Log("hold");
             Hold();
         }
     }
@@ -900,6 +899,18 @@ public class Piece : MonoBehaviour
         var go = new GameObject("Piece Empty");
         go.AddComponent<BoxCollider2D>();
         return go.AddComponent<Piece>();
+    }
+
+    public void ShowPieceShadowHint()
+    {
+        var spriteShadow = this.GetComponentsInChildren<SpriteRenderer>();
+        spriteShadow[1].color = new Color(spriteShadow[1].color.r, spriteShadow[1].color.g, spriteShadow[1].color.b, 1);
+    }
+
+    public void HidePieceShadowHint()
+    {
+        var spriteShadow = this.GetComponentsInChildren<SpriteRenderer>();
+        spriteShadow[1].color = new Color(spriteShadow[1].color.r, spriteShadow[1].color.g, spriteShadow[1].color.b, 0);
     }
 
     #endregion

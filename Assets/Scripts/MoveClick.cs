@@ -192,7 +192,7 @@ public class MoveClick : MonoBehaviour
         }
 
 
-        Player.text ="player "+ player.ToString();
+//        Player.text ="player "+ player.ToString();
  
         if (curMoves[0] == -1 && curMoves[1] == -1)
         {
@@ -267,21 +267,37 @@ public class MoveClick : MonoBehaviour
 
                 if (isAvailable(slots[longIndx]) && slots[longIndx] != slots[24] && slots[longIndx] != slots[25] && slots[longIndx] != slots[26] && bigDieWasUsed == false)
                 {
-                    SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
-                    BigSprite.color = new Color(BigSprite.color.r, BigSprite.color.g, BigSprite.color.b, 0.5f);
+                    if (slots[longIndx].pieces.Any()){
+                    slots[longIndx].pieces.Last().ShowPieceShadowHint();
+                    }
+                    else
+                    {
+                     SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
+                      BigSprite.color = new Color(BigSprite.color.r, BigSprite.color.g, BigSprite.color.b, 0.5f);
 
-                    Debug.Log("long index " + slots[longIndx]);
+                     Debug.Log("long index " + slots[longIndx]);
+
+                    }
+
 
                 }
 
                 if (isAvailable(slots[shortIndx]) && slots[shortIndx] != slots[24] && slots[shortIndx] != slots[25] && slots[shortIndx] != slots[26] && smallDieWasUsed == false)
                 {
+                    if (slots[shortIndx].pieces.Any())
+                    {
+                        slots[shortIndx].pieces.Last().ShowPieceShadowHint();
+                    }
+                    else
+                    {
+                        SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
+                        smallSprite.color = new Color(smallSprite.color.r, smallSprite.color.g, smallSprite.color.b, 0.5f);
 
-                    SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
-                    smallSprite.color = new Color(smallSprite.color.r, smallSprite.color.g, smallSprite.color.b, 0.5f);
+                       Debug.Log("short index " + slots[shortIndx]);
 
-                    Debug.Log("short index " + slots[shortIndx]);
+                    }
 
+ 
                 }
 
             }
@@ -296,6 +312,11 @@ public class MoveClick : MonoBehaviour
         {
             SpriteRenderer SlotSprite = slots[i].GetComponentInChildren<SpriteRenderer>();
             SlotSprite.color = new Color(SlotSprite.color.r, SlotSprite.color.g, SlotSprite.color.b, 0);
+
+            if (slots[i].pieces.Any())
+            {
+                slots[i].pieces.Last().HidePieceShadowHint();
+            }
         }
     }
 
