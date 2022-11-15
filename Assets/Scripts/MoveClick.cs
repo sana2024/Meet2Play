@@ -72,6 +72,8 @@ public class MoveClick : MonoBehaviour
     //this boolean will be true if there is no playable moves exists for player to move
     public bool NoMovePass = false;
 
+ 
+
     private void Awake()
     {
         if(instance == null)
@@ -96,6 +98,10 @@ public class MoveClick : MonoBehaviour
                 player = 0;
             }
 
+        }
+        else
+        {
+            player = 0;
         }
 
         prepareTurn();
@@ -255,7 +261,7 @@ public class MoveClick : MonoBehaviour
 
     }
 
-    public void Possabilities()
+    public void Possabilities(float FadeRate)
     {
         if (getTile(player) != null)
         {
@@ -273,7 +279,7 @@ public class MoveClick : MonoBehaviour
                     else
                     {
                      SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
-                      BigSprite.color = new Color(BigSprite.color.r, BigSprite.color.g, BigSprite.color.b, 0.5f);
+                      BigSprite.color = new Color(BigSprite.color.r, BigSprite.color.g, BigSprite.color.b, FadeRate);
 
                      Debug.Log("long index " + slots[longIndx]);
 
@@ -291,7 +297,7 @@ public class MoveClick : MonoBehaviour
                     else
                     {
                         SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
-                        smallSprite.color = new Color(smallSprite.color.r, smallSprite.color.g, smallSprite.color.b, 0.5f);
+                        smallSprite.color = new Color(smallSprite.color.r, smallSprite.color.g, smallSprite.color.b, FadeRate);
 
                        Debug.Log("short index " + slots[shortIndx]);
 
