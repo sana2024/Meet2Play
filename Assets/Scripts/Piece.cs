@@ -45,7 +45,10 @@ public class Piece : MonoBehaviour
     float offset = 1f; // Arbitrary number to choose based on what looks good
     float multiplier = 0.3f; // The higher this number, the less each item in list affects offset
 
-
+    //related to possability fade in and fade out
+    bool ReachedZero;
+    bool ReachedOne;
+    float FadeRate;
 
     //----------------------------
     // identifier properties
@@ -307,7 +310,32 @@ public class Piece : MonoBehaviour
             temps++;
 
             if (temps > 7) {
-            MoveClick.instance.Possabilities();
+
+                if (FadeRate <= 0)
+                {
+                    ReachedZero = true;
+                    ReachedOne = false;
+                }
+
+                if (FadeRate >= 1)
+                {
+                    ReachedOne = true;
+                    ReachedZero = false;
+                }
+
+                if (ReachedZero == true)
+                {
+                    FadeRate += 0.02f;
+                }
+
+                if (ReachedOne == true)
+                {
+                    FadeRate -= 0.02f;
+                }
+
+
+
+                MoveClick.instance.Possabilities(FadeRate);
             MoveClick.instance.IsBeingHeld = true;
             click = false;
             var mousePos = GetMousePos();
@@ -904,7 +932,7 @@ public class Piece : MonoBehaviour
     public void ShowPieceShadowHint()
     {
         var spriteShadow = this.GetComponentsInChildren<SpriteRenderer>();
-        spriteShadow[1].color = new Color(spriteShadow[1].color.r, spriteShadow[1].color.g, spriteShadow[1].color.b, 1);
+        spriteShadow[1].color = new Color(spriteShadow[1].color.r, spriteShadow[1].color.g, spriteShadow[1].color.b, FadeRate);
     }
 
     public void HidePieceShadowHint()
