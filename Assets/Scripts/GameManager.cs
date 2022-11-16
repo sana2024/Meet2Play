@@ -229,6 +229,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("player "+MoveClick.instance.player);
 
                  buttonController.EnableRollButton();
+
                  
 
                 if (RollCounters > 1)
@@ -603,7 +604,17 @@ public class GameManager : MonoBehaviour
 
  
         playerTimer.restart();
-        NextTurn();
+
+        if (AutoRollDice == true)
+        {
+            MoveClick.instance.player = (MoveClick.instance.player + 1) % 2;
+            NextTurn();
+        }
+
+        if (AutoRollDice == false)
+        {
+            NextTurn();
+        }
     }
 
  

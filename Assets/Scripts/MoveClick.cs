@@ -72,7 +72,11 @@ public class MoveClick : MonoBehaviour
     //this boolean will be true if there is no playable moves exists for player to move
     public bool NoMovePass = false;
 
- 
+    //pieces for possabilty
+    [SerializeField] Sprite whitePieceSprite;
+    [SerializeField] Sprite blackPiecesSprite;
+    Slot ClickedSlot;
+
 
     private void Awake()
     {
@@ -257,31 +261,46 @@ public class MoveClick : MonoBehaviour
  
                 }
             }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                ClickedSlot = getTile(player);
+ 
+            }
         }
 
     }
 
     public void Possabilities(float FadeRate)
     {
-        if (getTile(player) != null)
-        {
-            var longIndx = makeTileIndx(getTile(player).getIndx(), Mathf.Max(curMoves[1], curMoves[0]));
-            var shortIndx = makeTileIndx(getTile(player).getIndx(), Mathf.Min(curMoves[1], curMoves[0]));
+ 
+            var longIndx = makeTileIndx(ClickedSlot.getIndx(), Mathf.Max(curMoves[1], curMoves[0]));
+            var shortIndx = makeTileIndx(ClickedSlot.getIndx(), Mathf.Min(curMoves[1], curMoves[0]));
 
-            if (getTile(player).pieces.Any() && getTile(player).pieces.Last().pieceType == GameManager.instance.currentPlayer.pieceType)
+            if (ClickedSlot.pieces.Any() && ClickedSlot.pieces.Last().pieceType == GameManager.instance.currentPlayer.pieceType)
             {
 
                 if (isAvailable(slots[longIndx]) && slots[longIndx] != slots[24] && slots[longIndx] != slots[25] && slots[longIndx] != slots[26] && bigDieWasUsed == false)
                 {
                     if (slots[longIndx].pieces.Any()){
-                    slots[longIndx].pieces.Last().ShowPieceShadowHint();
+                    slots[longIndx].pieces.Last().ShowPieceShadowHint(FadeRate);
+                        
                     }
                     else
                     {
-                     SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
-                      BigSprite.color = new Color(BigSprite.color.r, BigSprite.color.g, BigSprite.color.b, FadeRate);
+                        SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
+                        if (ClickedSlot.getColor() == 1)
+                        {
+                            BigSprite.sprite = whitePieceSprite;
+                        }
+                        if (ClickedSlot.getColor() == 0)
+                        {
+                            BigSprite.sprite = blackPiecesSprite;
+                        }
 
-                     Debug.Log("long index " + slots[longIndx]);
+                        BigSprite.color = new Color(1, 0.9f, 0.7f, FadeRate);
+                        
+                        
 
                     }
 
@@ -292,14 +311,23 @@ public class MoveClick : MonoBehaviour
                 {
                     if (slots[shortIndx].pieces.Any())
                     {
-                        slots[shortIndx].pieces.Last().ShowPieceShadowHint();
+                        slots[shortIndx].pieces.Last().ShowPieceShadowHint(FadeRate);
                     }
                     else
                     {
                         SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
-                        smallSprite.color = new Color(smallSprite.color.r, smallSprite.color.g, smallSprite.color.b, FadeRate);
+                        if (ClickedSlot.getColor() == 1)
+                        {
+                            smallSprite.sprite = whitePieceSprite;
+                        }
+                        if (ClickedSlot.getColor() == 0)
+                        {
+                            smallSprite.sprite = blackPiecesSprite;
+                        }
+                        smallSprite.color = new Color(1, 0.9f, 0.7f, FadeRate);
 
-                       Debug.Log("short index " + slots[shortIndx]);
+
+                        
 
                     }
 
@@ -308,7 +336,7 @@ public class MoveClick : MonoBehaviour
 
             }
 
-        }
+        
 
     }
 
@@ -317,7 +345,7 @@ public class MoveClick : MonoBehaviour
         for (int i = 0; i < 24; i++)
         {
             SpriteRenderer SlotSprite = slots[i].GetComponentInChildren<SpriteRenderer>();
-            SlotSprite.color = new Color(SlotSprite.color.r, SlotSprite.color.g, SlotSprite.color.b, 0);
+            SlotSprite.color = new Color(1, 1, 1, 0);
 
             if (slots[i].pieces.Any())
             {

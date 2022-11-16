@@ -296,13 +296,15 @@ public class Piece : MonoBehaviour
         {
             temps = 0;
             OnPieceRelease();
-            MoveClick.instance.ResetPossabilities();
 
             var state = MatchDataJson.SetPeicePos(pieceId, transform);
             SendMatchState(OpCodes.Peice_Pos, state);
 
+        }
 
-
+        if (Input.GetMouseButtonUp(0))
+        {
+            MoveClick.instance.ResetPossabilities();
         }
 
         if (isBeingHeld)
@@ -317,7 +319,7 @@ public class Piece : MonoBehaviour
                     ReachedOne = false;
                 }
 
-                if (FadeRate >= 1)
+                if (FadeRate >= 0.8f)
                 {
                     ReachedOne = true;
                     ReachedZero = false;
@@ -325,17 +327,17 @@ public class Piece : MonoBehaviour
 
                 if (ReachedZero == true)
                 {
-                    FadeRate += 0.02f;
+                    FadeRate += 0.025f;
                 }
 
                 if (ReachedOne == true)
                 {
-                    FadeRate -= 0.02f;
+                    FadeRate -= 0.025f;
                 }
 
 
 
-                MoveClick.instance.Possabilities(FadeRate);
+            MoveClick.instance.Possabilities(FadeRate);
             MoveClick.instance.IsBeingHeld = true;
             click = false;
             var mousePos = GetMousePos();
@@ -394,7 +396,7 @@ public class Piece : MonoBehaviour
             case SlotType.Bar:
                 return .1f;
             case SlotType.Outside:
-                return .05f;
+                return .06f;
         };
         return 0f;
     }
@@ -586,12 +588,7 @@ public class Piece : MonoBehaviour
 
     private void OnPieceClick()
     {
-        var HintShadow = this.GetComponentsInChildren<SpriteRenderer>();
-        var tempColor = HintShadow[1].color;
-        tempColor.a = 0f;
-        HintShadow[1].color = tempColor;
-
-
+ 
         // if current player does not rolled the dice yet
         if (!IsCurrentPlayerRolled())
         {
@@ -883,6 +880,7 @@ public class Piece : MonoBehaviour
         }
         return false;
     }
+ 
 
     private Vector3 GetMousePos()
     {
@@ -929,16 +927,18 @@ public class Piece : MonoBehaviour
         return go.AddComponent<Piece>();
     }
 
-    public void ShowPieceShadowHint()
+    public void ShowPieceShadowHint(float faderate)
     {
-        var spriteShadow = this.GetComponentsInChildren<SpriteRenderer>();
-        spriteShadow[1].color = new Color(spriteShadow[1].color.r, spriteShadow[1].color.g, spriteShadow[1].color.b, FadeRate);
+        
+        var spriteShadow = this.GetComponent<SpriteRenderer>();
+        spriteShadow.color = new Color(1, 0.9f, 0.7f, faderate);
+        Debug.Log(FadeRate);
     }
 
     public void HidePieceShadowHint()
     {
-        var spriteShadow = this.GetComponentsInChildren<SpriteRenderer>();
-        spriteShadow[1].color = new Color(spriteShadow[1].color.r, spriteShadow[1].color.g, spriteShadow[1].color.b, 0);
+        var spriteShadow = this.GetComponent<SpriteRenderer>();
+        spriteShadow.color = new Color(1, 1, 1, 1);
     }
 
     #endregion
