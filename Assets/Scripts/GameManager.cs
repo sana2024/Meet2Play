@@ -115,14 +115,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
- 
-      
+
+    
+
+
         if (instance == null)
             instance = this;
 
         playerWhite = new Player { id = 0, pieceType = PieceType.White , UserId = PassData.hostPresence};
         playerBlack = new Player { id = 1, pieceType = PieceType.Black , UserId = PassData.SecondPresence};
-       
 
  
         nextTurnButton.onClick.AddListener(OnNextTurnButtonClick);
@@ -245,6 +246,14 @@ public class GameManager : MonoBehaviour
 
 
                 }
+                if (state["Current_Player"] == "Black" && AutoRollDiceActive == "True")
+                {
+                    MoveClick.instance.player = (MoveClick.instance.player + 1) % 2;
+                    currentPlayer = playerBlack;
+                    turnPlayer = currentPlayer;
+
+
+                }
 
                 if (state["Current_Player"] == "White")
                 {
@@ -253,7 +262,15 @@ public class GameManager : MonoBehaviour
 
                     Debug.Log(currentPlayer.id + " " + currentPlayer.UserId + " " + currentPlayer.pieceType);
                 }
+
+                if (state["Current_Player"] == "White" && AutoRollDiceActive == "True")
+                {
+                    MoveClick.instance.player = (MoveClick.instance.player + 1) % 2;
+                    currentPlayer = playerWhite;
+                    turnPlayer = currentPlayer;
  
+                }
+
                 break;
 
             case 7:
@@ -552,11 +569,12 @@ public class GameManager : MonoBehaviour
 
         if (turnPlayer.IsMoveLeft()&& MoveClick.instance.NoMovePass == false || turnPlayer.rolledDice == false)
         {
-            nextTurnButton.interactable = false;
+            Debug.Log("test");
+            nextTurnButton.gameObject.SetActive(false);
         }
         else
         {
-            nextTurnButton.interactable = true;
+            nextTurnButton.gameObject.SetActive(true);
         }
     
  
@@ -605,16 +623,7 @@ public class GameManager : MonoBehaviour
  
         playerTimer.restart();
 
-        if (AutoRollDice == true)
-        {
-            MoveClick.instance.player = (MoveClick.instance.player + 1) % 2;
-            NextTurn();
-        }
-
-        if (AutoRollDice == false)
-        {
-            NextTurn();
-        }
+        NextTurn();
     }
 
  
@@ -701,21 +710,21 @@ public class GameManager : MonoBehaviour
  
     private IEnumerator AfterRolledDice()
     {
-         nextTurnButton.interactable = false;
+         nextTurnButton.gameObject.SetActive(false);
 
         if (!currentPlayer.IsMoveLeft())
         {
         }
         else
         {
-            nextTurnButton.interactable = true;
+            nextTurnButton.gameObject.SetActive(true);
         }
 
         yield return new WaitForSeconds(0);
    
 
     }
-
+    //this functions manages the dice values on the UI (right corner of the screen
     private void HideDiceValues()
     {
         firstDiceValueImage.gameObject.SetActive(false);
@@ -814,8 +823,7 @@ public class GameManager : MonoBehaviour
 
     public void NextTurn()
     {
-        Debug.Log(currentPlayer.id + " " + currentPlayer.UserId + " " + currentPlayer.pieceType);
-
+        DiceController.instance.HideRollingDices();
 
         //--------------------------------
         // reset current player's fields
@@ -916,8 +924,6 @@ public class GameManager : MonoBehaviour
             // undo move action
             lastMove.piece.PlaceOn(lastMove.from);
 
-
-
             Debug.Log(lastMove.from.ToString());
             var state = MatchDataJson.SetPieceStack(lastMove.piece.name, lastMove.from.name, lastMove.to.name, lastMove.step.ToString(), lastMove.action.ToString(), "undo");
             SendMatchState(OpCodes.undo, state);
@@ -936,6 +942,8 @@ public class GameManager : MonoBehaviour
 
 
             currentPlayer.movesPlayed.Remove(lastMove);
+
+ 
 
             ConvertPieceOutside.instance.FromOutToSlot(lastMove.piece);
             lastMove.piece.IncreaseColliderRadius();
@@ -958,8 +966,8 @@ public class GameManager : MonoBehaviour
         {
 
             AutoRollDiceButon.image.sprite = ToggleOn;
-            buttonController.DissableRollButton();
-            // RollDices();
+           // buttonController.DissableRollButton();
+             // RollDices();
             // Debug.Log("AutoRolled");
         }
 
@@ -998,6 +1006,7 @@ public class GameManager : MonoBehaviour
             RestartBoard();
             HideGameEndScreen();
             playerTimer.restart();
+           ChangeBoard.instance.changeBoard();
  
     }
 
@@ -1011,8 +1020,7 @@ public class GameManager : MonoBehaviour
     IEnumerator ShowPlayAgainRequest()
     {
         PlayAgain.gameObject.SetActive(true);
-        yield return new WaitForSeconds(5);
-        PlayAgain.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1);
 
 
     }

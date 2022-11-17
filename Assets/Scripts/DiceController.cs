@@ -202,13 +202,11 @@ public class DiceController : MonoBehaviour
 
 
         animationFinished = true;
+
         foreach (var dice in rollingDices)
             animationFinished &= dice.AnimationFinished;
-
-        if (animationFinished)
-        {
-            Invoke("HideRollingDices", 2f);
-        }
+       
+  
     }
 
     #endregion
@@ -218,7 +216,14 @@ public class DiceController : MonoBehaviour
     private void ShowRollingDices()
     {
         foreach (var dice in rollingDices)
-            dice.gameObject.SetActive(true);
+        {
+            if(dice != null)
+            {
+              dice.gameObject.SetActive(true);
+            }
+
+        }
+
 
         var state = MatchDataJson.SetDiceVisability("true");
         SendMatchState(OpCodes.Show_dice, state);
@@ -226,11 +231,19 @@ public class DiceController : MonoBehaviour
 
     public void HideRollingDices()
     {
-        foreach (var dice in rollingDices)
- 
-        dice.gameObject.SetActive(false);
-  
-        rollingDices = null;
+        if(rollingDices  != null)
+        {
+          foreach (var dice in rollingDices)
+        {
+            if(dice != null)
+            {
+               dice.gameObject.SetActive(false);
+            }
+
+        }
+        }
+
+             rollingDices = null;
     }
 
     public void ThrowDices()
@@ -425,10 +438,10 @@ public class DiceController : MonoBehaviour
 
         foreach (var step in playedSteps)
         {
- 
-            if (step> 0)
+
+            if (step > 0)
             {
-                
+
 
                 if (list.Contains(step))
                 {
@@ -438,7 +451,7 @@ public class DiceController : MonoBehaviour
                         list.RemoveAt(list.FindIndex(x => x == step));
 
 
-                        
+
                         if (!IsDoubleMove())
                         {
 
@@ -449,37 +462,30 @@ public class DiceController : MonoBehaviour
 
                             if (step == MoveClick.instance.curMoves[0])
                             {
-                               MoveClick.instance.smallDieWasUsed = true;
+                                MoveClick.instance.smallDieWasUsed = true;
                             }
                         }
                         else
                         {
+                           /*
                             //this part will check if its double movement, then it will make the last two indexes of the list 0
                             if (list.Count > 1)
                             {
                                 MoveClick.instance.curMoves[list.Count] = 0;
                             }
+                            */
 
                         }
 
-                        
+                    }
  
-                    }
-                    else
-                    {
-                        
-                    }
-
                 }
-                else
-                {
-                     
-                }
+ 
 
             }
 
 
-}
+        }
         return list;
 
     }
@@ -487,5 +493,7 @@ public class DiceController : MonoBehaviour
 }
 
 
-    #endregion
+
+
+#endregion
 
