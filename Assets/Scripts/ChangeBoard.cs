@@ -16,11 +16,26 @@ public class ChangeBoard : MonoBehaviour
     [SerializeField] Sprite dubai;
     [SerializeField] Sprite moscow;
     [SerializeField] Sprite roma;
+    public static ChangeBoard instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
- 
+        changeBoard();
+         
+    }
+
+
+    public void changeBoard()
+    {
         switch (PassData.BoardType)
         {
             case "oslo":
