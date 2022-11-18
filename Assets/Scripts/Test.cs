@@ -6,29 +6,31 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Events;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Test : MonoBehaviour
 {
-    bool ReconnectFlag = false;
+    [SerializeField] Button click;
 
-    private void Update()
+
+    bool MyFunctionCalled = false;
+
+    void Update()
     {
-        if (Application.internetReachability == NetworkReachability.NotReachable)
+        if(MyFunctionCalled == true)
         {
-            Debug.Log("internet dissconected");
-            ReconnectFlag = true;
-        }
-        else
-        {
-            if(ReconnectFlag == true)
-            {
-               
-               Debug.Log("reconnected");
-                return;
+            Debug.Log("called");
+            MyFunctionCalled = false;
+            
+           
+     }
 
-            }
- 
-        }
+    }
+
+    public void onclick()
+    {
+        MyFunctionCalled = true;
+        
     }
 
 

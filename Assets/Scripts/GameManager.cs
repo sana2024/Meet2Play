@@ -245,6 +245,7 @@ public class GameManager : MonoBehaviour
                     turnPlayer = currentPlayer;
 
 
+
                 }
                 if (state["Current_Player"] == "Black" && AutoRollDiceActive == "True")
                 {
@@ -518,13 +519,25 @@ public class GameManager : MonoBehaviour
                 Debug.Log("my id" + PassData.Match.Self.UserId);
             }
 
-       
+
+        }
+        else
+        {
+            Debug.Log("session expired");
         }
     }
 
 
     private async void Update()
     {
+        if(currentPlayer.id == 0)
+        {
+            MoveClick.instance.player = 1;
+        }
+        if (currentPlayer.id == 1)
+        {
+            MoveClick.instance.player = 0;
+        }
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
@@ -569,12 +582,14 @@ public class GameManager : MonoBehaviour
 
         if (turnPlayer.IsMoveLeft()&& MoveClick.instance.NoMovePass == false || turnPlayer.rolledDice == false)
         {
-            Debug.Log("test");
+ 
             nextTurnButton.gameObject.SetActive(false);
+             
         }
         else
         {
             nextTurnButton.gameObject.SetActive(true);
+
         }
     
  
@@ -920,6 +935,18 @@ public class GameManager : MonoBehaviour
             }
 
             var lastMove = currentPlayer.movesPlayed.Last();
+
+            if(lastMove.step == MoveClick.instance.curMoves[0])
+            {
+                MoveClick.instance.smallDieWasUsed = false;
+            }
+
+            if (lastMove.step == MoveClick.instance.curMoves[1])
+            {
+                MoveClick.instance.bigDieWasUsed = false;
+            }
+
+            Debug.Log("last move step " + lastMove.step);
 
             // undo move action
             lastMove.piece.PlaceOn(lastMove.from);

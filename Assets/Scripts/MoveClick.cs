@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MoveClick : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class MoveClick : MonoBehaviour
 
     [SerializeField]
     public bool alreadyRolled = false;
-    private bool alreadyMoved;
+    public bool alreadyMoved;
     private bool canDeletePieces;
     [SerializeField]
     public bool bigDieWasUsed;
@@ -91,16 +92,20 @@ public class MoveClick : MonoBehaviour
     {
         if (PassData.IsFirstRound == false)
         {
-            Debug.Log("its second round ");
-            if (PassData.PlayerWonRound == GameManager.instance.playerBlack)
+   
+ 
+            if (PassData.PlayerWonRound.pieceType == GameManager.instance.playerBlack.pieceType)
             {
+   
                 player = 1;
             }
 
-            if (PassData.PlayerWonRound == GameManager.instance.playerWhite)
+            if (PassData.PlayerWonRound.pieceType == GameManager.instance.playerWhite.pieceType)
             {
+   
                 player = 0;
             }
+           
 
         }
         else
@@ -113,16 +118,16 @@ public class MoveClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
- 
+       
         if(IsBeingHeld == true)
         {
         }
         if (eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0 && alreadyRolled == true)
         {
- 
+            Debug.Log("runs");
             NoMovePass = true;
             smallDieWasUsed = bigDieWasUsed = true;
-            GameManager.instance.nextTurnButton.interactable = true;
+            GameManager.instance.nextTurnButton.gameObject.SetActive(true);
 
         }
 
@@ -135,10 +140,10 @@ public class MoveClick : MonoBehaviour
  
             if (smallDieWasUsed == true)
             {
- 
+                Debug.Log("runs");
                 bigDieWasUsed = true;
                 NoMovePass = true;
-                GameManager.instance.nextTurnButton.interactable = true;
+                GameManager.instance.nextTurnButton.gameObject.SetActive(true);
                 hitPiecesBiggerThanOne = false;
             }
         }
@@ -148,10 +153,10 @@ public class MoveClick : MonoBehaviour
  
             if (bigDieWasUsed == true)
             {
- 
+                Debug.Log("runs");
                 smallDieWasUsed = true;
                 NoMovePass = true;
-                GameManager.instance.nextTurnButton.interactable = true;
+                GameManager.instance.nextTurnButton.gameObject.SetActive(true);
                 hitPiecesBiggerThanOne = false;
             }
         }
@@ -202,7 +207,7 @@ public class MoveClick : MonoBehaviour
         }
 
 
-//        Player.text ="player "+ player.ToString();
+        Player.text ="player "+ player.ToString();
  
         if (curMoves[0] == -1 && curMoves[1] == -1)
         {
@@ -243,7 +248,8 @@ public class MoveClick : MonoBehaviour
                 checkIfCanRemove = canRemoveAPiece();
             if ((smallDieWasUsed && bigDieWasUsed) || (BCount + mCount + MCount == 0 && checkIfCanRemove == -1))
             {
-                GameManager.instance.nextTurnButton.interactable = true;
+                Debug.Log("runs");
+                GameManager.instance.nextTurnButton.gameObject.SetActive(true);
             }
 
 
@@ -257,7 +263,12 @@ public class MoveClick : MonoBehaviour
             {
                 if ( IsBeingHeld == false)
                 {
-                    makeMove(makeTargetIndx(true) );
+
+                    if (!EventSystem.current.IsPointerOverGameObject())
+                    {
+                       makeMove(makeTargetIndx(true) );
+                    }
+ 
  
                 }
             }
@@ -509,7 +520,7 @@ public class MoveClick : MonoBehaviour
             smallDieWasUsed = true;
         if (bigDieWasUsed && smallDieWasUsed)
         {
-            GameManager.instance.nextTurnButton.interactable = true;
+            GameManager.instance.nextTurnButton.gameObject.SetActive(true);
         }
 
     }
@@ -984,10 +995,13 @@ public class MoveClick : MonoBehaviour
         }
     }
 
-    
+
 
     public void undo()
     {
+        var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
+        GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
+
         if (curMoves[0] == curMoves[1])
         {
             if (whichDie.Count == 1)
@@ -1002,28 +1016,35 @@ public class MoveClick : MonoBehaviour
         else
         {
             if (whichDie[whichDie.Count - 1] == 'm')
+            {
+                Debug.Log("remove small");
                 smallDieWasUsed = false;
-            else
+            }
+            if(whichDie[whichDie.Count - 1] == 'M')
+            {
+                Debug.Log("remove big");
                 bigDieWasUsed = false;
-        }
+            }
  
-            ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
-        
+        }
 
-        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false );
+        ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
+
+
+        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false);
         if (eatenOrigin[eatenOrigin.Count - 1])
-            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(),  "hit", false );
+            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(), "hit", false);
 
 
         Debug.Log("destination " + destination[destination.Count - 1].getIndx());
 
         if (destination[destination.Count - 1].getIndx() < 24)
         {
- 
-                    Debug.Log("destination");
-                    updateTheCount(movesMap[destination.Last().getIndx()], -1);
-                    movesMap[destination.Last().getIndx()] = availableMoves(destination.Last());
-      
+
+            Debug.Log("destination");
+            updateTheCount(movesMap[destination.Last().getIndx()], -1);
+            movesMap[destination.Last().getIndx()] = availableMoves(destination.Last());
+
 
         }
         if (origin[origin.Count - 1].getIndx() < 24)
@@ -1043,13 +1064,13 @@ public class MoveClick : MonoBehaviour
         destination.RemoveAt(destination.Count - 1);
         eatenOrigin.RemoveAt(eatenOrigin.Count - 1);
 
-       
-        ButtonController.Instance.doneButton.GetComponent<Button>().interactable = false;
-         if (whichDie.Count == 0)
-            ButtonController.Instance.doneButton.GetComponent<Button>().interactable = false;
-         
-        var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
-        GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
+
+         ButtonController.Instance.doneButton.SetActive(false);
+        if (whichDie.Count == 0)
+        ButtonController.Instance.doneButton.SetActive(false);
+
+ 
+
     }
 
 
@@ -1284,7 +1305,7 @@ public class MoveClick : MonoBehaviour
             if ((mCount + BCount == 0 && bigDieWasUsed && check != 0) || (MCount + BCount == 0 && smallDieWasUsed && check == -1) || (mCount + MCount + BCount == 0 && check == -1))
             {
                 
-                GameManager.instance.nextTurnButton.interactable = true;
+                GameManager.instance.nextTurnButton.gameObject.SetActive(true);
                 NoMovePass = true;
             }
 

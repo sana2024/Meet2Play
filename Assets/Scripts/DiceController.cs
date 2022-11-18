@@ -40,6 +40,8 @@ public class DiceController : MonoBehaviour
     [SerializeField] Sprite[] BlackCanvasDice;
     [SerializeField] Sprite[] WhiteCanvasDice;
 
+    public bool OneOfTheDiceUsed = false;
+
     ISocket isocket;
 
     int BigDice;
@@ -454,16 +456,24 @@ public class DiceController : MonoBehaviour
 
                         if (!IsDoubleMove())
                         {
-
-                            if (step == MoveClick.instance.curMoves[1])
+                            if (OneOfTheDiceUsed == true)
                             {
-                                MoveClick.instance.bigDieWasUsed = true;
-                            }
+                                if (step == MoveClick.instance.curMoves[1])
+                                {
+                                    Debug.Log("big was used ");
+                                    MoveClick.instance.bigDieWasUsed = true;
 
-                            if (step == MoveClick.instance.curMoves[0])
-                            {
-                                MoveClick.instance.smallDieWasUsed = true;
+                                }
+
+                                if (step == MoveClick.instance.curMoves[0])
+                                {
+                                    Debug.Log("small was used ");
+                                    MoveClick.instance.smallDieWasUsed = true;
+                                }
+
+                                OneOfTheDiceUsed = false;
                             }
+                            
                         }
                         else
                         {

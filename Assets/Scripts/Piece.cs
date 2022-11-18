@@ -111,6 +111,11 @@ public class Piece : MonoBehaviour
     ISocket isocket;
 
 
+
+    // others
+    public int currentMoveBig;
+    public int currentMoveSmall;
+
     #region Unity API
 
     private void Awake()
@@ -327,12 +332,12 @@ public class Piece : MonoBehaviour
 
                 if (ReachedZero == true)
                 {
-                    FadeRate += 0.025f;
+                    FadeRate += 0.015f;
                 }
 
                 if (ReachedOne == true)
                 {
-                    FadeRate -= 0.025f;
+                    FadeRate -= 0.015f;
                 }
 
 
@@ -777,15 +782,15 @@ public class Piece : MonoBehaviour
 
     public void OnSuccessfulMove(Slot to, MoveActionTypes action, int stepPlayed)
     {
-        Debug.Log("step " +to);
+        Debug.Log("step " + to);
         MoveCounter++;
         var movesPlayedList = GameManager.instance.currentPlayer.movesPlayed;
 
         // log played moves for undo
         movesPlayedList.Add(new Move { piece = this, from = currentSlot, to = to, step = stepPlayed, action = action });
-        var state = MatchDataJson.SetPieceStack(this.name, currentSlot.name , to.name , stepPlayed.ToString(), action.ToString(), "move");
+        var state = MatchDataJson.SetPieceStack(this.name, currentSlot.name, to.name, stepPlayed.ToString(), action.ToString(), "move");
         movedWithDrag = true;
- 
+
         SendMatchState(OpCodes.stack, state);
 
         //---------------------------------------
@@ -803,16 +808,16 @@ public class Piece : MonoBehaviour
         // move yourself to outside
         if ((action & MoveActionTypes.Bear) == MoveActionTypes.Bear)
         {
- 
+
             ConvertPieceOutside.instance.FromSlotToOut(this);
 
             var slotOutside = Slot.GetOutside(pieceType).GetComponent<Slot>();
 
-             index += 0.15f;
+            index += 0.15f;
 
             PlaceOn(slotOutside);
 
-         
+
 
             // check round finish
             GameManager.instance.CheckRoundFinish();
@@ -821,8 +826,9 @@ public class Piece : MonoBehaviour
         else
             PlaceOn(to);
 
-
+        DiceController.instance.OneOfTheDiceUsed = true;
     }
+
 
     private void OnReciveMove(Piece piece, Slot to, MoveActionTypes action, int stepPlayed)
     {
