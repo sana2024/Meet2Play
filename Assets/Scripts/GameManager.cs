@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
             currentPlayer = PassData.PlayerWonRound;
             turnPlayer = currentPlayer;
         }
- 
+   
 
         HideDiceValues();
 
@@ -517,6 +517,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log("re joined the match");
 
                 Debug.Log("my id" + PassData.Match.Self.UserId);
+
+                SystemSettings.instance.ConnectionPanel.SetActive(false);
             }
 
 
@@ -524,6 +526,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("session expired");
+            isession = await iclient.SessionRefreshAsync(isession);
         }
     }
 
@@ -537,6 +540,11 @@ public class GameManager : MonoBehaviour
         if (currentPlayer.id == 1)
         {
             MoveClick.instance.player = 0;
+        }
+
+        if (isocket.IsConnected)
+        {
+            Debug.Log("socket disconnected");
         }
 
         if (Application.internetReachability == NetworkReachability.NotReachable)

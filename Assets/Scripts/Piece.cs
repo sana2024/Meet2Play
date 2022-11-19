@@ -231,8 +231,8 @@ public class Piece : MonoBehaviour
 
     void Update()
     {
-
-
+        if (CurSlot != null)
+ 
         if (MovedWithClick)
         {
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
@@ -255,6 +255,8 @@ public class Piece : MonoBehaviour
                     }
                 }
             }
+
+
 
 
             if(preSlot != null && preSlot.slotType != SlotType.Outside)
@@ -346,7 +348,6 @@ public class Piece : MonoBehaviour
             MoveClick.instance.IsBeingHeld = true;
             click = false;
             var mousePos = GetMousePos();
-
             gameObject.transform.position = new Vector3(mousePos.x, mousePos.y + (currentSlot.IsTopSlot() ? -offsetY : offsetY), 0);
 
             // var state = new Dictionary<string, string> { { "PeiceID", pieceId.ToString() }, { "PeiceX", gameObject.transform.position.x.ToString() }, { "PeiceY", gameObject.transform.position.y.ToString() } }.ToJson();

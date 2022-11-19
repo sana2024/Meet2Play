@@ -11,28 +11,31 @@ using UnityEngine.SceneManagement;
 public class Test : MonoBehaviour
 {
     [SerializeField] Button click;
-
+    Ping p;
 
     bool MyFunctionCalled = false;
 
+
+
     void Update()
     {
-        if(MyFunctionCalled == true)
-        {
-            Debug.Log("called");
-            MyFunctionCalled = false;
-            
-           
-     }
+        StartCoroutine(CheckRoutine());
 
     }
 
     public void onclick()
     {
-        MyFunctionCalled = true;
+ 
         
     }
 
+    IEnumerator CheckRoutine()
+    {
+        UnityWebRequest request = new UnityWebRequest("https://www.google.com/");
+        yield return request.SendWebRequest();
+
+        Debug.Log(request.result);
+    }
 
 
 }

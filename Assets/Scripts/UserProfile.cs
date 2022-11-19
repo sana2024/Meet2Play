@@ -77,6 +77,9 @@ public class UserProfile : MonoBehaviour
     int countertokoyo = 0;
 
 
+    bool ChekckedReadData = true;
+
+
 
 
     // Start is called before the first frame update
@@ -96,7 +99,6 @@ public class UserProfile : MonoBehaviour
         Wallet();
 
         rpc();
-
 
 
         Storageojectcounter();
@@ -129,7 +131,7 @@ public class UserProfile : MonoBehaviour
         foreach (var userId in result.Users)
         {
 
-            Debug.Log("meta data " + userId.Metadata);
+ 
 
             if (userId.Online)
             {
@@ -176,7 +178,7 @@ public class UserProfile : MonoBehaviour
 }); ;
 
 
-        Debug.Log(string.Join(",\n  ", Sendata));
+  
 
     }
 
@@ -296,8 +298,11 @@ public class UserProfile : MonoBehaviour
         }
         else
         {
+  
+                ReadData();
+      
 
-            ReadData();
+       
             //    ReadDataStatus();
 
 
@@ -431,7 +436,7 @@ public class UserProfile : MonoBehaviour
                     Debug.Log(storage);
 
 
-                    osloText.text = "Waiting Player" + " " + counteroslo;
+                    osloText.text = "Waiting Player  " + " " + counteroslo;
  
                 }
 
@@ -439,7 +444,7 @@ public class UserProfile : MonoBehaviour
                 {
                     counterparis++;
  
-                    parisText.text = "Waiting Player " + " " + counterparis;
+                    parisText.text = "Waiting Player  " + " " + counterparis;
  
 
                 }
@@ -448,56 +453,56 @@ public class UserProfile : MonoBehaviour
                 {
                     countermosco++;
 
-                    moscoText.text = "Waiting Player" + " " + countermosco;
+                    moscoText.text = "Waiting Player  " + " " + countermosco;
  
                 }
                 if (storage.Value.Contains("true") && storage.Value.Contains("tokoyo"))
                 {
                     countertokoyo++;
 
-                    tokoyoText.text = "Waiting Player" + " " + countertokoyo;
+                    tokoyoText.text = "Waiting Player  " + " " + countertokoyo;
  
                 }
                 if (storage.Value.Contains("true") && storage.Value.Contains("berlin"))
                 {
                     counterberlin++;
 
-                    berlinText.text = "Waiting Player" + " " + counterberlin;
+                    berlinText.text = "Waiting Player  " + " " + counterberlin;
  
                 }
                 if (storage.Value.Contains("true") && storage.Value.Contains("newyork"))
                 {
                     counternewyork++;
 
-                    newyorkText.text = "Waiting  Player" + " " + counternewyork;
+                    newyorkText.text = "Waiting  Player  " + " " + counternewyork;
  
                 }
                 if (storage.Value.Contains("true") && storage.Value.Contains("london"))
                 {
                     counterlondon++;
 
-                    londonText.text=" Waiting Player "+" " +counterlondon;
+                    londonText.text=" Waiting Player  "+" " +counterlondon;
  
                 }
                 if (storage.Value.Contains("true") && storage.Value.Contains("boston"))
                 {
                     counterboston++;
 
-                    bostonText.text = "Waiting Player " + " " + counterboston;
+                    bostonText.text = "Waiting Player  " + " " + counterboston;
  
                 }
                 if (storage.Value.Contains("true") && storage.Value.Contains("dubai"))
                 {
                     counterdubai++;
 
-                    dubaiText.text = "Waiting Player " + " " + counterdubai;
+                    dubaiText.text = "Waiting Player  " + " " + counterdubai;
  
                 }
                 if (storage.Value.Contains("true") && storage.Value.Contains("roma"))
                 {
                     counterroma++;
 
-                    romaText.text = " Waiting Player " + " " + counterroma;
+                    romaText.text = " Waiting Player  " + " " + counterroma;
  
                 }
  

@@ -10,7 +10,7 @@ public class SystemSettings : MonoBehaviour
 {
 
     [SerializeField] GameObject SettingPanel;
-    [SerializeField] GameObject ConnectionPanel;
+    [SerializeField] public GameObject ConnectionPanel;
 
     [SerializeField] Button MusicToggle;
     [SerializeField] Button SoundToggle;
@@ -24,12 +24,20 @@ public class SystemSettings : MonoBehaviour
     [SerializeField] GameObject AdsPanel;
 
     [SerializeField] GameObject TutorialPanel;
+
+    public static SystemSettings instance;
  
 
 
     bool MusicMute = false;
     bool SoundMute = false;
-
+    public void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
     public void Start()
     {
@@ -91,10 +99,7 @@ public class SystemSettings : MonoBehaviour
             ConnectionPanel.SetActive(true);
 
         }
-        else
-        {
-            ConnectionPanel.SetActive(false);
-        }
+ 
     }
 
 

@@ -205,10 +205,18 @@ public class MoveClick : MonoBehaviour
             }
 
         }
+        if(GameManager.instance.currentPlayer.UserId == PassData.Match.Self.UserId)
+        {
+            Player.text = "YOUR TURN";
+        }
+
+        if (GameManager.instance.currentPlayer.UserId == PassData.OtherUserId)
+        {
+            Player.text = "OPPONENT TURN";
+        }
 
 
-        Player.text ="player "+ player.ToString();
- 
+
         if (curMoves[0] == -1 && curMoves[1] == -1)
         {
  
