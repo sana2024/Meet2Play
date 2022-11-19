@@ -284,70 +284,80 @@ public class MoveClick : MonoBehaviour
 
     public void Possabilities(float FadeRate)
     {
- 
+        if (ClickedSlot != slots[25] && ClickedSlot != slots[26])
+        {
+
             var longIndx = makeTileIndx(ClickedSlot.getIndx(), Mathf.Max(curMoves[1], curMoves[0]));
             var shortIndx = makeTileIndx(ClickedSlot.getIndx(), Mathf.Min(curMoves[1], curMoves[0]));
 
             if (ClickedSlot.pieces.Any() && ClickedSlot.pieces.Last().pieceType == GameManager.instance.currentPlayer.pieceType)
             {
-
-                if (isAvailable(slots[longIndx]) && slots[longIndx] != slots[24] && slots[longIndx] != slots[25] && slots[longIndx] != slots[26] && bigDieWasUsed == false)
+                if (longIndx < 24 && longIndx > -1)
                 {
-                    if (slots[longIndx].pieces.Any()){
-                    slots[longIndx].pieces.Last().ShowPieceShadowHint(FadeRate);
-                        
-                    }
-                    else
+                    Debug.Log("long index " + longIndx);
+                    if (isAvailable(slots[longIndx]) && bigDieWasUsed == false)
                     {
-                        SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
-                        if (ClickedSlot.getColor() == 1)
+                        if (slots[longIndx].pieces.Any())
                         {
-                            BigSprite.sprite = whitePieceSprite;
+                            slots[longIndx].pieces.Last().ShowPieceShadowHint(FadeRate);
+
                         }
-                        if (ClickedSlot.getColor() == 0)
+                        else
                         {
-                            BigSprite.sprite = blackPiecesSprite;
+                            SpriteRenderer BigSprite = slots[longIndx].GetComponentInChildren<SpriteRenderer>();
+                            if (ClickedSlot.getColor() == 1)
+                            {
+                                BigSprite.sprite = whitePieceSprite;
+                            }
+                            if (ClickedSlot.getColor() == 0)
+                            {
+                                BigSprite.sprite = blackPiecesSprite;
+                            }
+
+                            BigSprite.color = new Color(1, 1, 1, FadeRate);
+
+
+
                         }
 
-                        BigSprite.color = new Color(1, 0.9f, 0.7f, FadeRate);
-                        
-                        
 
                     }
-
-
                 }
-
-                if (isAvailable(slots[shortIndx]) && slots[shortIndx] != slots[24] && slots[shortIndx] != slots[25] && slots[shortIndx] != slots[26] && smallDieWasUsed == false)
+                if (shortIndx < 24 && longIndx > -1)
                 {
-                    if (slots[shortIndx].pieces.Any())
+                    Debug.Log("short index " + shortIndx);
+                    if (isAvailable(slots[shortIndx]) && smallDieWasUsed == false)
                     {
-                        slots[shortIndx].pieces.Last().ShowPieceShadowHint(FadeRate);
-                    }
-                    else
-                    {
-                        SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
-                        if (ClickedSlot.getColor() == 1)
+                        if (slots[shortIndx].pieces.Any())
                         {
-                            smallSprite.sprite = whitePieceSprite;
+                            slots[shortIndx].pieces.Last().ShowPieceShadowHint(FadeRate);
                         }
-                        if (ClickedSlot.getColor() == 0)
+                        else
                         {
-                            smallSprite.sprite = blackPiecesSprite;
+                            SpriteRenderer smallSprite = slots[shortIndx].GetComponentInChildren<SpriteRenderer>();
+                            if (ClickedSlot.getColor() == 1)
+                            {
+                                smallSprite.sprite = whitePieceSprite;
+                            }
+                            if (ClickedSlot.getColor() == 0)
+                            {
+                                smallSprite.sprite = blackPiecesSprite;
+                            }
+                            smallSprite.color = new Color(1, 1, 1, FadeRate);
+
+
+
+
                         }
-                        smallSprite.color = new Color(1, 0.9f, 0.7f, FadeRate);
 
-
-                        
 
                     }
 
- 
                 }
 
             }
 
-        
+        }
 
     }
 

@@ -389,7 +389,7 @@ public class Piece : MonoBehaviour
 
     public void IncreaseColliderRadius()
     {
-        circleCollider2D.radius = 2.24898f;
+        circleCollider2D.radius = 4.019942f;
     }
 
     private float GetOffsetMultiplier(SlotType type)
@@ -472,6 +472,7 @@ public class Piece : MonoBehaviour
 
                     p.transform.localPosition = new Vector2(0, (offset / (slot.pieces.Count * multiplier) * slot.pieces.IndexOf(p) * slot.up));
                     p.GetComponent<SpriteRenderer>().sortingOrder = slot.pieces.IndexOf(p);
+                    p.IncreaseColliderRadius();
 
 
 
@@ -593,6 +594,7 @@ public class Piece : MonoBehaviour
 
     private void OnPieceClick()
     {
+        Debug.Log("on piece click");
  
         // if current player does not rolled the dice yet
         if (!IsCurrentPlayerRolled())
@@ -637,6 +639,7 @@ public class Piece : MonoBehaviour
 
     private void Hold()
     {
+        Debug.Log("hold");
         // hold the piece
         isBeingHeld = true;
 
@@ -648,7 +651,7 @@ public class Piece : MonoBehaviour
         offsetY = Mathf.Abs(GetMousePos().y - this.transform.position.y);
 
         // for easing placing
-        DecreaseColliderRadius();
+       // DecreaseColliderRadius();
 
  
     }
@@ -937,7 +940,7 @@ public class Piece : MonoBehaviour
     {
         
         var spriteShadow = this.GetComponent<SpriteRenderer>();
-        spriteShadow.color = new Color(1, 0.9f, 0.7f, faderate);
+        spriteShadow.color = new Color(1, 1, 1, faderate);
         Debug.Log(FadeRate);
     }
 
