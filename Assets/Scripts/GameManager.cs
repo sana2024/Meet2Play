@@ -542,11 +542,7 @@ public class GameManager : MonoBehaviour
             MoveClick.instance.player = 0;
         }
 
-        if (isocket.IsConnected)
-        {
-            Debug.Log("socket disconnected");
-        }
-
+ 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.Log("internet dissconected");

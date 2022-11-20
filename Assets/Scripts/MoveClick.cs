@@ -124,7 +124,6 @@ public class MoveClick : MonoBehaviour
         }
         if (eatenMovesMap == 'n' && hitted[player].howManyPieces() > 0 && alreadyRolled == true)
         {
-            Debug.Log("runs");
             NoMovePass = true;
             smallDieWasUsed = bigDieWasUsed = true;
             GameManager.instance.nextTurnButton.gameObject.SetActive(true);

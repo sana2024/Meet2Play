@@ -298,9 +298,12 @@ public class UserProfile : MonoBehaviour
         }
         else
         {
-  
-                ReadData();
-      
+            if(ChekckedReadData == true)
+            {
+                Debug.Log("check read data");
+               // ReadData();
+                ChekckedReadData = false;
+            }
 
        
             //    ReadDataStatus();
