@@ -19,6 +19,7 @@ public class SpinManager : MonoBehaviour
     [SerializeField] GameObject CollectBonusPanel;
     [SerializeField] ParticleSystem CoinParticle;
     [SerializeField] UserProfile userProfile;
+    [SerializeField] GameObject spinButton;
 
     int amount;
 
@@ -42,10 +43,10 @@ public class SpinManager : MonoBehaviour
 
     private IEnumerator Spin()
     {
-
+        spinButton.SetActive(false);
         isCoroutine = false;
         randVal = Random.Range(100, 200);
-        timeInterval = 0.0001f * Time.deltaTime * 7;
+        timeInterval = 0.0001f * Time.deltaTime * 5;
         for (int i = 0; i < randVal; i++)
         {
             transform.Rotate(0, 0, (totalAngle / 2));

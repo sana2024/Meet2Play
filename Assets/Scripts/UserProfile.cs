@@ -207,7 +207,6 @@ public class UserProfile : MonoBehaviour
 
 
 
-            PassData.version = storageObject.Version;
             PassData.ReadPermission = storageObject.PermissionRead;
             PassData.wins = int.Parse(datas.wins);
             PassData.losses = int.Parse(datas.Losses);
@@ -216,14 +215,7 @@ public class UserProfile : MonoBehaviour
             PassData.Board = datas.BoardType;
 
         }
-        else
-        {
-
-            WriteData(sendLevel, wins, losses, QueueUser, Boardtype);
-
-
-
-        }
+ 
 
 
     }
@@ -284,7 +276,7 @@ public class UserProfile : MonoBehaviour
 
         LevelText.text = sendLevel.ToString();
         WinText.text = wins.ToString();
-        LossText.text = losses.ToString();
+       // LossText.text = losses.ToString();
 
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -301,11 +293,11 @@ public class UserProfile : MonoBehaviour
             if(ChekckedReadData == true)
             {
                 Debug.Log("check read data");
-               // ReadData();
+                ReadData();
                 ChekckedReadData = false;
             }
 
-       
+
             //    ReadDataStatus();
 
 
