@@ -16,12 +16,58 @@ public class ResizeSlots : MonoBehaviour
     [SerializeField] GameObject whiteSlot;
     [SerializeField] GameObject BlackSlot;
 
-    
-
-    private void Start()
-    {
-
+    [SerializeField] GameObject board;
+    [SerializeField] GameObject boardBackground;
+    [SerializeField] GameObject users;
+    [SerializeField] GameObject autoRoll;
+    [SerializeField] GameObject diceValues;
+    [SerializeField] GameObject bet;
+    [SerializeField] GameObject turnPlayer;
  
+
+
+
+
+    private void Update()
+    {
+        //resize board based on screen size
+        if(Camera.main.aspect <= 1.6)
+        {
+            //ipad and tablet
+            board.transform.localScale = new Vector2(0.868f, 0.868f);
+            boardBackground.transform.localScale = new Vector2(0.44f, 0.417f);
+
+            RectTransform UserRect = users.GetComponent<RectTransform>();
+            RectTransform AutoRollRect = autoRoll.GetComponent<RectTransform>();
+            RectTransform DiceValueRect = diceValues.GetComponent<RectTransform>();
+            RectTransform BetRect = bet.GetComponent<RectTransform>();
+            RectTransform TurnRect = turnPlayer.GetComponent<RectTransform>();
+
+            UserRect.anchoredPosition = new Vector2(0,-29);
+            users.transform.localPosition = new Vector3(0.94f, 0.94f, 0.94f);
+            AutoRollRect.anchoredPosition = new Vector2(-593, 33);
+            DiceValueRect.anchoredPosition = new Vector2(-55, 435);
+            BetRect.anchoredPosition = new Vector2(-511, 6);
+            TurnRect.anchoredPosition = new Vector2(5, -45);
+            turnPlayer.transform.localScale = new Vector3(2.1f, 0.54f, 1.3f);
+
+        }
+
+        if(Camera.main.aspect > 1.6 && Camera.main.aspect < 2)
+        {
+            // 16:9 screen size
+            board.transform.localScale = new Vector3(0.9763f, 0.9763f, 0.9763f);
+            boardBackground.transform.localScale = new Vector3(0.5f,0.47f, 0.5f);
+            
+        }
+
+        if (Camera.main.aspect >= 2)
+        {
+              //iphone 11,12
+
+        }
+
+
     }
 
     public void rotate()
@@ -44,6 +90,8 @@ public class ResizeSlots : MonoBehaviour
         Section3.transform.position = new Vector3(Section3.transform.position.x, -0.1f, Section3.transform.position.z);
         Section4.transform.position = new Vector3(Section4.transform.position.x, -0.1f, Section3.transform.position.z);
     }
+
+
 
    
 
