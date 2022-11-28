@@ -175,7 +175,7 @@ public class UserProfile : MonoBehaviour
 
 
     }
-}); ;
+}); 
 
 
   
@@ -213,6 +213,11 @@ public class UserProfile : MonoBehaviour
             PassData.level = int.Parse(datas.Level);
             PassData.Queue = datas.Queue;
             PassData.Board = datas.BoardType;
+ 
+
+            PlayerPrefs.SetInt("level", sendLevel);
+            PlayerPrefs.SetInt("wins", wins);
+            PlayerPrefs.SetInt("looses", losses);
 
         }
  
@@ -292,9 +297,9 @@ public class UserProfile : MonoBehaviour
         {
             if(ChekckedReadData == true)
             {
-                Debug.Log("check read data");
                 ReadData();
                 ChekckedReadData = false;
+
             }
 
 

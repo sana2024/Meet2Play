@@ -23,13 +23,20 @@ public class ResizeSlots : MonoBehaviour
     [SerializeField] GameObject diceValues;
     [SerializeField] GameObject bet;
     [SerializeField] GameObject turnPlayer;
- 
+    [SerializeField] GameObject endgameButtons;
+    [SerializeField] GameObject reward;
+    [SerializeField] GameObject gameScore;
+    [SerializeField] GameObject CameraMask1;
+    [SerializeField] GameObject CameraMask2;
 
 
 
 
     private void Update()
     {
+
+            RectTransform mask1Rect = CameraMask1.GetComponent<RectTransform>();
+            RectTransform mask2Rect = CameraMask2.GetComponent<RectTransform>();
         //resize board based on screen size
         if(Camera.main.aspect <= 1.6)
         {
@@ -42,6 +49,10 @@ public class ResizeSlots : MonoBehaviour
             RectTransform DiceValueRect = diceValues.GetComponent<RectTransform>();
             RectTransform BetRect = bet.GetComponent<RectTransform>();
             RectTransform TurnRect = turnPlayer.GetComponent<RectTransform>();
+            RectTransform EndGameRect = endgameButtons.GetComponent<RectTransform>();
+            RectTransform rewardRect= reward.GetComponent<RectTransform>();
+            RectTransform scoreRect = gameScore.GetComponent<RectTransform>();
+
 
             UserRect.anchoredPosition = new Vector2(0,-29);
             users.transform.localPosition = new Vector3(0.94f, 0.94f, 0.94f);
@@ -50,7 +61,13 @@ public class ResizeSlots : MonoBehaviour
             BetRect.anchoredPosition = new Vector2(-511, 6);
             TurnRect.anchoredPosition = new Vector2(5, -45);
             turnPlayer.transform.localScale = new Vector3(2.1f, 0.54f, 1.3f);
+            EndGameRect.anchoredPosition = new Vector2(0,99);
+            rewardRect.anchoredPosition = new Vector2(9, 13);
+            scoreRect.anchoredPosition = new Vector2(0, 88);
 
+
+            mask1Rect.anchoredPosition = new Vector2(mask1Rect.anchoredPosition.x, -65);
+            mask2Rect.anchoredPosition = new Vector2(mask2Rect.anchoredPosition.x, -65);
         }
 
         if(Camera.main.aspect > 1.6 && Camera.main.aspect < 2)
@@ -58,12 +75,15 @@ public class ResizeSlots : MonoBehaviour
             // 16:9 screen size
             board.transform.localScale = new Vector3(0.9763f, 0.9763f, 0.9763f);
             boardBackground.transform.localScale = new Vector3(0.5f,0.47f, 0.5f);
-            
+
+            mask1Rect.anchoredPosition = new Vector2(mask1Rect.anchoredPosition.x, -87);
+            mask2Rect.anchoredPosition = new Vector2(mask2Rect.anchoredPosition.x, -87);
+
         }
 
         if (Camera.main.aspect >= 2)
         {
-              //iphone 11,12
+              
 
         }
 
