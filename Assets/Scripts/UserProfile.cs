@@ -38,7 +38,7 @@ public class UserProfile : MonoBehaviour
     //USER TEXTFRIENDS
     [SerializeField] Text LevelText;
     [SerializeField] Text TimeText;
-    [SerializeField] Text Username;
+    [SerializeField] ArabicText Username;
     [SerializeField] RawImage ProfileImage;
     [SerializeField] RawImage ProfilePanel;
     [SerializeField] RawImage MatchImage;
@@ -48,7 +48,7 @@ public class UserProfile : MonoBehaviour
     [SerializeField] Text WinText;
     [SerializeField] Text LossText;
     [SerializeField] Text OnlineCounterText;
-    [SerializeField] Text MatchUserName;
+    [SerializeField] ArabicText MatchUserName;
 
     PersonData data;
 
@@ -79,11 +79,22 @@ public class UserProfile : MonoBehaviour
 
     bool ChekckedReadData = true;
 
+    string useridParis = "";
+    string useridLondon = "";
+    string useridOslo = "";
+    string useridMoscow = "";
+    string useridNewYork= "";
+    string useridTokyo = "";
+    string useridBoston = "";
+    string useridDubai = "";
+    string useridRoma = "";
+    string useridBerlin = "";
 
+     List<string> OnlineUsers = new List<string>();
 
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         client = PassData.iClient;
         session = PassData.isession;
@@ -98,12 +109,37 @@ public class UserProfile : MonoBehaviour
 
         Wallet();
 
-        rpc();
+       // InvokeRepeating("rpc",0.1f, 5);
+        InvokeRepeating("Storageojectcounter", 0.1f, 5);
 
+        PassData.isocket.ReceivedStreamPresence += presenceEvent => JoinedStream(presenceEvent);
 
-        Storageojectcounter();
+        var result = await PassData.isocket.RpcAsync("join","payload");
+       
     }
 
+    void JoinedStream(IStreamPresenceEvent presenceEvent)
+    {
+
+        foreach (var joined in presenceEvent.Joins)
+        {
+            OnlineCounter++;
+
+            OnlineUsers.Add(joined.UserId);
+            Storageojectcounter();
+
+        }
+        foreach (var left in presenceEvent.Leaves)
+        {
+            OnlineUsers.Remove(left.UserId);
+            OnlineCounter--;
+        }
+
+ 
+    }
+
+ 
+/*
     public async void rpc()
     {
         var rpcid = "users";
@@ -116,10 +152,10 @@ public class UserProfile : MonoBehaviour
         List<String> termsList = new List<String>();
 
 
-        foreach (var id in data.client)
+        for(int i=0; i<100; i++)
         {
-
-            termsList.Add(id.id);
+            
+            termsList.Add(data.client[i].id);
 
         }
 
@@ -143,7 +179,7 @@ public class UserProfile : MonoBehaviour
         OnlineCounterText.text = onlines.Count.ToString();
 
     }
-
+*/
 
     public async void WriteData(int levelvalue, int winsvalue, int LossValue, string wating, string BoardType)
     {
@@ -278,6 +314,7 @@ public class UserProfile : MonoBehaviour
 
     public void Update()
     {
+        OnlineCounterText.text = OnlineCounter.ToString();
 
         LevelText.text = sendLevel.ToString();
         WinText.text = wins.ToString();
@@ -295,6 +332,7 @@ public class UserProfile : MonoBehaviour
         }
         else
         {
+            
             if(ChekckedReadData == true)
             {
                 ReadData();
@@ -341,8 +379,8 @@ public class UserProfile : MonoBehaviour
         TimeText.text = date;
 
         //Username
-        Username.text = user.Username;
-        MatchUserName.text = user.Username;
+        Username.Text = user.Username;
+        MatchUserName.Text = user.Username;
     }
 
     public void OpenProfilePanel()
@@ -397,120 +435,260 @@ public class UserProfile : MonoBehaviour
     {
         public List<Person> client;
     }
- 
+
+
     public async void Storageojectcounter()
     {
-
-        var rpcid = "users";
-        var pokemonInfo = await client.RpcAsync(session, rpcid);
-
-        string TrimedJson = pokemonInfo.Payload.Remove(11, 1);
-
-        data = JsonUtility.FromJson<PersonData>(TrimedJson);
-
-        List<String> termsList = new List<String>();
-
-
-        foreach (var id in data.client)
+ 
+        foreach (var userId in OnlineUsers)
         {
-
-            termsList.Add(id.id);
-
-        }
-
-
-        var result = await client.GetUsersAsync(session, termsList);
-
-        foreach (var userId in result.Users)
-        {
-
+            
             const int limit = 10; // default is 10.
-            var result1 = await client.ListUsersStorageObjectsAsync(session, "UserData", userId.Id, limit);
-
+            var result1 = await client.ListUsersStorageObjectsAsync(session, "UserData", userId, limit);
+ 
             foreach (var storage in result1.Objects)
             {
- 
-                if (storage.Value.Contains("true") && storage.Value.Contains("oslo"))
+
+                 
+                //OSLO
+                if (storage.Value.Contains("oslo"))
                 {
-                    counteroslo++;
-                    Debug.Log(storage);
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridOslo = storage.UserId;
+                        counteroslo = 1;
+
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridOslo)
+                        {
+                            counteroslo = 0;
+                        }
+
+                    }
+
 
 
                     osloText.text = "Waiting Player  " + " " + counteroslo;
- 
                 }
 
-                if (storage.Value.Contains("true") && storage.Value.Contains("paris"))
+                //PARIS
+                if (storage.Value.Contains("paris"))
                 {
-                    counterparis++;
+                     
+                    
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridParis = storage.UserId;
+                        counterparis = 1;
+        
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+                         
+                         if(storage.UserId == useridParis)
+                        {
+                            counterparis = 0; 
+                        }
+
+                    }
  
                     parisText.text = "Waiting Player  " + " " + counterparis;
- 
-
+                
+               
+                         
+           
                 }
 
-                if (storage.Value.Contains("true") && storage.Value.Contains("mosco"))
+                //MOSCOW
+                if (storage.Value.Contains("mosco"))
                 {
-                    countermosco++;
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridMoscow = storage.UserId;
+                        countermosco = 1;
 
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridMoscow)
+                        {
+                            countermosco = 0;
+                        }
+
+                    }
                     moscoText.text = "Waiting Player  " + " " + countermosco;
- 
                 }
-                if (storage.Value.Contains("true") && storage.Value.Contains("tokoyo"))
-                {
-                    countertokoyo++;
 
+                //TOKYO
+                if (storage.Value.Contains("tokyo"))
+                {
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridTokyo = storage.UserId;
+                        countertokoyo = 1;
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridTokyo)
+                        {
+                            countertokoyo = 0;
+                        }
+
+                    }
                     tokoyoText.text = "Waiting Player  " + " " + countertokoyo;
- 
                 }
-                if (storage.Value.Contains("true") && storage.Value.Contains("berlin"))
-                {
-                    counterberlin++;
 
+                //BERLIN
+                if (storage.Value.Contains("berlin"))
+                {
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridBerlin = storage.UserId;
+                        counterberlin = 1;
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridBerlin)
+                        {
+                            counterberlin = 0;
+                        }
+
+                    }
                     berlinText.text = "Waiting Player  " + " " + counterberlin;
- 
                 }
-                if (storage.Value.Contains("true") && storage.Value.Contains("newyork"))
-                {
-                    counternewyork++;
 
-                    newyorkText.text = "Waiting  Player  " + " " + counternewyork;
- 
+                //NEWYORK
+                if (storage.Value.Contains("newyork"))
+                {
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridNewYork = storage.UserId;
+                        counternewyork = 1;
+            
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridNewYork)
+                        {
+                            counternewyork = 0;
+                        }
+
+                    }
+                    newyorkText.text = "Waiting Player  " + " " + counternewyork;
                 }
-                if (storage.Value.Contains("true") && storage.Value.Contains("london"))
-                {
-                    counterlondon++;
 
-                    londonText.text=" Waiting Player  "+" " +counterlondon;
+                //LONDON
+                if (storage.Value.Contains("london"))
+                {
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridLondon = storage.UserId;
+                        counterlondon = 1;
  
-                }
-                if (storage.Value.Contains("true") && storage.Value.Contains("boston"))
-                {
-                    counterboston++;
 
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridLondon)
+                        {
+                            counterlondon = 0;
+                        }
+
+                    }
+                    londonText.text = "Waiting Player  " + " " + counterlondon;
+                }
+
+                //BOSTON
+                if (storage.Value.Contains("boston"))
+                {
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridBoston = storage.UserId;
+                        counterboston = 1;
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridBoston)
+                        {
+                            counterboston = 0;
+                        }
+
+                    }
                     bostonText.text = "Waiting Player  " + " " + counterboston;
- 
                 }
-                if (storage.Value.Contains("true") && storage.Value.Contains("dubai"))
-                {
-                    counterdubai++;
 
+                //DUBAI
+                if (storage.Value.Contains("dubai"))
+                {
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridDubai = storage.UserId;
+                        counterdubai = 1;
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridDubai)
+                        {
+                            counterdubai = 0;
+                        }
+
+                    }
                     dubaiText.text = "Waiting Player  " + " " + counterdubai;
- 
                 }
-                if (storage.Value.Contains("true") && storage.Value.Contains("roma"))
-                {
-                    counterroma++;
 
-                    romaText.text = " Waiting Player  " + " " + counterroma;
- 
+                //ROMA
+                if (storage.Value.Contains("roma"))
+                {
+                    if (storage.Value.Contains("true"))
+                    {
+                        useridRoma = storage.UserId;
+                        counterroma = 1;
+
+                    }
+
+                    if (storage.Value.Contains("false"))
+                    {
+
+                        if (storage.UserId == useridRoma)
+                        {
+                            counterroma = 0;
+                        }
+
+                    }
+                    romaText.text = "Waiting Player  " + " " + counterroma;
                 }
- 
+
 
 
 
             }
-            Console.WriteLine("List objects: {0}", result);
+ 
         }
 
 
