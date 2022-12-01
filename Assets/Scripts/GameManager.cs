@@ -160,6 +160,24 @@ public class GameManager : MonoBehaviour
 
         var mainThread = UnityMainThreadDispatcher.Instance();
         isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
+        isocket.Closed += () => Connect();
+
+        isocket.ReceivedStreamPresence += presenceEvent =>
+        {
+            foreach (var joined in presenceEvent.Joins)
+            {
+                Debug.Log("user joined");
+            }
+            foreach (var left in presenceEvent.Leaves)
+            {
+                Debug.Log("user leaved");
+            }
+        };
+
+        isocket.ReceivedStreamState += stream =>
+        {
+            Debug.Log("stream state");
+        };
 
         HideGameEndScreen();
 
@@ -492,44 +510,29 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         NoMoveExistsPanel.SetActive(false);
     }
-
-    IEnumerator Reconnect()
+ 
+    private async void Connect()
     {
-        yield return new WaitForSeconds(3);
-
-        CreateNewSocket();
-    }
-
-    public async void CreateNewSocket()
-    {
-        if (!isession.IsExpired)
+        try
         {
-            Debug.Log("reconnected");
-            isocket = iclient.NewSocket();
-            int connectionTimeout = 30;
-            await isocket.ConnectAsync(isession, true, connectionTimeout);
-            PassData.isocket = isocket;
-
-            if (isocket.IsConnected || isocket != null)
+            if (!isocket.IsConnected)
             {
-                await isocket.JoinMatchAsync(PassData.Match.Id);
-                ReconnectSocket = true;
-                Debug.Log("re joined the match");
+                await isocket.ConnectAsync(isession);
+                PassData.isocket = isocket;
 
-                Debug.Log("my id" + PassData.Match.Self.UserId);
-
-                SystemSettings.instance.ConnectionPanel.SetActive(false);
+                if (isocket.IsConnected)
+                {
+                    await isocket.JoinMatchAsync(PassData.Match.Id);
+                    SystemSettings.instance.ConnectionPanel.SetActive(false);
+                }
             }
-
-
         }
-        else
+        catch (Exception e)
         {
-            Debug.Log("session expired");
-            isession = await iclient.SessionRefreshAsync(isession);
+            Debug.LogWarning("Error connecting socket: " + e.Message);
         }
     }
-
+ 
 
     private async void Update()
     {
@@ -541,23 +544,7 @@ public class GameManager : MonoBehaviour
         {
             MoveClick.instance.player = 0;
         }
-
  
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            Debug.Log("internet dissconected");
-            ReconnectFlag = true;
-        }
-        else
-        {
-            if (ReconnectFlag == true)
-            {
-                StartCoroutine(Reconnect());
-                ReconnectFlag = false;
-            }
-
-
-        }
 
         if (currentPlayer.UserId == PassData.Match.Self.UserId)
         {
@@ -733,14 +720,16 @@ public class GameManager : MonoBehaviour
 
         if (!currentPlayer.IsMoveLeft())
         {
+            NoMoveExistsPanel.SetActive(true);
         }
         else
         {
             nextTurnButton.gameObject.SetActive(true);
         }
 
-        yield return new WaitForSeconds(0);
-   
+        yield return new WaitForSeconds(1.5f);
+
+        NoMoveExistsPanel.SetActive(false);
 
     }
     //this functions manages the dice values on the UI (right corner of the screen
