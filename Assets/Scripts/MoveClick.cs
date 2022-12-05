@@ -139,7 +139,7 @@ public class MoveClick : MonoBehaviour
  
             if (smallDieWasUsed == true)
             {
-                Debug.Log("runs");
+        
                 bigDieWasUsed = true;
                 NoMovePass = true;
                 GameManager.instance.nextTurnButton.gameObject.SetActive(true);
@@ -152,7 +152,7 @@ public class MoveClick : MonoBehaviour
  
             if (bigDieWasUsed == true)
             {
-                Debug.Log("runs");
+ 
                 smallDieWasUsed = true;
                 NoMovePass = true;
                 GameManager.instance.nextTurnButton.gameObject.SetActive(true);
@@ -255,7 +255,7 @@ public class MoveClick : MonoBehaviour
                 checkIfCanRemove = canRemoveAPiece();
             if ((smallDieWasUsed && bigDieWasUsed) || (BCount + mCount + MCount == 0 && checkIfCanRemove == -1))
             {
-                Debug.Log("runs");
+ 
                 GameManager.instance.nextTurnButton.gameObject.SetActive(true);
             }
 
@@ -1018,6 +1018,8 @@ public class MoveClick : MonoBehaviour
     {
         var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
         GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
+
+        Piece.instance.movedWithDrag = false;
 
         if (curMoves[0] == curMoves[1])
         {
