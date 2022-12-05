@@ -18,7 +18,6 @@ public class Notifications : MonoBehaviour
 
 
     [SerializeField] Text NotificationAmountText;
-    [SerializeField] Text username;
     [SerializeField] RawImage userAvatar;
     [SerializeField] RawImage OpponentAvatar;
 
@@ -149,7 +148,7 @@ public class Notifications : MonoBehaviour
                 Debug.Log(n.Subject);
                 GameObject Notification = Instantiate(notificationPrefab, notificationParent);
                 Notification.transform.parent = notificationParent.transform;
-                Text Message = Notification.GetComponentInChildren<Text>();
+                ArabicText [] Message = Notification.GetComponentsInChildren<ArabicText>();
                 Button[] ButtonResponse = Notification.GetComponentsInChildren<Button>();
 
 
@@ -168,7 +167,8 @@ public class Notifications : MonoBehaviour
                         ButtonResponse[1].onClick.AddListener(() => SendNotificationRpcReject(sender.Id, message));
 
                         // SenderProfile(n.SenderId);
-                        Message.text = sender.Username + " " + "Challenged You For A game";
+                        Message[0].Text = sender.Username;
+                        Message[1].Text = "Challenged You For A game";
 
                     }
 
@@ -179,7 +179,8 @@ public class Notifications : MonoBehaviour
                         ButtonResponse[0].onClick.AddListener(() => AcceptRequest(sender.Id) );
                         ButtonResponse[1].gameObject.SetActive(false);
 
-                        Message.text = sender.Username + " " + "Sent you friend request";
+                        Message[0].Text = sender.Username;
+                        Message[1].Text ="Sent you friend request";
 
                     }
 
@@ -187,7 +188,9 @@ public class Notifications : MonoBehaviour
                     {
                         ButtonResponse[0].gameObject.SetActive(false);
                         ButtonResponse[1].gameObject.SetActive(false);
-                        Message.text = sender.Username + " " + "Accepted your friend request";
+
+                        Message[0].Text = sender.Username;
+                        Message[1].Text = "Accepted your friend request";
 
                     }
                 }
