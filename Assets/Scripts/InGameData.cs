@@ -11,34 +11,35 @@ using System;
 public class InGameData : MonoBehaviour
 {
 
-    [SerializeField] Text LocalUsername;
-    [SerializeField] Text RemoteUsername;
-    [SerializeField] Text DoubleUsername;
-    [SerializeField] Text AcceptUsername;
+    [SerializeField] ArabicText LocalUsername;
+    [SerializeField] ArabicText RemoteUsername;
+    [SerializeField] ArabicText DoubleUsername;
+    [SerializeField] ArabicText AcceptUsername;
     [SerializeField] Text LevelText;
     [SerializeField] GameManager gameManager;
     [SerializeField] RawImage MyAvatar;
     [SerializeField] RawImage OponentAvatar;
     [SerializeField] Text RewardAmount;
-    [SerializeField] Text MyUsername;
-    [SerializeField] Text OpponentUsername;
+    [SerializeField] ArabicText MyUsername;
+    [SerializeField] ArabicText OpponentUsername;
 
     IClient client;
     ISession session;
     
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        PassData.isession = await PassData.iClient.SessionRefreshAsync(PassData.isession);
         client = PassData.iClient;
         session = PassData.isession;
-        LocalUsername.text = PassData.Match.Self.Username;
-        RemoteUsername.text = PassData.otherUsername;
-        DoubleUsername.text = PassData.otherUsername;
-        AcceptUsername.text = PassData.otherUsername;
+        LocalUsername.Text = PassData.isession.Username;
+        RemoteUsername.Text = PassData.otherUsername;
+        DoubleUsername.Text = PassData.otherUsername;
+        AcceptUsername.Text = PassData.otherUsername;
 
-        MyUsername.text = PassData.Match.Self.Username;
-        OpponentUsername.text = PassData.otherUsername;
+        MyUsername.Text = PassData.isession.Username;
+        OpponentUsername.Text = PassData.otherUsername;
 
         StartCoroutine(GetTexture(PassData.MyURL , MyAvatar));
         StartCoroutine(GetTexture(PassData.OpponentURL, OponentAvatar));
@@ -67,8 +68,9 @@ public class InGameData : MonoBehaviour
         {
             var storageObject = result.Objects.First();
             var datas = JsonParser.FromJson<PlayerDataObj>(storageObject.Value);
-            LevelText.text = datas.Level;
-            var state = MatchDataJson.SetLevel(datas.Level);
+            LevelText.text = PassData.level.ToString();
+            var state = MatchDataJson.SetLevel(PassData.level.ToString());
+            Debug.Log("level " + PassData.level.ToString());
             gameManager.SendMatchState(OpCodes.Player_Level, state);
 
         }
@@ -129,6 +131,8 @@ public class InGameData : MonoBehaviour
             Losses = lossesValue.ToString(), 
             wins = winsvalue.ToString(),
             Level = levelValue.ToString(),
+            Queue = "false",
+            BoardType = "paris"
         };
 
         var Sendata = await client.WriteStorageObjectsAsync(session, new[] {
