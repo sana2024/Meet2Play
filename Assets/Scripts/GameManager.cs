@@ -9,6 +9,7 @@ using Nakama;
 using Nakama.TinyJson;
 using System.Threading.Tasks;
 using Nakama.Ninja.WebSockets;
+using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour
 {
@@ -152,6 +153,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        LevelText.text = PassData.RecivedLevel;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
  
         isocket = PassData.isocket;
@@ -382,7 +384,7 @@ public class GameManager : MonoBehaviour
 
 
             case 11:
-
+                Debug.Log("recived level");
                 LevelText.text = state["Level"];
 
                 break;
@@ -536,7 +538,8 @@ public class GameManager : MonoBehaviour
 
     private async void Update()
     {
-        if(currentPlayer.id == 0)
+ 
+        if (currentPlayer.id == 0)
         {
             MoveClick.instance.player = 1;
         }
