@@ -115,7 +115,20 @@ public class UserProfile : MonoBehaviour
         PassData.isocket.ReceivedStreamPresence += presenceEvent => JoinedStream(presenceEvent);
 
         var result = await PassData.isocket.RpcAsync("join","payload");
+ 
+        InvokeRepeating("Onlines", 0.1f, 5);
+ 
+        
        
+    }
+
+   async void Onlines()
+    {
+        var payload = JsonWriter.ToJson(new { Payload = "dragonite" });
+        var rpcid = "onlineusers";
+        var OnlineUsersRPC = await client.RpcAsync(session, rpcid, payload);
+        OnlineCounterText.text =  OnlineUsersRPC.Payload;
+       // Debug.Log(OnlineUsersRPC.Payload);
     }
 
     void JoinedStream(IStreamPresenceEvent presenceEvent)
@@ -138,8 +151,6 @@ public class UserProfile : MonoBehaviour
  
     }
 
- 
-/*
     public async void rpc()
     {
         var rpcid = "users";
@@ -179,11 +190,9 @@ public class UserProfile : MonoBehaviour
         OnlineCounterText.text = onlines.Count.ToString();
 
     }
-*/
-
+ 
     public async void WriteData(int levelvalue, int winsvalue, int LossValue, string wating, string BoardType)
     {
-
         var Datas = new PlayerDataObj
         {
             Level = levelvalue.ToString(),
@@ -246,7 +255,7 @@ public class UserProfile : MonoBehaviour
             PassData.ReadPermission = storageObject.PermissionRead;
             PassData.wins = int.Parse(datas.wins);
             PassData.losses = int.Parse(datas.Losses);
-            PassData.level = int.Parse(datas.Level);
+            PassData.level = sendLevel;
             PassData.Queue = datas.Queue;
             PassData.Board = datas.BoardType;
  
@@ -255,8 +264,20 @@ public class UserProfile : MonoBehaviour
             PlayerPrefs.SetInt("wins", wins);
             PlayerPrefs.SetInt("looses", losses);
 
+
+
+            Debug.Log(PlayerPrefs.GetInt("level"));
+
         }
- 
+        else
+        {
+            PlayerPrefs.SetInt("level", sendLevel);
+            WriteData(sendLevel, wins, losses, "false", "paris");
+
+
+
+        }
+
 
 
     }
@@ -314,7 +335,7 @@ public class UserProfile : MonoBehaviour
 
     public void Update()
     {
-        OnlineCounterText.text = OnlineCounter.ToString();
+ 
 
         LevelText.text = sendLevel.ToString();
         WinText.text = wins.ToString();
@@ -439,265 +460,266 @@ public class UserProfile : MonoBehaviour
 
     public async void Storageojectcounter()
     {
- 
-        foreach (var userId in OnlineUsers)
+        if (OnlineUsers.Count != 0)
         {
-            
-            const int limit = 10; // default is 10.
-            var result1 = await client.ListUsersStorageObjectsAsync(session, "UserData", userId, limit);
- 
-            foreach (var storage in result1.Objects)
+            foreach (var userId in OnlineUsers)
             {
 
-                 
-                //OSLO
-                if (storage.Value.Contains("oslo"))
+                const int limit = 10; // default is 10.
+                var result1 = await client.ListUsersStorageObjectsAsync(session, "UserData", userId, limit);
+
+                foreach (var storage in result1.Objects)
                 {
-                    if (storage.Value.Contains("true"))
+
+
+                    //OSLO
+                    if (storage.Value.Contains("oslo"))
                     {
-                        useridOslo = storage.UserId;
-                        counteroslo = 1;
-
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-
-                        if (storage.UserId == useridOslo)
+                        if (storage.Value.Contains("true"))
                         {
-                            counteroslo = 0;
+                            useridOslo = storage.UserId;
+                            counteroslo = 1;
+
+
                         }
 
-                    }
-
-
-
-                    osloText.text = "Waiting Player  " + " " + counteroslo;
-                }
-
-                //PARIS
-                if (storage.Value.Contains("paris"))
-                {
-                     
-                    
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridParis = storage.UserId;
-                        counterparis = 1;
-        
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-                         
-                         if(storage.UserId == useridParis)
+                        if (storage.Value.Contains("false"))
                         {
-                            counterparis = 0; 
+
+                            if (storage.UserId == useridOslo)
+                            {
+                                counteroslo = 0;
+                            }
+
                         }
 
-                    }
- 
-                    parisText.text = "Waiting Player  " + " " + counterparis;
-                
-               
-                         
-           
-                }
 
-                //MOSCOW
-                if (storage.Value.Contains("mosco"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridMoscow = storage.UserId;
-                        countermosco = 1;
 
+                        osloText.text = "Waiting Player  " + " " + counteroslo;
                     }
 
-                    if (storage.Value.Contains("false"))
+                    //PARIS
+                    if (storage.Value.Contains("paris"))
                     {
 
-                        if (storage.UserId == useridMoscow)
+
+                        if (storage.Value.Contains("true"))
                         {
-                            countermosco = 0;
+                            useridParis = storage.UserId;
+                            counterparis = 1;
+
+
                         }
 
-                    }
-                    moscoText.text = "Waiting Player  " + " " + countermosco;
-                }
-
-                //TOKYO
-                if (storage.Value.Contains("tokyo"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridTokyo = storage.UserId;
-                        countertokoyo = 1;
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-
-                        if (storage.UserId == useridTokyo)
+                        if (storage.Value.Contains("false"))
                         {
-                            countertokoyo = 0;
+
+                            if (storage.UserId == useridParis)
+                            {
+                                counterparis = 0;
+                            }
+
                         }
 
-                    }
-                    tokoyoText.text = "Waiting Player  " + " " + countertokoyo;
-                }
+                        parisText.text = "Waiting Player  " + " " + counterparis;
 
-                //BERLIN
-                if (storage.Value.Contains("berlin"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridBerlin = storage.UserId;
-                        counterberlin = 1;
+
+
 
                     }
 
-                    if (storage.Value.Contains("false"))
+                    //MOSCOW
+                    if (storage.Value.Contains("mosco"))
                     {
-
-                        if (storage.UserId == useridBerlin)
+                        if (storage.Value.Contains("true"))
                         {
-                            counterberlin = 0;
+                            useridMoscow = storage.UserId;
+                            countermosco = 1;
+
                         }
 
-                    }
-                    berlinText.text = "Waiting Player  " + " " + counterberlin;
-                }
-
-                //NEWYORK
-                if (storage.Value.Contains("newyork"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridNewYork = storage.UserId;
-                        counternewyork = 1;
-            
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-
-                        if (storage.UserId == useridNewYork)
+                        if (storage.Value.Contains("false"))
                         {
-                            counternewyork = 0;
+
+                            if (storage.UserId == useridMoscow)
+                            {
+                                countermosco = 0;
+                            }
+
+                        }
+                        moscoText.text = "Waiting Player  " + " " + countermosco;
+                    }
+
+                    //TOKYO
+                    if (storage.Value.Contains("tokyo"))
+                    {
+                        if (storage.Value.Contains("true"))
+                        {
+                            useridTokyo = storage.UserId;
+                            countertokoyo = 1;
+
                         }
 
-                    }
-                    newyorkText.text = "Waiting Player  " + " " + counternewyork;
-                }
-
-                //LONDON
-                if (storage.Value.Contains("london"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridLondon = storage.UserId;
-                        counterlondon = 1;
- 
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-
-                        if (storage.UserId == useridLondon)
+                        if (storage.Value.Contains("false"))
                         {
-                            counterlondon = 0;
+
+                            if (storage.UserId == useridTokyo)
+                            {
+                                countertokoyo = 0;
+                            }
+
+                        }
+                        tokoyoText.text = "Waiting Player  " + " " + countertokoyo;
+                    }
+
+                    //BERLIN
+                    if (storage.Value.Contains("berlin"))
+                    {
+                        if (storage.Value.Contains("true"))
+                        {
+                            useridBerlin = storage.UserId;
+                            counterberlin = 1;
+
                         }
 
-                    }
-                    londonText.text = "Waiting Player  " + " " + counterlondon;
-                }
-
-                //BOSTON
-                if (storage.Value.Contains("boston"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridBoston = storage.UserId;
-                        counterboston = 1;
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-
-                        if (storage.UserId == useridBoston)
+                        if (storage.Value.Contains("false"))
                         {
-                            counterboston = 0;
+
+                            if (storage.UserId == useridBerlin)
+                            {
+                                counterberlin = 0;
+                            }
+
+                        }
+                        berlinText.text = "Waiting Player  " + " " + counterberlin;
+                    }
+
+                    //NEWYORK
+                    if (storage.Value.Contains("newyork"))
+                    {
+                        if (storage.Value.Contains("true"))
+                        {
+                            useridNewYork = storage.UserId;
+                            counternewyork = 1;
+
+
                         }
 
-                    }
-                    bostonText.text = "Waiting Player  " + " " + counterboston;
-                }
-
-                //DUBAI
-                if (storage.Value.Contains("dubai"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridDubai = storage.UserId;
-                        counterdubai = 1;
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-
-                        if (storage.UserId == useridDubai)
+                        if (storage.Value.Contains("false"))
                         {
-                            counterdubai = 0;
+
+                            if (storage.UserId == useridNewYork)
+                            {
+                                counternewyork = 0;
+                            }
+
+                        }
+                        newyorkText.text = "Waiting Player  " + " " + counternewyork;
+                    }
+
+                    //LONDON
+                    if (storage.Value.Contains("london"))
+                    {
+                        if (storage.Value.Contains("true"))
+                        {
+                            useridLondon = storage.UserId;
+                            counterlondon = 1;
+
+
                         }
 
-                    }
-                    dubaiText.text = "Waiting Player  " + " " + counterdubai;
-                }
-
-                //ROMA
-                if (storage.Value.Contains("roma"))
-                {
-                    if (storage.Value.Contains("true"))
-                    {
-                        useridRoma = storage.UserId;
-                        counterroma = 1;
-
-                    }
-
-                    if (storage.Value.Contains("false"))
-                    {
-
-                        if (storage.UserId == useridRoma)
+                        if (storage.Value.Contains("false"))
                         {
-                            counterroma = 0;
+
+                            if (storage.UserId == useridLondon)
+                            {
+                                counterlondon = 0;
+                            }
+
+                        }
+                        londonText.text = "Waiting Player  " + " " + counterlondon;
+                    }
+
+                    //BOSTON
+                    if (storage.Value.Contains("boston"))
+                    {
+                        if (storage.Value.Contains("true"))
+                        {
+                            useridBoston = storage.UserId;
+                            counterboston = 1;
+
                         }
 
+                        if (storage.Value.Contains("false"))
+                        {
+
+                            if (storage.UserId == useridBoston)
+                            {
+                                counterboston = 0;
+                            }
+
+                        }
+                        bostonText.text = "Waiting Player  " + " " + counterboston;
                     }
-                    romaText.text = "Waiting Player  " + " " + counterroma;
+
+                    //DUBAI
+                    if (storage.Value.Contains("dubai"))
+                    {
+                        if (storage.Value.Contains("true"))
+                        {
+                            useridDubai = storage.UserId;
+                            counterdubai = 1;
+
+                        }
+
+                        if (storage.Value.Contains("false"))
+                        {
+
+                            if (storage.UserId == useridDubai)
+                            {
+                                counterdubai = 0;
+                            }
+
+                        }
+                        dubaiText.text = "Waiting Player  " + " " + counterdubai;
+                    }
+
+                    //ROMA
+                    if (storage.Value.Contains("roma"))
+                    {
+                        if (storage.Value.Contains("true"))
+                        {
+                            useridRoma = storage.UserId;
+                            counterroma = 1;
+
+                        }
+
+                        if (storage.Value.Contains("false"))
+                        {
+
+                            if (storage.UserId == useridRoma)
+                            {
+                                counterroma = 0;
+                            }
+
+                        }
+                        romaText.text = "Waiting Player  " + " " + counterroma;
+                    }
+
+
+
+
                 }
-
-
-
 
             }
- 
+
+
+
+
+
         }
 
-
-
-
-
     }
-
-
 }
 
 
