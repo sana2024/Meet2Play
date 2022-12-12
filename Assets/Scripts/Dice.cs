@@ -28,6 +28,8 @@ public class Dice : MonoBehaviour, IThrowable
     private float changeSpriteTime = CHANGE_SPRITE_TIME;
     private bool changeSprite = false;
 
+    bool isValueSet;
+
     public int value = 0;
 
     private ISocket isocket;
@@ -74,6 +76,12 @@ public class Dice : MonoBehaviour, IThrowable
         get { return body2D.velocity.magnitude < 1f; }
     }
 
+    //i added this frame rate for sending the ste=ate to the other user because it's not too late also not too frequesnt
+    private bool IsMidFrame
+    {
+        get { return body2D.velocity.magnitude < 1.7f && body2D.velocity.magnitude > 1.6f; }
+    }
+
     #region Unity API
 
     private void Awake()
@@ -98,7 +106,7 @@ public class Dice : MonoBehaviour, IThrowable
         {
             case 4:
 
-
+                
                 if (DiceID == int.Parse(state["Dice_Id"]))
                 {
                     var diceNum = int.Parse(state["Dice_sprite_index"]);
@@ -111,7 +119,7 @@ public class Dice : MonoBehaviour, IThrowable
                 }
 
                 
-
+                
                 break;
 
 
@@ -138,6 +146,7 @@ public class Dice : MonoBehaviour, IThrowable
             // if dice is stopped
             if (IsStopped)
             {
+ 
                 // finish animation
                 AnimationFinished = true;
                 return;
@@ -174,7 +183,19 @@ public class Dice : MonoBehaviour, IThrowable
 
         // animation is last frame
         if (IsLastFrame)
+        {
+            Debug.Log("run last frame");
             DisplayValue();
+           
+        }
+
+        if (IsMidFrame)
+        {
+            Debug.Log("Mid");
+            var state = MatchDataJson.SetDiceSprite(DiceID, value - 1);
+            SendMatchState(OpCodes.dice_Sprite, state);
+        }
+
 
     }
 
@@ -185,9 +206,8 @@ public class Dice : MonoBehaviour, IThrowable
     private void DisplayValue()
     {
         spriteRenderer.sprite = diceObject.valueSprites[value - 1];
+        Debug.Log("value " + (value - 1));
 
-        var state = MatchDataJson.SetDiceSprite(DiceID , value -1);
-        SendMatchState(OpCodes.dice_Sprite, state);
     }
 
     private void DisplayRandom()

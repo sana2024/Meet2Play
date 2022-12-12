@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Nakama.Ninja.WebSockets;
 using UnityEngine.Networking;
 
+ 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject RejectGamePanel;
     [SerializeField] GameObject NoMoveExistsPanel;
     [SerializeField] GameObject RejectReplayPanel;
+    [SerializeField] GameObject OfflineOpponent;
 
     [SerializeField] Text TimeoutDEbugger;
 
@@ -104,7 +107,11 @@ public class GameManager : MonoBehaviour
     //play agaian
     [SerializeField] GameObject PlayAgain;
     HelloVideoAgora DisplaYVideo;
- 
+
+
+    float timeToEndGame = 0;
+
+    bool OtherOfflineTrue = false;
 
 
 
@@ -116,10 +123,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-
-    
-
-
+ 
+        ISocketAdapter adatper;
+       
         if (instance == null)
             instance = this;
 
@@ -153,6 +159,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        InvokeRepeating("CheckOpponentAailabilty", 0.1f, 1);
+
         LevelText.text = PassData.RecivedLevel;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
  
@@ -162,8 +170,8 @@ public class GameManager : MonoBehaviour
 
         var mainThread = UnityMainThreadDispatcher.Instance();
         isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
+ 
         isocket.Closed += () => Connect();
-
         isocket.ReceivedStreamPresence += presenceEvent =>
         {
             foreach (var joined in presenceEvent.Joins)
@@ -181,6 +189,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("stream state");
         };
 
+ 
         HideGameEndScreen();
 
         if (PassData.IsFirstRound == true)
@@ -216,12 +225,46 @@ public class GameManager : MonoBehaviour
             MyChecker.sprite = BlackChecker;
             OponentChecker.sprite = WhiteChecker;
         }
- 
+
+        //var account = iclient.GetAccountAsync(isession);
+        //Debug.Log(account.Result.User.Online);
+       
+
     }
+
+    async void CheckOpponentAailabilty()
+    {
+        var ids = new[] { PassData.OtherUserId};
+        var result = await iclient.GetUsersAsync(isession, ids);
+
+        foreach(var user in result.Users)
+        {
+            if (user.Online)
+            {
+                OfflineOpponent.SetActive(false);
+                timeToEndGame = 0;
+            }
+
+            if(user.Online == false)
+            {
+                OfflineOpponent.SetActive(true);
+            }
+        }
+
+       
+    }
+
+    
 
     public async void SendMatchState(long opCode, string state)
     {
-        await isocket.SendMatchStateAsync(PassData.Match.Id, opCode, state);
+        try
+        {
+            await isocket.SendMatchStateAsync(PassData.Match.Id, opCode, state);
+        }catch(Nakama.ApiResponseException ex)
+        {
+            Debug.Log("send game manager " + ex);
+        }
     }
 
 
@@ -466,7 +509,7 @@ public class GameManager : MonoBehaviour
                     OnNextRoundButtonClick();
                 }
 
-
+             
 
 
                 break;
@@ -515,30 +558,75 @@ public class GameManager : MonoBehaviour
  
     private async void Connect()
     {
+ 
         try
         {
-            if (!isocket.IsConnected)
-            {
-                await isocket.ConnectAsync(isession);
+                 var keepAliveIntervalSec = 5;
+                await isocket.ConnectAsync(isession, true, keepAliveIntervalSec);
                 PassData.isocket = isocket;
+                SystemSettings.instance.ConnectionPanel.SetActive(false);
+                Debug.Log("socket reconnected ");
 
                 if (isocket.IsConnected)
                 {
-                    await isocket.JoinMatchAsync(PassData.Match.Id);
-                    SystemSettings.instance.ConnectionPanel.SetActive(false);
+                     await isocket.JoinMatchAsync(PassData.Match.Id);
+                    Debug.Log("socket reconnected ");
+ 
                 }
             }
-        }
-        catch (Exception e)
+        
+        catch (Nakama.ApiResponseException e)
         {
-            Debug.LogWarning("Error connecting socket: " + e.Message);
+            Debug.Log("error connecting to server "+e);
+            var retryConfiguration = new Nakama.RetryConfiguration(1, 5, delegate { });
+
+            // Configure the retry configuration globally.
+            iclient.GlobalRetryConfiguration = retryConfiguration;
+            await isocket.JoinMatchAsync(PassData.Match.Id);
+
         }
     }
- 
 
-    private async void Update()
+    public void InVokeConnect()
     {
- 
+        Invoke("Connect", 10);
+    }
+       
+     
+    private void Update()
+    {
+     
+        if (OfflineOpponent.activeSelf ||  SystemSettings.instance.ConnectionPanel.activeSelf)
+        {
+            timeToEndGame += Time.deltaTime;
+
+            if(timeToEndGame > 20)
+            {
+                HelloVideoAgora.instance.OnApplicationQuit();
+                SceneManager.LoadScene("Menu");
+            }
+        }
+
+           
+
+
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            Debug.Log("internet dissconected");
+            ReconnectFlag = true;
+        }
+        else
+        {
+            if (ReconnectFlag == true)
+            {
+                Debug.Log("reconnected ");
+                Connect();
+                ReconnectFlag = false;
+            }
+
+
+        }
+
         if (currentPlayer.id == 0)
         {
             MoveClick.instance.player = 1;
@@ -922,60 +1010,64 @@ public class GameManager : MonoBehaviour
 
     private void UndoPiece()
     {
-        if(currentPlayer.movesPlayed.Last().piece.movedWithDrag == true) { 
 
-            if (currentPlayer.movesPlayed.Count == 0)
+            if (currentPlayer.movesPlayed.Last().piece.movedWithDrag == true)
             {
-                Debug.Log("You must have played a move for undo");
-                return;
+
+                if (currentPlayer.movesPlayed.Count == 0)
+                {
+                    Debug.Log("You must have played a move for undo");
+                    return;
+                }
+
+                var lastMove = currentPlayer.movesPlayed.Last();
+
+                if (lastMove.step == MoveClick.instance.curMoves[0])
+                {
+                    MoveClick.instance.smallDieWasUsed = false;
+                }
+
+                if (lastMove.step == MoveClick.instance.curMoves[1])
+                {
+                    MoveClick.instance.bigDieWasUsed = false;
+                }
+
+                Debug.Log("last move step " + lastMove.step);
+
+                // undo move action
+                lastMove.piece.PlaceOn(lastMove.from);
+
+                Debug.Log(lastMove.from.ToString());
+                var state = MatchDataJson.SetPieceStack(lastMove.piece.name, lastMove.from.name, lastMove.to.name, lastMove.step.ToString(), lastMove.action.ToString(), "undo");
+                SendMatchState(OpCodes.undo, state);
+
+                // undo hit action
+                if ((lastMove.action & MoveActionTypes.Hit) == MoveActionTypes.Hit)
+                {
+                    var enemyBar = Slot.GetBar(Piece.GetEnemyType(lastMove.piece.pieceType));
+                    var enemyPiece = enemyBar.pieces.Last();
+                    enemyPiece.PlaceOn(lastMove.to);
+                }
+
+                //undo bear action
+                lastMove.piece.index -= 0.15f;
+
+
+
+                currentPlayer.movesPlayed.Remove(lastMove);
+
+
+
+                ConvertPieceOutside.instance.FromOutToSlot(lastMove.piece);
+                lastMove.piece.IncreaseColliderRadius();
+
+            }
+            else
+            {
+                MoveClick.instance.undo();
             }
 
-            var lastMove = currentPlayer.movesPlayed.Last();
-
-            if(lastMove.step == MoveClick.instance.curMoves[0])
-            {
-                MoveClick.instance.smallDieWasUsed = false;
-            }
-
-            if (lastMove.step == MoveClick.instance.curMoves[1])
-            {
-                MoveClick.instance.bigDieWasUsed = false;
-            }
-
-            Debug.Log("last move step " + lastMove.step);
-
-            // undo move action
-            lastMove.piece.PlaceOn(lastMove.from);
-
-            Debug.Log(lastMove.from.ToString());
-            var state = MatchDataJson.SetPieceStack(lastMove.piece.name, lastMove.from.name, lastMove.to.name, lastMove.step.ToString(), lastMove.action.ToString(), "undo");
-            SendMatchState(OpCodes.undo, state);
-
-            // undo hit action
-            if ((lastMove.action & MoveActionTypes.Hit) == MoveActionTypes.Hit)
-            {
-                var enemyBar = Slot.GetBar(Piece.GetEnemyType(lastMove.piece.pieceType));
-                var enemyPiece = enemyBar.pieces.Last();
-                enemyPiece.PlaceOn(lastMove.to);
-            }
-
-            //undo bear action
-            lastMove.piece.index -= 0.15f;
-
-
-
-            currentPlayer.movesPlayed.Remove(lastMove);
-
- 
-
-            ConvertPieceOutside.instance.FromOutToSlot(lastMove.piece);
-            lastMove.piece.IncreaseColliderRadius();
-
-        }
-          else
-        {
-            MoveClick.instance.undo();
-        }
+        
 
     }
 

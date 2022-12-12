@@ -6,6 +6,7 @@ using Nakama.TinyJson;
 using System.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(Collider2D))]
 public class Piece : MonoBehaviour
@@ -142,7 +143,7 @@ public class Piece : MonoBehaviour
         mainThread = UnityMainThreadDispatcher.Instance();
         isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
 
-
+ 
     }
     
     public bool IsTop()
@@ -165,12 +166,15 @@ public class Piece : MonoBehaviour
         switch (matchState.OpCode)
         {
             case 1:
-                if(pieceId == int.Parse(state["PeiceID"]))
+  
+                      
+
+                if (pieceId == int.Parse(state["PeiceID"]))
                 {
                     if (this != null)
                     {
                         transform.position = new Vector2(float.Parse(state["Pos_x"]), -float.Parse(state["pos_y"]));
-  
+                        Debug.Log("postion " + state["Pos_x"]);
                     }
 
                 }
@@ -293,7 +297,7 @@ public class Piece : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
+        if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft() && IsBarEmpty())
         {
             OnPieceClick();
         }
@@ -652,7 +656,7 @@ public class Piece : MonoBehaviour
         offsetY = Mathf.Abs(GetMousePos().y - this.transform.position.y);
 
         // for easing placing
-       // DecreaseColliderRadius();
+         DecreaseColliderRadius();
 
  
     }

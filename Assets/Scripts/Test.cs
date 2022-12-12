@@ -1,45 +1,30 @@
 
 using UnityEngine;
 using UnityEngine.UI;
- 
+using Nakama;
+using System.Collections;
+using UnityEngine.Networking;
+using Nakama.TinyJson;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] GameObject cam;
+    [SerializeField] NakamaConnection Nconnect;
+    ISession isession;
+    IClient iclient;
+    ISocket isocket;
+
+    public string email;
+    public string username;
+
     private void Start()
     {
-        RectTransform rect = cam.GetComponent<RectTransform>();
-        rect.anchoredPosition = new Vector3(5, 5, 5);
-       
+        string str = "2.586094";
+        Debug.Log(str.ToJson());
+
+         
     }
 
 
-    [SerializeField] GameObject board;
-    void Update()
-    {
-        Debug.Log(Camera.main.aspect);
-       if(Camera.main.aspect <= 1.5f)
-        {
-            Debug.Log("ipad");
-            board.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        }
 
-        if (Camera.main.aspect >= 1.5f)
-        {
-            Debug.Log("iphone");
-            board.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-        }
-
-
-
-
-
-
-    }
-    
-
- 
-
- 
 
 }

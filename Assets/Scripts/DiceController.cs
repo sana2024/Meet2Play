@@ -51,10 +51,7 @@ public class DiceController : MonoBehaviour
     UnityMainThreadDispatcher mainThread;
     [SerializeField] GameManager gameManager;
 
-
-
-
-
+ 
     private IEnumerable<Dice> WhiteDices
     {
         get { return dices.Take(2); }
@@ -79,7 +76,13 @@ public class DiceController : MonoBehaviour
     {
         isocket = PassData.isocket;
         mainThread = UnityMainThreadDispatcher.Instance();
-        isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
+        try
+        {
+            isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
+        }catch (Nakama.ApiResponseException ex)
+        {
+            Debug.Log("recived state " + ex);
+        }
     }
 
 
@@ -169,7 +172,14 @@ public class DiceController : MonoBehaviour
 
     public async void SendMatchState(long opCode, string state)
     {
-        await isocket.SendMatchStateAsync(PassData.Match.Id, opCode, state);
+        try
+        {
+            await isocket.SendMatchStateAsync(PassData.Match.Id, opCode, state);
+        }
+        catch (Nakama.ApiResponseException ex)
+        {
+            Debug.Log("sending data " + ex);
+        }
     }
 
     public void UpdateSocket()
@@ -197,12 +207,7 @@ public class DiceController : MonoBehaviour
 
         firstValueSprite = firstDice.GetComponent<SpriteRenderer>().sprite;
         secondValueSprite = secondDice.GetComponent<SpriteRenderer>().sprite;
-
-        var State = MatchDataJson.SetDiceCanvar(firstDice.DiceColor , firstDice.value.ToString() , secondDice.value.ToString());
-        SendMatchState(OpCodes.Dice_Canvas, State);
-
-
-
+ 
         animationFinished = true;
 
         foreach (var dice in rollingDices)
@@ -286,7 +291,8 @@ public class DiceController : MonoBehaviour
         var state = MatchDataJson.SetDicePos(pos, firstDice.value , secondDice.value );
         SendMatchState(OpCodes.throw_Loc, state);
 
- 
+        var State = MatchDataJson.SetDiceCanvar(firstDice.DiceColor, firstDice.value.ToString(), secondDice.value.ToString());
+        SendMatchState(OpCodes.Dice_Canvas, State);
     }
 
 
@@ -347,6 +353,19 @@ public class DiceController : MonoBehaviour
     {
         int index = 0;
         Vector2 postion = new Vector2(2.85f,-3.32f);
+
+        if (Camera.main.aspect <= 1.6)
+        {
+            whiteDicePrefab.transform.localScale = new Vector2(0.14f, 0.14f);
+            blackDicePrefab.transform.localScale = new Vector2(0.11f, 0.11f);
+
+        }
+        if (Camera.main.aspect >= 2)
+        {
+            whiteDicePrefab.transform.localScale = new Vector2(0.18f, 0.18f);
+            blackDicePrefab.transform.localScale = new Vector2(0.13f, 0.13f);
+
+        }
 
         // instantiate 2 white dices
         for (int i = 0; i < 2; i++, index++)
@@ -437,7 +456,6 @@ public class DiceController : MonoBehaviour
     public IEnumerable<int> GetMovesLeftList(IEnumerable<int> playedSteps)
     {
         var list = GetMovesList().ToList();
-
         foreach (var step in playedSteps)
         {
 
@@ -477,14 +495,18 @@ public class DiceController : MonoBehaviour
                         }
                         else
                         {
-                           /*
-                            //this part will check if its double movement, then it will make the last two indexes of the list 0
-                            if (list.Count > 1)
-                            {
-                                MoveClick.instance.curMoves[list.Count] = 0;
-                            }
-                            */
 
+                            if(MoveClick.instance.curMoves[1] == MoveClick.instance.curMoves[0])
+                            {
+                                
+                                
+                                if (list.Count == 0)
+                                {
+                                    MoveClick.instance.smallDieWasUsed = MoveClick.instance.bigDieWasUsed = true;
+                                }
+                                
+                            }
+                          
                         }
 
                     }
