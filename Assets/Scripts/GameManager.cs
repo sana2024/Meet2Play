@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Nakama.Ninja.WebSockets;
 using UnityEngine.Networking;
 
- 
+
 
 public class GameManager : MonoBehaviour
 {
@@ -118,11 +118,14 @@ public class GameManager : MonoBehaviour
     //Others
     int RollCounters = 1;
 
+    
 
+    
     #region Unity API
 
     private void Awake()
     {
+       
  
         ISocketAdapter adatper;
        
@@ -159,6 +162,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+
         InvokeRepeating("CheckOpponentAailabilty", 0.1f, 1);
 
         LevelText.text = PassData.RecivedLevel;
@@ -172,6 +176,8 @@ public class GameManager : MonoBehaviour
         isocket.ReceivedMatchState += m => mainThread.Enqueue(async () => await OnReceivedMatchState(m));
  
         isocket.Closed += () => Connect();
+        isocket.ReceivedError += e => Debug.Log("Socket error: " + e.Message);
+
         isocket.ReceivedStreamPresence += presenceEvent =>
         {
             foreach (var joined in presenceEvent.Joins)
@@ -226,10 +232,7 @@ public class GameManager : MonoBehaviour
             OponentChecker.sprite = WhiteChecker;
         }
 
-        //var account = iclient.GetAccountAsync(isession);
-        //Debug.Log(account.Result.User.Online);
-       
-
+      
     }
 
     async void CheckOpponentAailabilty()
@@ -558,7 +561,6 @@ public class GameManager : MonoBehaviour
  
     private async void Connect()
     {
- 
         try
         {
                  var keepAliveIntervalSec = 5;
@@ -589,13 +591,23 @@ public class GameManager : MonoBehaviour
 
     public void InVokeConnect()
     {
-        Invoke("Connect", 10);
+        if(Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork)
+        {
+            Debug.Log("user is using Mobile Data");
+            Invoke("Connect", 10);
+        }
+
+        if(Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork)
+        {
+            Debug.Log("user is using WIFI");
+        }
+
     }
        
      
     private void Update()
     {
-     
+         
         if (OfflineOpponent.activeSelf ||  SystemSettings.instance.ConnectionPanel.activeSelf)
         {
             timeToEndGame += Time.deltaTime;
@@ -612,7 +624,6 @@ public class GameManager : MonoBehaviour
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            Debug.Log("internet dissconected");
             ReconnectFlag = true;
         }
         else
