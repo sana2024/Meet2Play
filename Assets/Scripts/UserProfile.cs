@@ -109,27 +109,29 @@ public class UserProfile : MonoBehaviour
 
         Wallet();
 
-       // InvokeRepeating("rpc",0.1f, 5);
         InvokeRepeating("Storageojectcounter", 0.1f, 5);
 
-        PassData.isocket.ReceivedStreamPresence += presenceEvent => JoinedStream(presenceEvent);
+       // PassData.isocket.ReceivedStreamPresence += presenceEvent => JoinedStream(presenceEvent);
 
         var result = await PassData.isocket.RpcAsync("join","payload");
  
-        InvokeRepeating("Onlines", 0.1f, 5);
+
+       InvokeRepeating("Onlines", 0.1f, 2);
+
  
-        
-       
     }
 
+  
    async void Onlines()
     {
-        var payload = JsonWriter.ToJson(new { Payload = "dragonite" });
-        var rpcid = "onlineusers";
-        var OnlineUsersRPC = await client.RpcAsync(session, rpcid, payload);
-        OnlineCounterText.text =  OnlineUsersRPC.Payload;
-       // Debug.Log(OnlineUsersRPC.Payload);
+        var payload_online = JsonWriter.ToJson(new { Payload = "OnlineStatus" });
+        var rpcid_online = "onlineusers";
+        var OnlineUsersRPC_online = await client.RpcAsync(session, rpcid_online, payload_online);
+        OnlineCounterText.text = OnlineUsersRPC_online.Payload;
+ 
     }
+
+    /*
 
     void JoinedStream(IStreamPresenceEvent presenceEvent)
     {
@@ -151,43 +153,25 @@ public class UserProfile : MonoBehaviour
  
     }
 
+    */
+
     public async void rpc()
     {
-        var rpcid = "users";
-        var pokemonInfo = await client.RpcAsync(session, rpcid);
-
-        string TrimedJson = pokemonInfo.Payload.Remove(11, 1);
-
-        data = JsonUtility.FromJson<PersonData>(TrimedJson);
-
-        List<String> termsList = new List<String>();
-
-
-        for(int i=0; i<100; i++)
-        {
-            
-            termsList.Add(data.client[i].id);
-
-        }
-
-
-        var result = await client.GetUsersAsync(session, termsList);
-
-        List<bool> onlines = new List<bool>();
-
-        foreach (var userId in result.Users)
-        {
-
+        var payload_List = JsonWriter.ToJson(new { Payload = "UserList" });
+        var rpcid_list = "list_stream_users";
+        var OnlineUsersRPC_list = await client.RpcAsync(session, rpcid_list, payload_List);
  
-
-            if (userId.Online)
-            {
-                onlines.Add(userId.Online);
-            }
+        string TrimedJson = OnlineUsersRPC_list.Payload.Remove(11, 1);
+ 
+        data = JsonUtility.FromJson<PersonData>(TrimedJson);
+ 
+        foreach (var id in data.client)
+        {
+   
+                OnlineUsers.Add(id.id);
+            
 
         }
-
-        OnlineCounterText.text = onlines.Count.ToString();
 
     }
  
@@ -460,9 +444,10 @@ public class UserProfile : MonoBehaviour
 
     public async void Storageojectcounter()
     {
+        rpc();
         if (OnlineUsers.Count != 0)
         {
-            foreach (var userId in OnlineUsers)
+            foreach (var userId in OnlineUsers.ToList())
             {
 
                 const int limit = 10; // default is 10.
