@@ -56,10 +56,10 @@ public class Slot : MonoBehaviour
 
         if(PassData.Match.Self.UserId == GameManager.instance.playerBlack.UserId)
         {
-            Debug.Log("this player is black");
+      
             if(this.slotType == SlotType.AboutTobeDeleted)
             {
-                Debug.Log("black player slot");
+        
                 slotId = 25;
             }
         }
@@ -141,7 +141,7 @@ public class Slot : MonoBehaviour
     {
         if (slot.pieces.Count > 0)
         {
-            Debug.Log("last "+slot);
+ 
           return slot.pieces.LastOrDefault() == piece;
         }
         else
@@ -272,7 +272,7 @@ public class Slot : MonoBehaviour
 
             if (MoveType == "move")
             {
- 
+              //  Debug.Log("Moved");
                 movesPlayedList.Add(new Move { piece = piece, from = from, to = this, step = currentMove, action = move });
 
                 if (recive == false)

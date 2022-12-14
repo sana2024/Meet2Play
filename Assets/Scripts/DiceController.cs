@@ -461,7 +461,7 @@ public class DiceController : MonoBehaviour
 
             if (step > 0)
             {
-
+               // Debug.Log("played stepts " + playedSteps.Count());
 
                 if (list.Contains(step))
                 {
@@ -495,7 +495,7 @@ public class DiceController : MonoBehaviour
                         }
                         else
                         {
-
+                            
                             if(MoveClick.instance.curMoves[1] == MoveClick.instance.curMoves[0])
                             {
                                 
@@ -506,6 +506,7 @@ public class DiceController : MonoBehaviour
                                 }
                                 
                             }
+                            
                           
                         }
 
@@ -518,6 +519,7 @@ public class DiceController : MonoBehaviour
 
 
         }
+ 
         return list;
 
     }

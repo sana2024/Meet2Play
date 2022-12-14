@@ -184,14 +184,14 @@ public class Dice : MonoBehaviour, IThrowable
         // animation is last frame
         if (IsLastFrame)
         {
-            Debug.Log("run last frame");
+ 
             DisplayValue();
            
         }
 
         if (IsMidFrame)
         {
-            Debug.Log("Mid");
+ 
             var state = MatchDataJson.SetDiceSprite(DiceID, value - 1);
             SendMatchState(OpCodes.dice_Sprite, state);
         }
@@ -206,7 +206,7 @@ public class Dice : MonoBehaviour, IThrowable
     private void DisplayValue()
     {
         spriteRenderer.sprite = diceObject.valueSprites[value - 1];
-        Debug.Log("value " + (value - 1));
+ 
 
     }
 

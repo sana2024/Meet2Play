@@ -18,16 +18,17 @@ public class FriendSystem : MonoBehaviour
     [SerializeField] GameObject NoUserPanel;
     [SerializeField] InputField FriendName;
     [SerializeField] GameObject UserFound;
-    [SerializeField] Text FoundUserName;
+    [SerializeField] ArabicText FoundUserName;
     [SerializeField] RawImage FoundUserAvatar;
     [SerializeField] Button AddButton;
     [SerializeField] GameObject FriendPrefab;
     [SerializeField] Transform FriendListHolderUI;
-    [SerializeField] Text FriendNameText;
+     ArabicText FriendNameText;
     [SerializeField] RawImage FriendAvatar;
     [SerializeField] GameObject FriendChanllegePanel;
     [SerializeField] PlayerList playerList;
     [SerializeField] Image FoundUserStatus;
+    [SerializeField] Sprite FriendAdded;
 
 
     bool FacebookOn = false;
@@ -95,6 +96,8 @@ public class FriendSystem : MonoBehaviour
     {
         var usernames = new[] { addFriendName };
         await iclient.AddFriendsAsync(isession, null, usernames);
+
+        AddButton.image.sprite = FriendAdded;
  
     }
 
@@ -117,8 +120,8 @@ public class FriendSystem : MonoBehaviour
 
                        friends = Instantiate(FriendPrefab, FriendListHolderUI);
                        FriendAvatar = friends.GetComponentInChildren<RawImage>();
-                       FriendNameText = friends.GetComponentInChildren<Text>();
-                       FriendNameText.text = f.User.Username;
+                       FriendNameText = friends.GetComponentInChildren<ArabicText>();
+                       FriendNameText.Text = f.User.Username;
                        StartCoroutine(GetTexture(f.User.AvatarUrl ,FriendAvatar ));
                        Button ChallangeButton = friends.GetComponentInChildren<Button>();
                        ChallangeButton.onClick.AddListener(() => { playerList.SendNotificationRpc(f.User.Id); });
@@ -168,7 +171,7 @@ public class FriendSystem : MonoBehaviour
 
                 UserFound.SetActive(true);
                 NoUserPanel.SetActive(false);
-                FoundUserName.text = u.DisplayName;
+                FoundUserName.Text = u.DisplayName;
                 addFriendName = u.DisplayName;
                 StartCoroutine(GetTexture(u.AvatarUrl , FoundUserAvatar));
 
@@ -197,9 +200,11 @@ public class FriendSystem : MonoBehaviour
                     if(f.State == 0 || f.State == 1)
                     {
                         AddButton.interactable = false;
+                        AddButton.image.sprite = FriendAdded;
                     }
                     else { 
                         AddButton.interactable = true;
+                        AddButton.image.sprite = FriendAdded;
                     }
                 }
 

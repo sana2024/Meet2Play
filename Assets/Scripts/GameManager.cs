@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject NoMoveExistsPanel;
     [SerializeField] GameObject RejectReplayPanel;
     [SerializeField] GameObject OfflineOpponent;
-
     [SerializeField] Text TimeoutDEbugger;
 
     bool InternetConnected;
@@ -105,6 +104,7 @@ public class GameManager : MonoBehaviour
     string AutoRollDiceActive;
 
     //play agaian
+    [SerializeField] Button PlayAgainButton;
     [SerializeField] GameObject PlayAgain;
     HelloVideoAgora DisplaYVideo;
 
@@ -608,7 +608,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
          
-        if (OfflineOpponent.activeSelf ||  SystemSettings.instance.ConnectionPanel.activeSelf)
+        if (OfflineOpponent.activeSelf)
         {
             timeToEndGame += Time.deltaTime;
 
@@ -616,6 +616,17 @@ public class GameManager : MonoBehaviour
             {
                 HelloVideoAgora.instance.OnApplicationQuit();
                 SceneManager.LoadScene("Menu");
+            }
+        }
+
+        if (SystemSettings.instance.ConnectionPanel.activeSelf)
+        {
+            timeToEndGame += Time.deltaTime;
+
+            if (timeToEndGame > 20)
+            {
+                HelloVideoAgora.instance.OnApplicationQuit();
+                SceneManager.LoadScene("Login");
             }
         }
 
@@ -1138,8 +1149,10 @@ public class GameManager : MonoBehaviour
 
     public void SendPlay_AgainRequest()
     {
+
         var state = MatchDataJson.SetRematch("RequestReplay");
         SendMatchState(OpCodes.Play_Again, state);
+        StartCoroutine(PlayAgainButtonClicked());
     }
  
 
@@ -1150,6 +1163,17 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+    //this is for desabiling and enabling the play again button as an effect 
+    IEnumerator PlayAgainButtonClicked()
+    {
+        PlayAgainButton.interactable = false;
+        yield return new WaitForSeconds(3);
+        PlayAgainButton.interactable = false;
+    }
+
+
+
 
 
 

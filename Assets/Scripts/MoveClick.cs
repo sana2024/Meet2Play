@@ -185,7 +185,7 @@ public class MoveClick : MonoBehaviour
             if (player == 1)
             {
                 while (aboutToBeDeleted.pieces.Count > 0)
-                    slots[27].addPiece(aboutToBeDeleted.removePiece(), "move" , false );
+                    slots[27].addPiece(aboutToBeDeleted.removePiece(), "AboutToBeDeleted" , false );
 
  
 
@@ -196,7 +196,7 @@ public class MoveClick : MonoBehaviour
             {
 
                 while (aboutToBeDeleted.pieces.Count > 0)
-                    slots[28].addPiece(aboutToBeDeleted.removePiece(), "move", false );
+                    slots[28].addPiece(aboutToBeDeleted.removePiece(), "AboutToBeDeleted", false );
 
  
 
@@ -1016,79 +1016,88 @@ public class MoveClick : MonoBehaviour
 
     public void undo()
     {
-        var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
-        GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
-
-        Piece.instance.movedWithDrag = false;
-
-        if (curMoves[0] == curMoves[1])
+        if (whichDie.Count != 0)
         {
-            if (whichDie.Count == 1)
-                curMoves[3] = curMoves[0];
-            else if (whichDie.Count == 2)
-                curMoves[2] = curMoves[0];
-            else if (whichDie.Count == 3)
-                smallDieWasUsed = false;
+            var lastMove = GameManager.instance.currentPlayer.movesPlayed.Last();
+            GameManager.instance.currentPlayer.movesPlayed.Remove(lastMove);
+
+            Piece.instance.movedWithDrag = false;
+
+            if (curMoves[0] == curMoves[1])
+            {
+                NoMovePass = false;
+                if (whichDie.Count == 1)
+                    curMoves[3] = curMoves[0];
+                else if (whichDie.Count == 2)
+                    curMoves[2] = curMoves[0];
+                else if (whichDie.Count == 3)
+                {
+                    smallDieWasUsed = false;
+                    bigDieWasUsed = false;
+                }
+
+                else
+                    bigDieWasUsed = false;
+            }
             else
-                bigDieWasUsed = false;
-        }
-        else
-        {
-            if (whichDie[whichDie.Count - 1] == 'm')
             {
-                Debug.Log("remove small");
-                smallDieWasUsed = false;
+                if (whichDie[whichDie.Count - 1] == 'm')
+                {
+                    Debug.Log("remove small");
+                    smallDieWasUsed = false;
+                    NoMovePass = false;
+                }
+                if (whichDie[whichDie.Count - 1] == 'M')
+                {
+                    Debug.Log("remove big");
+                    bigDieWasUsed = false;
+                    NoMovePass = false;
+                }
+
             }
-            if(whichDie[whichDie.Count - 1] == 'M')
+
+            ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
+
+
+            origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false);
+            if (eatenOrigin[eatenOrigin.Count - 1])
+                eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(), "hit", false);
+
+
+            Debug.Log("destination " + destination[destination.Count - 1].getIndx());
+
+            if (destination[destination.Count - 1].getIndx() < 24)
             {
-                Debug.Log("remove big");
-                bigDieWasUsed = false;
+
+                Debug.Log("destination");
+                updateTheCount(movesMap[destination.Last().getIndx()], -1);
+                movesMap[destination.Last().getIndx()] = availableMoves(destination.Last());
+
+
             }
- 
+            if (origin[origin.Count - 1].getIndx() < 24)
+            {
+                Debug.Log("origin");
+                movesMap[origin[origin.Count - 1].getIndx()] = availableMoves(origin[origin.Count - 1]);
+                updateTheCount(movesMap[origin[origin.Count - 1].getIndx()], 1);
+            }
+
+            if (player == 0 && origin[origin.Count - 1].getIndx() < 18 && destination[destination.Count - 1] != hitted[0] && destination[destination.Count - 1].getIndx() > 17)
+                notInHousePieces++;
+            if (player == 1 && origin[origin.Count - 1].getIndx() > 5 && destination[destination.Count - 1] != hitted[1] && destination[destination.Count - 1].getIndx() < 6)
+                notInHousePieces++;
+
+            whichDie.RemoveAt(whichDie.Count - 1);
+            origin.RemoveAt(origin.Count - 1);
+            destination.RemoveAt(destination.Count - 1);
+            eatenOrigin.RemoveAt(eatenOrigin.Count - 1);
+
+
+            ButtonController.Instance.doneButton.SetActive(false);
+            if (whichDie.Count == 0)
+                ButtonController.Instance.doneButton.SetActive(false);
+
         }
-
-        ConvertPieceOutside.instance.FromOutToSlot(destination[destination.Count - 1].pieces.Last());
-
-
-        origin[origin.Count - 1].addPiece(destination[destination.Count - 1].removePiece(), "undo", false);
-        if (eatenOrigin[eatenOrigin.Count - 1])
-            eatenOrigin[eatenOrigin.Count - 1].addPiece(hitted[(player + 1) % 2].removePiece(), "hit", false);
-
-
-        Debug.Log("destination " + destination[destination.Count - 1].getIndx());
-
-        if (destination[destination.Count - 1].getIndx() < 24)
-        {
-
-            Debug.Log("destination");
-            updateTheCount(movesMap[destination.Last().getIndx()], -1);
-            movesMap[destination.Last().getIndx()] = availableMoves(destination.Last());
-
-
-        }
-        if (origin[origin.Count - 1].getIndx() < 24)
-        {
-            Debug.Log("origin");
-            movesMap[origin[origin.Count - 1].getIndx()] = availableMoves(origin[origin.Count - 1]);
-            updateTheCount(movesMap[origin[origin.Count - 1].getIndx()], 1);
-        }
-
-        if (player == 0 && origin[origin.Count - 1].getIndx() < 18 && destination[destination.Count - 1] != hitted[0] && destination[destination.Count - 1].getIndx() > 17)
-            notInHousePieces++;
-        if (player == 1 && origin[origin.Count - 1].getIndx() > 5 && destination[destination.Count - 1] != hitted[1] && destination[destination.Count - 1].getIndx() < 6)
-            notInHousePieces++;
-
-        whichDie.RemoveAt(whichDie.Count - 1);
-        origin.RemoveAt(origin.Count - 1);
-        destination.RemoveAt(destination.Count - 1);
-        eatenOrigin.RemoveAt(eatenOrigin.Count - 1);
-
-
-         ButtonController.Instance.doneButton.SetActive(false);
-        if (whichDie.Count == 0)
-        ButtonController.Instance.doneButton.SetActive(false);
-
- 
 
     }
 

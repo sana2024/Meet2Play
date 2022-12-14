@@ -163,8 +163,10 @@ public class Notifications : MonoBehaviour
                      {
  
                         ButtonResponse[0].onClick.AddListener(() => JoinedPlayers(sender.Id, messageAccept, subject));
- 
+                        StartCoroutine(ButtonClickedDesign(ButtonResponse[0]));
+
                         ButtonResponse[1].onClick.AddListener(() => SendNotificationRpcReject(sender.Id, message));
+                        StartCoroutine(ButtonClickedDesign(ButtonResponse[1]));
 
                         // SenderProfile(n.SenderId);
                         Message[0].Text = sender.Username;
@@ -177,6 +179,7 @@ public class Notifications : MonoBehaviour
                     {
  
                         ButtonResponse[0].onClick.AddListener(() => AcceptRequest(sender.Id) );
+                        StartCoroutine(ButtonClickedDesign(ButtonResponse[0]));
                         ButtonResponse[1].gameObject.SetActive(false);
 
                         Message[0].Text = sender.Username;
@@ -386,7 +389,16 @@ public class Notifications : MonoBehaviour
 
     }
 
-}
+
+    IEnumerator ButtonClickedDesign(Button button)
+    {
+        button.interactable = false;
+        yield return new WaitForSeconds(3f);
+        button.interactable = true;
+         
+    }
+
+    }
 
 
 

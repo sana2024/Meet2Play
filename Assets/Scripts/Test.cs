@@ -8,22 +8,12 @@ using Nakama.TinyJson;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] NakamaConnection Nconnect;
-    ISession isession;
-    IClient iclient;
-    ISocket isocket;
+    [SerializeField] Text text;
 
-    public string email;
-    public string username;
-
-    private void Start()
+    private void OnApplicationFocus(bool focus)
     {
-        string str = "2.586094";
-        Debug.Log(str.ToJson());
-
-         
+        Debug.Log("on focus");
     }
-
 
 
 

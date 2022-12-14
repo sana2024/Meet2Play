@@ -297,9 +297,20 @@ public class Piece : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft() && IsBarEmpty())
+        if (Input.GetButtonDown("Fire1") && IsMouseOverThis() && IsCurrentPlayerTurn() && IsCurrentPlayerRolled() && IsCurrentPlayerPiece() && IsCurrentPlayerMoveLeft())
         {
-            OnPieceClick();
+            if (!IsBarEmpty())
+            {
+                if(CurSlot.slotType == SlotType.Bar)
+                {
+                    OnPieceClick();
+                }
+            }
+            else
+            {
+                OnPieceClick();
+            }
+
         }
 
 
