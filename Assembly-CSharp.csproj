@@ -402,7 +402,6 @@
     <None Include="Assets/Fonts/Arabic Font/Arabic Support UI/Lib/ArabicSupport.dll" />
     <None Include="Assets/AgoraEngine/Plugins/x86/libhwcodec.dll" />
     <None Include="Assets/AgoraEngine/Plugins/x86/libagora-wgc.dll" />
-    <None Include="Assets/AddressableAssetsData/link.xml" />
     <None Include="Assets/Unimgpicker/StandaloneFileBrowser/Plugins/Ookii.Dialogs.dll" />
     <None Include="Assets/AgoraEngine/Plugins/x86/libagora_ci_extension.dll" />
     <None Include="Assets/AgoraEngine/Plugins/x86_64/agoraSdkCWrapper.dll" />
