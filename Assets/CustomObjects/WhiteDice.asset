@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a19646a0dce5a4cbbd126156b687a3, type: 3}
+  m_Name: WhiteDice
+  m_EditorClassIdentifier: 
+  valueSprites:
+  - {fileID: 21300000, guid: d1162e2b20c8e418a833bba0703dc8dd, type: 3}
+  - {fileID: 21300000, guid: 650374ea74fb4425eb76c1a51a8c2453, type: 3}
+  - {fileID: 21300000, guid: 7e589ac08749b452cbb53b57d8fab02d, type: 3}
+  - {fileID: 21300000, guid: 605c6b33ddefa47c68532c53a896c601, type: 3}
+  - {fileID: 21300000, guid: b27049387c3bc41aab13b3588f3c79be, type: 3}
+  - {fileID: 21300000, guid: 300f95d0a0d784a7ca0da6827028cd0f, type: 3}

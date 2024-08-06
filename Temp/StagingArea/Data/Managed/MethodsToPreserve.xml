@@ -1,0 +1,386 @@
+<linker>
+	<assembly fullname="Assembly-CSharp" ignoreIfMissing="1">
+		<type fullname="AddImage">
+			<method name="PickImage"/>
+		</type>
+		<type fullname="AIfakeCam">
+			<method name="MuteLocalAudio"/>
+			<method name="MuteLocalAudio"/>
+			<method name="MuteLocalVideo"/>
+			<method name="MuteRemoteAudio"/>
+			<method name="MuteRemoteAudio"/>
+			<method name="MuteRemoteVideo"/>
+			<method name="MuteRemoteVideo"/>
+			<method name="StartAndMuteCamera"/>
+			<method name="StartAndMuteCamera"/>
+		</type>
+		<type fullname="AIGameResult">
+			<method name="AddFriend"/>
+			<method name="AILooserResult"/>
+			<method name="CloseDrawOfferPanel"/>
+			<method name="CloseEndPanel"/>
+			<method name="CloseLeavePanel"/>
+			<method name="LeaveGame"/>
+			<method name="MonitorLeave"/>
+			<method name="OpenDrawOfferPanel"/>
+			<method name="Rematch"/>
+			<method name="SendDrawRequest"/>
+		</type>
+		<type fullname="BackAIResult">
+			<method name="AddFriend"/>
+			<method name="CloseLeavePanel"/>
+			<method name="LeaveGame"/>
+			<method name="LeaveScene"/>
+			<method name="OnMenubuttonClicked"/>
+			<method name="OnMenuCancleClicked"/>
+			<method name="OpenLeavePanel"/>
+			<method name="SendplayAgainRequest"/>
+		</type>
+		<type fullname="BackgammonAI">
+			<method name="AutoRoll"/>
+			<method name="endTurn"/>
+			<method name="increaseRollCounter"/>
+		</type>
+		<type fullname="Bet">
+			<method name="AcceptBet"/>
+			<method name="RejectBet"/>
+			<method name="SendDoubleRequest"/>
+			<method name="SendDoubleRequestAI"/>
+		</type>
+		<type fullname="BonusTimer">
+			<method name="OnBonusClicked"/>
+		</type>
+		<type fullname="ButtonController">
+			<method name="AcceptReplay"/>
+			<method name="DisableDoubleButton"/>
+			<method name="DisableUndoButton"/>
+			<method name="DissableDoneButton"/>
+			<method name="DissableDoneButton"/>
+			<method name="DissableRollButton"/>
+			<method name="LeaveScene"/>
+			<method name="OnLeaveClicked"/>
+			<method name="OnMenubuttonClicked"/>
+			<method name="OnMenuCancleClicked"/>
+			<method name="RejectReplay"/>
+		</type>
+		<type fullname="ChessBoard">
+			<method name="ProcessBishopSelect"/>
+			<method name="ProcessKnightSelect"/>
+			<method name="ProcessQueenSelect"/>
+			<method name="ProcessRookSelect"/>
+		</type>
+		<type fullname="ChessBoardAI">
+			<method name="ProcessBishopSelect"/>
+			<method name="ProcessKnightSelect"/>
+			<method name="ProcessQueenSelect"/>
+			<method name="ProcessRookSelect"/>
+		</type>
+		<type fullname="ChessUserDatas">
+			<method name="CloseStatisticPanel"/>
+			<method name="EditClicked"/>
+			<method name="OpenStatisticPanel"/>
+		</type>
+		<type fullname="CollectBonus">
+			<method name="OpenBonusPanel"/>
+		</type>
+		<type fullname="DailyReward">
+			<method name="CloseDailyReward"/>
+			<method name="OpenDailyReward"/>
+		</type>
+		<type fullname="FriendSystem">
+			<method name="AddFriend"/>
+			<method name="FindFriend"/>
+			<method name="OnCloseButtonChallengePanel"/>
+			<method name="OnCloseButtonClicked"/>
+			<method name="OnFriendButtonClicked"/>
+			<method name="Search"/>
+			<method name="SelectFind"/>
+			<method name="SelectFriends"/>
+			<method name="SelectRequests"/>
+		</type>
+		<type fullname="GameEndResult">
+			<method name="AcceptDrawOffer"/>
+			<method name="AcceptRematch"/>
+			<method name="AddFriend"/>
+			<method name="CloseDrawOfferPanel"/>
+			<method name="CloseEndPanel"/>
+			<method name="CloseLeavePanel"/>
+			<method name="LeaveMatch"/>
+			<method name="LeaveScene"/>
+			<method name="OpenDrawOfferPanel"/>
+			<method name="RejectDrawOffer"/>
+			<method name="RejectRematch"/>
+			<method name="Rematch"/>
+			<method name="SendDrawRequest"/>
+		</type>
+		<type fullname="GameManager">
+			<method name="AutoRoll"/>
+			<method name="SendPlay_AgainRequest"/>
+		</type>
+		<type fullname="HelloVideoAgora">
+			<method name="muteRemoteAudio"/>
+			<method name="muteRemoteAudio"/>
+			<method name="muteRemoteVedio"/>
+			<method name="muteRemoteVedio"/>
+			<method name="muteUserAudio"/>
+			<method name="muteUserAudio"/>
+			<method name="muteUserVideo"/>
+			<method name="muteUserVideo"/>
+			<method name="OnApplicationQuit"/>
+		</type>
+		<type fullname="IAPManager">
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+			<method name="OnPurchaseFailed"/>
+		</type>
+		<type fullname="InAppPurchase">
+			<method name="CloseIAPpanel"/>
+			<method name="CloseIAPpanel"/>
+			<method name="CloseIAPpanel"/>
+			<method name="CloseIAPpanel"/>
+			<method name="OpenIAPpanel"/>
+			<method name="OpenIAPpanel"/>
+			<method name="OpenIAPpanel"/>
+			<method name="OpenIAPpanel"/>
+			<method name="OpenIAPpanel"/>
+		</type>
+		<type fullname="InGameData">
+			<method name="AddFriend"/>
+			<method name="CloseLeavePanel"/>
+			<method name="OpenLeavePanel"/>
+		</type>
+		<type fullname="IOSRedirect">
+			<method name="OpenSettings"/>
+		</type>
+		<type fullname="leaderboard1">
+			<method name="createleaderBoard"/>
+		</type>
+		<type fullname="Matchmaking">
+			<method name="AcceptGame"/>
+			<method name="AcceptGame"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindBackgammonMatch"/>
+			<method name="FindChessMatch"/>
+			<method name="FindChessMatch"/>
+			<method name="FindChessMatch"/>
+			<method name="FindChessMatch"/>
+		</type>
+		<type fullname="MoveClick">
+			<method name="endTurn"/>
+		</type>
+		<type fullname="NakamaLogin">
+			<method name="OnGuestLogin"/>
+		</type>
+		<type fullname="navigate">
+			<method name="back"/>
+			<method name="PopPlane"/>
+		</type>
+		<type fullname="OnlineUsers">
+			<method name="CloseOnlineUserPanel"/>
+			<method name="OpenOnlineUserPanel"/>
+		</type>
+		<type fullname="PanelHandlers">
+			<method name="BackToSelectionPanel"/>
+			<method name="BackToSelectionPanel"/>
+			<method name="CloseAppleSettingsPanel"/>
+			<method name="CloseChallageRejectionPanel"/>
+			<method name="CloseWaitingsPanel"/>
+			<method name="CloseWaitingsPanel"/>
+			<method name="NoEnoughMoneyClose"/>
+			<method name="OpenBackgammonPanel"/>
+			<method name="OpenChessPanel"/>
+			<method name="OpenCollectBonus"/>
+			<method name="OpenFriendsPanel"/>
+			<method name="OpenIAPPanel"/>
+			<method name="OpenIAPPanel"/>
+			<method name="OpenIAPPanel"/>
+			<method name="OpenLeaderBoardPanel"/>
+			<method name="OpenProfilePanel"/>
+			<method name="OpenSettingsPanel"/>
+			<method name="OpenSharePanel"/>
+		</type>
+		<type fullname="PlaySound">
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+			<method name="PlayAudio"/>
+		</type>
+		<type fullname="PurchseButton">
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+			<method name="clickPurchaseType"/>
+		</type>
+		<type fullname="SelectChessTime">
+			<method name="Selected10Min"/>
+			<method name="Selected30Min"/>
+			<method name="Selected5Min"/>
+		</type>
+		<type fullname="SpinManager">
+			<method name="CollectReward"/>
+			<method name="RollSpin"/>
+		</type>
+		<type fullname="SwitchImage">
+			<method name="Next"/>
+			<method name="Next"/>
+			<method name="Next"/>
+			<method name="Next"/>
+			<method name="Next"/>
+			<method name="Previous"/>
+			<method name="Previous"/>
+			<method name="Previous"/>
+			<method name="Previous"/>
+			<method name="Previous"/>
+		</type>
+		<type fullname="SystemSettings">
+			<method name="cancleDeletation"/>
+			<method name="CloseSettings"/>
+			<method name="CloseSettings"/>
+			<method name="CloseSettings"/>
+			<method name="CloseTheApp"/>
+			<method name="CloseTutorialPanel"/>
+			<method name="CloseTutorialPanel"/>
+			<method name="CloseTutorialPanel"/>
+			<method name="CloseTutorialPanel"/>
+			<method name="CloseTutorialPanel"/>
+			<method name="CloseTutorialPanel"/>
+			<method name="OnLeaveClicked"/>
+			<method name="onMusicClicked"/>
+			<method name="onMusicClicked"/>
+			<method name="onMusicClicked"/>
+			<method name="onMusicClicked"/>
+			<method name="onMusicClicked"/>
+			<method name="onSoundClicked"/>
+			<method name="onSoundClicked"/>
+			<method name="onSoundClicked"/>
+			<method name="onSoundClicked"/>
+			<method name="onSoundClicked"/>
+			<method name="OpenDeletePanel"/>
+			<method name="OpenSettings"/>
+			<method name="OpenSettings"/>
+			<method name="OpenSettings"/>
+		</type>
+		<type fullname="Theme">
+			<method name="BlueSelected"/>
+			<method name="BlueSelected"/>
+			<method name="BrownSelected"/>
+			<method name="GreenSelected"/>
+			<method name="GreySelected"/>
+		</type>
+		<type fullname="URLRedirect">
+			<method name="discord"/>
+			<method name="support"/>
+		</type>
+		<type fullname="UserProfile">
+			<method name="AccountDeletation"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="AddXP"/>
+			<method name="CloseProfilePanel"/>
+			<method name="DeleteAppleAccount"/>
+			<method name="OpenProfilePanel"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+			<method name="updateWallet"/>
+		</type>
+		<type fullname="VersionCheck">
+			<method name="UpdateClicked"/>
+		</type>
+	</assembly>
+</linker>

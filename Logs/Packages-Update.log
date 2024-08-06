@@ -1,0 +1,48 @@
+
+=== Thu Mar 14 10:44:03 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.ai.navigation@1.1.5
+The following packages were updated:
+  com.unity.adaptiveperformance.samsung.android from version 4.0.1 to 4.0.2
+  com.unity.ads from version 4.1.0 to 4.4.2
+  com.unity.collab-proxy from version 1.7.1 to 2.2.0
+  com.unity.ide.rider from version 3.0.22 to 3.0.27
+  com.unity.ide.visualstudio from version 2.0.16 to 2.0.22
+  com.unity.mobile.notifications from version 2.0.2 to 2.3.2
+  com.unity.remote-config from version 3.1.3 to 3.3.2
+  com.unity.timeline from version 1.7.1 to 1.7.6
+
+=== Sat Mar 16 15:22:04 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.modules.accessibility@1.0.0
+The following packages were updated:
+  com.unity.adaptiveperformance.samsung.android from version 4.0.2 to 5.0.0
+  com.unity.ai.navigation from version 1.1.5 to 2.0.0
+  com.unity.collab-proxy from version 2.2.0 to 2.3.1
+  com.unity.ide.rider from version 3.0.27 to 3.0.28
+  com.unity.test-framework from version 1.1.33 to 1.3.9
+  com.unity.timeline from version 1.7.6 to 1.8.6
+  com.unity.ugui from version 1.0.0 to 2.0.0
+The following packages were removed:
+  com.unity.textmeshpro@3.0.6
+
+=== Sun Mar 17 14:04:24 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.modules.accessibility@1.0.0
+The following packages were updated:
+  com.unity.remote-config from version 3.3.2 to 4.0.0
+  com.unity.test-framework from version 1.3.9 to 1.4.3
+The following packages were removed:
+  com.unity.textmeshpro@3.0.8

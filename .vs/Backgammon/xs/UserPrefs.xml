@@ -1,0 +1,59 @@
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{C18058CC-1200-F19A-9E29-1B4B728CB551}|">
+  <MonoDevelop.Ide.ItemProperties.AppleAuth PreferredExecutionTarget="cf9b605f-882f-4b06-87cf-fea113eb0828" />
+  <MonoDevelop.Ide.Workbench>
+    <Files>
+      <File FileName="Assets/Scripts/NakamaScripts/NakamaLogin.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="828" Column="31" />
+      <File FileName="Assets/AgoraEngine/API-Example-Unity/Assets/API-Example/examples/advanced/SendStreamMessage/SendStreamMessageSample.cs" />
+      <File FileName="Assets/Scripts/GSPManager.cs" />
+      <File FileName="Assets/Scripts/Test.cs" />
+      <File FileName="Assets/Scripts/UserProfile.cs" />
+      <File FileName="Assets/Scripts/SpinManager.cs" />
+      <File FileName="Assets/Scripts/Slot.cs" />
+      <File FileName="Assets/Scripts/Piece.cs" />
+      <File FileName="Assets/Scripts/SystemSettings.cs" />
+      <File FileName="Assets/Scripts/Model/Player.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Backgammon" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="AgoraEngine" expanded="True">
+                <Node name="API-Example-Unity" expanded="True">
+                  <Node name="Assets" expanded="True">
+                    <Node name="API-Example" expanded="True">
+                      <Node name="examples" expanded="True">
+                        <Node name="advanced" expanded="True">
+                          <Node name="SendStreamMessage" expanded="True" />
+                        </Node>
+                      </Node>
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="GooglePlayGames" expanded="True">
+                <Node name="Editor" expanded="True" />
+                <Node name="ISocialPlatform" expanded="True" />
+              </Node>
+              <Node name="IAP" expanded="True" />
+              <Node name="Scripts" expanded="True">
+                <Node name="Model" expanded="True" />
+                <Node name="NakamaScripts" expanded="True">
+                  <Node name="NakamaLogin.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="824fbbb2-2092-4083-8885-d2c3494700f6" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

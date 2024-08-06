@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6649042765092927501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6649042765092927502}
+  - component: {fileID: 6649042765092927503}
+  m_Layer: 0
+  m_Name: DisplayVideos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6649042765092927502
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649042765092927501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 106.25, y: 793.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6649042765092927503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649042765092927501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496dcca0763834c9ca7913edacec606a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  APP_ID: 030117ec8e334b648ddba44afd805612
+  LogText: {fileID: 0}
+  UseCustomSink: 0
+  localAudio: 0
+  localvideo: 1
+  remoteAudio: 0
+  remoteVideo: 0
+  NetworkQuality: 0
+  AudioButtonLocal: {fileID: 0}
+  VideoButtonLocal: {fileID: 0}
+  AudioButtonRemote: {fileID: 0}
+  VideoButtonRemote: {fileID: 0}
+  LoaclAudioMuteOn: {fileID: 21300000, guid: ea9c9a9080fba474d9a04e92fdf8e7bb, type: 3}
+  LoaclAudioMuteOff: {fileID: 21300000, guid: 151bf6bf2e0884b888ebff6989132600, type: 3}
+  RemoteAudioMuteOn: {fileID: 21300000, guid: 13ddfa69fd7e54c3599455c54f8c330a, type: 3}
+  RemoteAudioMuteOff: {fileID: 21300000, guid: 20a960577ee264e5da6749a3bf19eccd, type: 3}
+  VideoMuteOn: {fileID: 21300000, guid: 57179d1f8608d4476b223da54b4d90b5, type: 3}
+  VideoMuteOff: {fileID: 21300000, guid: 756f782fb8eb143ea9c73b9a9ca50d3e, type: 3}
+  gameManager: {fileID: 0}
+  LocalBackground: {fileID: 0}
+  RemoteBackground: {fileID: 0}

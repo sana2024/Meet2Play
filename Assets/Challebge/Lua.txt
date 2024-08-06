@@ -1,0 +1,30 @@
+ocal function custom_rpc_func_reject(context, payload)
+  -- payload is bytes sent by the client we'll JSON decode it.
+--  local json = nk.json_decode(payload)
+ 
+  -- local user_id = nk.json_encode(json)
+  -- local sender_id = nk.json_encode(context)-- nil for server sent.
+
+  local content = {
+    item_id = Matchid,
+   
+  }
+
+local user_id = nk.json_decode(payload)
+
+local userid = string.format(user_id.userid)
+local message = string.format(Other Player is Busy!)
+
+local code = 103
+local persistent = true
+
+ nk.notification_send(userid, message , content, code, senderid, persistent)
+ 
+  return userid
+  
+end
+
+nk.register_rpc(custom_rpc_func_reject, custom_rpc_func_reject)
+
+
+ 

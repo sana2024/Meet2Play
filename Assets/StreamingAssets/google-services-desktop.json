@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "672894270007",
+    "project_id": "games-e8a60",
+    "storage_bucket": "games-e8a60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672894270007:android:e87e8ae53eaa478e39ddb2",
+        "android_client_info": {
+          "package_name": "com.meet2play.v1.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672894270007-u0t8ufsjj96j950rnipuloauafnpee6p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG-Q4P5JlFkSUZ6IKjsDechfJQjsOHH6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672894270007-u0t8ufsjj96j950rnipuloauafnpee6p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "672894270007-b3ujrdo9dcc2vucahl4pnsmnfqb6a8gi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.DefaultCompany.Myproject2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

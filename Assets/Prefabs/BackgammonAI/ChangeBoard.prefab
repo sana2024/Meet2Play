@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5452910250154229735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5452910250154229728}
+  - component: {fileID: 5452910250154229729}
+  m_Layer: 0
+  m_Name: ChangeBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5452910250154229728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5452910250154229735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1279.0209, y: 460.25836, z: -132.98766}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5452910250154229729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5452910250154229735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbc866d61db84157bea96cf70aa545f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoardBackground: {fileID: 0}
+  Oslo: {fileID: 21300000, guid: 87845e4a452f2496d8f8ee0484a768ce, type: 3}
+  tokyo: {fileID: 21300000, guid: 85552b620be4048f4a25646dd450f135, type: 3}
+  boston: {fileID: 21300000, guid: 37d5cf29d416448308fce16c5b483e09, type: 3}
+  london: {fileID: 21300000, guid: 73dfeb1604ae6436aa30a511146612d6, type: 3}
+  paris: {fileID: 21300000, guid: 85cbf6a636f3b416890ee66d8eb2b537, type: 3}
+  newyork: {fileID: 21300000, guid: 076a03e04661f4732b1f6bac7f5fe917, type: 3}
+  berlin: {fileID: 21300000, guid: 081a5a11bb4dd4aef99daeeb04d4941e, type: 3}
+  dubai: {fileID: 21300000, guid: ac3f12d7570184757b576cb5ae7307cc, type: 3}
+  moscow: {fileID: 21300000, guid: 79e130c069e52418da976d47d72e83e8, type: 3}
+  roma: {fileID: 21300000, guid: 78d66e82f471c4aaf9e02637689f2bbb, type: 3}

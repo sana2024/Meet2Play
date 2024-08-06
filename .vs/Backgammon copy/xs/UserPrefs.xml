@@ -1,0 +1,69 @@
+﻿<Properties StartupConfiguration="{D27C19A6-D69E-1C54-B389-2AD9E702D3E6}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PanelHandlers.cs">
+    <Files>
+      <File FileName="Assets/Scripts/NakamaScripts/Matchmaking.cs" Line="160" Column="32" IsPinned="True" />
+      <File FileName="Assets/Scripts/UserProfile.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/MoveClick.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/GameManager.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/NakamaScripts/NakamaLogin.cs" IsPinned="True" />
+      <File FileName="../../../Modules/local.go" Line="115" Column="19" />
+      <File FileName="../../../Downloads/local.go" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GSPManager.cs" />
+      <File FileName="Assets/Scripts/NakamaScripts/FacebookLogin.cs" />
+      <File FileName="Assets/Scripts/Notifications.cs" />
+      <File FileName="Assets/AddPlayer/PlayerList.cs" />
+      <File FileName="Assets/Scripts/FriendSystem.cs" />
+      <File FileName="Assets/Scripts/NakamaScripts/OpCodes.cs" />
+      <File FileName="Assets/Scripts/NakamaScripts/MatchDataJson.cs" />
+      <File FileName="Assets/Scripts/NakamaScripts/NakamaConnection.cs" />
+      <File FileName="Assets/Scripts/Piece.cs" />
+      <File FileName="Assets/Scripts/InGameData.cs" />
+      <File FileName="Assets/Scripts/NakamaScripts/PassData.cs" />
+      <File FileName="Assets/Scripts/Model/Player.cs" />
+      <File FileName="Assets/Scripts/mobileNotification.cs" />
+      <File FileName="Assets/Scripts/PushNotification.cs" />
+      <File FileName="Assets/Scripts/Bet.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PanelHandlers.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Backgammon copy" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="AddPlayer" expanded="True" />
+              <Node name="AgoraEngine" expanded="True">
+                <Node name="API-Example-Unity" expanded="True">
+                  <Node name="Assets" expanded="True">
+                    <Node name="API-Example" expanded="True">
+                      <Node name="examples" expanded="True">
+                        <Node name="basic" expanded="True">
+                          <Node name="JoinChannelVideo" expanded="True" />
+                        </Node>
+                      </Node>
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="LeaderBoardLatest" expanded="True" />
+              <Node name="OneSignal" expanded="True">
+                <Node name="Example" expanded="True" />
+              </Node>
+              <Node name="Plugins" expanded="True" />
+              <Node name="Scripts" expanded="True">
+                <Node name="NakamaScripts" expanded="True" />
+                <Node name="PanelHandlers.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e1bb4f54-989a-4053-902c-738245c3fd0c" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

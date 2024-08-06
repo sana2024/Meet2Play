@@ -1,0 +1,68 @@
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{EEF96110-1DD8-6169-1BB5-B2662DFDFAB6}|">
+  <MonoDevelop.Ide.ItemProperties.AppleAuth PreferredExecutionTarget="5b73e1e8-07f6-47f9-9dfa-ff2c45ef5585" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ChessScrips/ChessAIScripts/huggingFaceStock.cs">
+    <Files>
+      <File FileName="Assets/Scripts/LoginScripts/VersionCheck.cs" Line="130" Column="62" />
+      <File FileName="Assets/Scripts/MenuScrips/OnlineUsers.cs" />
+      <File FileName="Assets/Scripts/MenuScrips/UserProfile.cs" />
+      <File FileName="Assets/Scripts/NakamaScripts/Matchmaking.cs" />
+      <File FileName="Assets/Scripts/MenuScrips/DeepLink.cs" />
+      <File FileName="Assets/Scripts/ChessScrips/OnlineChess/ChessBoard.cs" Line="1439" Column="55" />
+      <File FileName="Assets/Scripts/MenuScrips/EditProfile.cs" />
+      <File FileName="Assets/Scripts/NakamaScripts/DataSync.cs" Line="199" Column="50" />
+      <File FileName="Assets/Scripts/ChessScrips/ChessPieces/ChessPiece.cs" />
+      <File FileName="Assets/Scripts/MenuScrips/SystemSettings.cs" />
+      <File FileName="Assets/Scripts/MenuScrips/Notifications.cs" />
+      <File FileName="Assets/Scripts/ChessScrips/GameEndResult.cs" Line="459" Column="8" />
+      <File FileName="Assets/Scripts/ChessScrips/ChessAIScripts/AIGameResult.cs" Line="309" Column="48" />
+      <File FileName="Assets/Scripts/BackgammonScrips/InGameData.cs" Line="173" Column="37" />
+      <File FileName="Assets/Scripts/BackgammonScrips/GameManager.cs" />
+      <File FileName="Assets/Scripts/BackgammonScrips/PlayerTimer.cs" />
+      <File FileName="Assets/Scripts/BackgammonScrips/BackAIResult.cs" />
+      <File FileName="Assets/Scripts/ChessScrips/ChessTimer.cs" Line="211" Column="1" />
+      <File FileName="Assets/Scripts/LoginScripts/NakamaLogin.cs" Line="300" Column="73" />
+      <File FileName="Assets/Scripts/ChessScrips/OnlineChess/Connections.cs" Line="263" Column="23" />
+      <File FileName="Assets/LeaderBoardLatest/leaderboard1.cs" Line="99" Column="1" />
+      <File FileName="Assets/Scripts/ChessScrips/ChessAIScripts/huggingFaceStock.cs" Line="145" Column="23" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Meet2Play" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="AddPlayer" expanded="True" />
+              <Node name="ByteBrewSDK" expanded="True">
+                <Node name="Scripts" expanded="True" />
+              </Node>
+              <Node name="LeaderBoardLatest" expanded="True" />
+              <Node name="Scripts" expanded="True">
+                <Node name="BackgammonScrips" expanded="True" />
+                <Node name="ChessScrips" expanded="True">
+                  <Node name="ChessAIScripts" expanded="True">
+                    <Node name="huggingFaceStock.cs" selected="True" />
+                  </Node>
+                  <Node name="OnlineChess" expanded="True" />
+                </Node>
+                <Node name="LoginScripts" expanded="True" />
+                <Node name="MenuScrips" expanded="True" />
+                <Node name="NakamaScripts" expanded="True" />
+                <Node name="VideoChat" expanded="True" />
+              </Node>
+              <Node name="Unimgpicker" expanded="True">
+                <Node name="Samples" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/sanaomer/Documents/GitHub/Meet2Play/Assets/Scripts/MenuScrips/FacebookShare.cs" relfile="Assets/Scripts/MenuScrips/FacebookShare.cs" line="27" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

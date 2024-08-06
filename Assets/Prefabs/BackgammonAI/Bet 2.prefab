@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5420502974066046509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5420502974066046507}
+  - component: {fileID: 5420502974066046508}
+  m_Layer: 0
+  m_Name: Bet 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5420502974066046507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5420502974066046509}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.06614, y: 0.029595643, z: 0.34493607}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5420502974066046508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5420502974066046509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e19e57c06a3548bf9f11b788c5ac6f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BetAmountText: {fileID: 0}
+  gameManager: {fileID: 0}
+  VideoAgora: {fileID: 0}
+  DoubleDiceImage: {fileID: 0}
+  dice2: {fileID: 21300000, guid: 8cbf7c4ae33e24dea856f4788c815630, type: 3}
+  dice4: {fileID: 21300000, guid: ca5deeb3661ed4567acbe03c819c49c2, type: 3}
+  dice8: {fileID: 21300000, guid: ddad0192cc26a44e184fc1b42f034b85, type: 3}
+  dice16: {fileID: 21300000, guid: f3aab6cf837c5439d8b03525f756cdc5, type: 3}
+  dice32: {fileID: 21300000, guid: 93a8c3ee9c075438a9ffecd53e25988b, type: 3}
+  dice64: {fileID: 21300000, guid: a4dd393e3db254cf3a371095a94666e1, type: 3}
+  WaitingPanel: {fileID: 0}
+  RequestBetPanel: {fileID: 0}
+  buttonController: {fileID: 0}
+  NoEnoughCoinsPanel: {fileID: 0}
+  nextBetAmount: 1

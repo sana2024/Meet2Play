@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: 
+  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"fc16c01f-2c49-472a-9894-51a4793a1364\"\n   
+    },\n    \"rs\": {\n      \"key\": \"IOSVersion\",\n      \"type\": \"string\",\n     
+    \"value\": \"60\"\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"ee7c8d11-ec07-428b-ab90-03d3685ef829\"\n    },\n    \"rs\": {\n      \"key\":
+    \"AndroidVersion\",\n      \"type\": \"string\",\n      \"value\": \"52\"\n   
+    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"02893911-663e-432e-a986-29637b1e18f5\"\n   
+    },\n    \"rs\": {\n      \"key\": \"Version\",\n      \"type\": \"string\",\n     
+    \"value\": \"1.0.0\"\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"72700235-4975-4bc5-b8d1-358a314d2032\"\n    },\n    \"rs\": {\n      \"key\":
+    \"Host\",\n      \"type\": \"string\",\n      \"value\": \"NakamaAppALB-1422208787.eu-west-1.elb.amazonaws.com\"\n   
+    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"a9a9bce9-9816-47c5-a144-0765f18fe58f\"\n   
+    },\n    \"rs\": {\n      \"key\": \"facebookButton\",\n      \"type\": \"bool\",\n     
+    \"value\": false\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"fca19dba-e154-424a-bfca-1303512620de\"\n    },\n    \"rs\": {\n      \"key\":
+    \"GooglePlayButton\",\n      \"type\": \"bool\",\n      \"value\": true\n   
+    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"3da73722-47a3-4cae-b490-a067eae85f4d\"\n   
+    },\n    \"rs\": {\n      \"key\": \"GuestButton\",\n      \"type\": \"bool\",\n     
+    \"value\": true\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"f04386b0-84fc-41f4-8f5f-b606ce5441e2\"\n   
+    },\n    \"rs\": {\n      \"key\": \"AppleButton\",\n      \"type\": \"bool\",\n     
+    \"value\": true\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"c82fcbb3-3e68-4643-b774-0a7c8f85dc4d\"\n   
+    },\n    \"rs\": {\n      \"key\": \"discord\",\n      \"type\": \"string\",\n     
+    \"value\": \"https://discord.gg/6XDCzFejbb\"\n    }\n  },\n  {\n    \"metadata\":
+    {\n      \"entityId\": \"11f4933e-dbad-4c2c-8596-9e3dff1adf79\"\n    },\n   
+    \"rs\": {\n      \"key\": \"BonusTimer\",\n      \"type\": \"float\",\n     
+    \"value\": 1200000.0\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"a0a9da51-b6f9-4a33-88a9-8bd0771d8ade\"\n    },\n    \"rs\": {\n      \"key\":
+    \"maintenance\",\n      \"type\": \"string\",\n      \"value\": \"true\"\n   
+    }\n  }\n]"
+  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"fc16c01f-2c49-472a-9894-51a4793a1364\"\n   
+    },\n    \"rs\": {\n      \"key\": \"IOSVersion\",\n      \"type\": \"string\",\n     
+    \"value\": \"60\"\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"ee7c8d11-ec07-428b-ab90-03d3685ef829\"\n    },\n    \"rs\": {\n      \"key\":
+    \"AndroidVersion\",\n      \"type\": \"string\",\n      \"value\": \"52\"\n   
+    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"02893911-663e-432e-a986-29637b1e18f5\"\n   
+    },\n    \"rs\": {\n      \"key\": \"Version\",\n      \"type\": \"string\",\n     
+    \"value\": \"1.0.0\"\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"72700235-4975-4bc5-b8d1-358a314d2032\"\n    },\n    \"rs\": {\n      \"key\":
+    \"Host\",\n      \"type\": \"string\",\n      \"value\": \"NakamaAppALB-1422208787.eu-west-1.elb.amazonaws.com\"\n   
+    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"a9a9bce9-9816-47c5-a144-0765f18fe58f\"\n   
+    },\n    \"rs\": {\n      \"key\": \"facebookButton\",\n      \"type\": \"bool\",\n     
+    \"value\": false\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"fca19dba-e154-424a-bfca-1303512620de\"\n    },\n    \"rs\": {\n      \"key\":
+    \"GooglePlayButton\",\n      \"type\": \"bool\",\n      \"value\": true\n   
+    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"3da73722-47a3-4cae-b490-a067eae85f4d\"\n   
+    },\n    \"rs\": {\n      \"key\": \"GuestButton\",\n      \"type\": \"bool\",\n     
+    \"value\": true\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"f04386b0-84fc-41f4-8f5f-b606ce5441e2\"\n   
+    },\n    \"rs\": {\n      \"key\": \"AppleButton\",\n      \"type\": \"bool\",\n     
+    \"value\": true\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\": \"c82fcbb3-3e68-4643-b774-0a7c8f85dc4d\"\n   
+    },\n    \"rs\": {\n      \"key\": \"discord\",\n      \"type\": \"string\",\n     
+    \"value\": \"https://discord.gg/6XDCzFejbb\"\n    }\n  },\n  {\n    \"metadata\":
+    {\n      \"entityId\": \"11f4933e-dbad-4c2c-8596-9e3dff1adf79\"\n    },\n   
+    \"rs\": {\n      \"key\": \"BonusTimer\",\n      \"type\": \"float\",\n     
+    \"value\": 1200000.0\n    }\n  },\n  {\n    \"metadata\": {\n      \"entityId\":
+    \"a0a9da51-b6f9-4a33-88a9-8bd0771d8ade\"\n    },\n    \"rs\": {\n      \"key\":
+    \"maintenance\",\n      \"type\": \"string\",\n      \"value\": \"true\"\n   
+    }\n  }\n]"
+  _environments: "[\n  {\n    \"projectId\": \"49650cd8-7a60-420b-82b9-fb3adf01a223\",\n   
+    \"name\": \"production\",\n    \"id\": \"028187b1-8e06-4596-80c6-9b667c8d9dcb\",\n   
+    \"isDefault\": true,\n    \"createdAt\": \"2022-06-19T07:09:29Z\",\n    \"updatedAt\":
+    \"2022-06-19T07:09:29Z\"\n  }\n]"
