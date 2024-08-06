@@ -52,7 +52,6 @@ public class NakamaLogin : MonoBehaviour
     [System.Obsolete]
     private void Start()
     {
- //dhcgdjhdjhdjcgdjcgdjhcdjhcdhcv
 #if UNITY_ANDROID
 
         //if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
