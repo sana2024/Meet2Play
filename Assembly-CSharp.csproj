@@ -371,12 +371,14 @@
     <None Include="Assets/AgoraEngine/Plugins/x86/libagora_spatial_audio_extension.dll" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets/AgoraEngine/Plugins/x86_64/libagora_spatial_audio_extension.dll" />
+    <None Include="Assets/AddressableAssetsData/link.xml" />
     <None Include="Assets/AgoraEngine/Plugins/x86_64/libagora_mpg123.dll" />
     <None Include="Assets/AgoraEngine/API-Example-Unity/ProjectSettings/ProjectVersion.txt" />
     <None Include="Assets/AgoraEngine/Plugins/x86/libagora_fd_extension.dll" />
     <None Include="Assets/AgoraEngine/Plugins/x86/libagora_dav1d_extension.dll" />
     <None Include="Assets/Packages/Nakama/Runtime/Plugins/Satori.dll" />
     <None Include="Assets/AgoraEngine/Plugins/x86_64/libagora_fdkaac.dll" />
+    <None Include="Assets/Resources/en.txt" />
     <None Include="Assets/GUI PRO Kit - Casual Game/geometos 1/readme.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
     <None Include="Assets/AgoraEngine/Plugins/x86/libagora_fdkaac.dll" />
@@ -410,6 +412,7 @@
     <None Include="Assets/AgoraEngine/Plugins/x86_64/libagora_fd_extension.dll" />
     <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets/Resources/es.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />

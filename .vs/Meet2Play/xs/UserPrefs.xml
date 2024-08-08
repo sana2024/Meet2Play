@@ -1,29 +1,31 @@
 ﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{EEF96110-1DD8-6169-1BB5-B2662DFDFAB6}|">
-  <MonoDevelop.Ide.ItemProperties.AppleAuth PreferredExecutionTarget="5b73e1e8-07f6-47f9-9dfa-ff2c45ef5585" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LoginScripts/NakamaLogin.cs">
+  <MonoDevelop.Ide.ItemProperties.AppleAuth PreferredExecutionTarget="c51ac471-9a7c-4631-9dcf-73d3c2797e78" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MenuScrips/EditProfile.cs">
     <Files>
       <File FileName="Assets/Scripts/LoginScripts/VersionCheck.cs" Line="119" Column="37" />
       <File FileName="Assets/Scripts/MenuScrips/OnlineUsers.cs" />
       <File FileName="Assets/Scripts/MenuScrips/UserProfile.cs" />
       <File FileName="Assets/Scripts/NakamaScripts/Matchmaking.cs" />
       <File FileName="Assets/Scripts/MenuScrips/DeepLink.cs" />
-      <File FileName="Assets/Scripts/ChessScrips/OnlineChess/ChessBoard.cs" Line="1439" Column="55" />
-      <File FileName="Assets/Scripts/MenuScrips/EditProfile.cs" />
-      <File FileName="Assets/Scripts/NakamaScripts/DataSync.cs" Line="199" Column="50" />
+      <File FileName="Assets/Scripts/ChessScrips/OnlineChess/ChessBoard.cs" />
+      <File FileName="Assets/Scripts/MenuScrips/EditProfile.cs" Line="154" Column="6" />
+      <File FileName="Assets/Scripts/NakamaScripts/DataSync.cs" />
       <File FileName="Assets/Scripts/ChessScrips/ChessPieces/ChessPiece.cs" />
       <File FileName="Assets/Scripts/MenuScrips/SystemSettings.cs" />
       <File FileName="Assets/Scripts/MenuScrips/Notifications.cs" />
-      <File FileName="Assets/Scripts/ChessScrips/GameEndResult.cs" Line="459" Column="8" />
-      <File FileName="Assets/Scripts/ChessScrips/ChessAIScripts/AIGameResult.cs" Line="309" Column="48" />
-      <File FileName="Assets/Scripts/BackgammonScrips/InGameData.cs" Line="173" Column="37" />
+      <File FileName="Assets/Scripts/ChessScrips/GameEndResult.cs" Line="183" Column="54" />
+      <File FileName="Assets/Scripts/ChessScrips/ChessAIScripts/AIGameResult.cs" />
+      <File FileName="Assets/Scripts/BackgammonScrips/InGameData.cs" />
       <File FileName="Assets/Scripts/BackgammonScrips/GameManager.cs" />
       <File FileName="Assets/Scripts/BackgammonScrips/PlayerTimer.cs" />
       <File FileName="Assets/Scripts/BackgammonScrips/BackAIResult.cs" />
-      <File FileName="Assets/Scripts/ChessScrips/ChessTimer.cs" Line="211" Column="1" />
-      <File FileName="Assets/Scripts/LoginScripts/NakamaLogin.cs" Line="55" Column="23" />
-      <File FileName="Assets/Scripts/ChessScrips/OnlineChess/Connections.cs" Line="263" Column="23" />
-      <File FileName="Assets/LeaderBoardLatest/leaderboard1.cs" Line="99" Column="1" />
-      <File FileName="Assets/Scripts/ChessScrips/ChessAIScripts/huggingFaceStock.cs" Line="134" Column="63" />
+      <File FileName="Assets/Scripts/ChessScrips/ChessTimer.cs" />
+      <File FileName="Assets/Scripts/LoginScripts/NakamaLogin.cs" Line="18" Column="2" />
+      <File FileName="Assets/Scripts/ChessScrips/OnlineChess/Connections.cs" />
+      <File FileName="Assets/LeaderBoardLatest/leaderboard1.cs" />
+      <File FileName="Assets/Scripts/ChessScrips/ChessAIScripts/huggingFaceStock.cs" />
+      <File FileName="Assets/Scripts/VideoChat/HelloVideoAgora.cs" Line="186" Column="51" />
+      <File FileName="Assets/Scripts/test.cs" Line="42" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -35,16 +37,17 @@
                 <Node name="Scripts" expanded="True" />
               </Node>
               <Node name="LeaderBoardLatest" expanded="True" />
+              <Node name="Resources" expanded="True" />
               <Node name="Scripts" expanded="True">
                 <Node name="BackgammonScrips" expanded="True" />
                 <Node name="ChessScrips" expanded="True">
                   <Node name="ChessAIScripts" expanded="True" />
                   <Node name="OnlineChess" expanded="True" />
                 </Node>
-                <Node name="LoginScripts" expanded="True">
-                  <Node name="NakamaLogin.cs" selected="True" />
+                <Node name="LoginScripts" expanded="True" />
+                <Node name="MenuScrips" expanded="True">
+                  <Node name="EditProfile.cs" selected="True" />
                 </Node>
-                <Node name="MenuScrips" expanded="True" />
                 <Node name="NakamaScripts" expanded="True" />
                 <Node name="VideoChat" expanded="True" />
               </Node>

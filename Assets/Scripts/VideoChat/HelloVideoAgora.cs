@@ -201,7 +201,9 @@ public class HelloVideoAgora : MonoBehaviour
     public void OnApplicationQuit()
     {
         _rtcEngine.MuteLocalAudioStream(localAudio);
+
         Debug.Log("OnApplicationQuit");
+
         if (_rtcEngine != null)
         {
             _rtcEngine.LeaveChannel();

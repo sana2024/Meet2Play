@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Threading.Tasks;
 using ByteBrewSDK;
+using System.Text.RegularExpressions;
 
 public class EditProfile : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class EditProfile : MonoBehaviour
     [SerializeField] Text ChallangeUsernameText;
     [SerializeField] GameObject EditAvatarButton;
     [SerializeField] GameObject AlreadyExistText;
+    [SerializeField] GameObject InappropriateText;
+    [SerializeField] GameObject StartWithnumberText;
+    [SerializeField] GameObject AllnumberText;
 
     [SerializeField] Button EditButton;
     [SerializeField] Text EditButtonText;
@@ -50,7 +54,7 @@ public class EditProfile : MonoBehaviour
         EditButtonText.text = "EDIT PROFILE";
         EditButton.onClick.AddListener(Editprofile);
 
-        if(UsernameInputField.text != null)
+        if(UsernameInputField.text != null && IsWordSafe() == true)
         {
         try
         {
@@ -91,5 +95,86 @@ public class EditProfile : MonoBehaviour
 
     }
 
+    IEnumerator Inappropriate()
+    {
+        InappropriateText.SetActive(true);
+        yield return new WaitForSeconds(5);
+        InappropriateText.SetActive(false);
+
+    }
+
+    IEnumerator StartsWithNumber()
+    {
+        StartWithnumberText.SetActive(true);
+        yield return new WaitForSeconds(5);
+        StartWithnumberText.SetActive(false);
+    }
+
+    IEnumerator AllNumber()
+    {
+        AllnumberText.SetActive(true);
+        yield return new WaitForSeconds(5);
+        AllnumberText.SetActive(false);
+    }
+
+    public bool StartsWithNumberOrSymbol(string input)
+    {
+        // This regex checks if the string starts with a digit or any symbol
+        return Regex.IsMatch(input, @"^[\d\W]");
+    }
+
+
+    public bool IsOnlyNumbersOrSymbols(string input)
+    {
+        // This regex checks if the string is composed entirely of digits or symbols
+        return Regex.IsMatch(input, @"^[\d\W]+$");
+    }
+
+    public static List<string> ReadWordsFromFile(string fileName)
+    {
+        // Load the text file from the Resources folder
+        TextAsset textAsset = Resources.Load<TextAsset>(fileName);
+
+        if (textAsset == null)
+        {
+            Debug.LogError("File not found: " + fileName);
+            return new List<string>();
+        }
+
+        // Read the text content
+        string fileContent = textAsset.text;
+
+        // Split the content into words
+        List<string> words = new List<string>(fileContent.Split(new char[] { ' ', '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries));
+
+        return words;
+    }
+
+    public bool IsWordSafe()
+    {
+        var word = UsernameInputField.text.ToLower();
+        if (ReadWordsFromFile("en").Contains(word) || ReadWordsFromFile("es").Contains(word))
+        {
+            StartCoroutine(Inappropriate());
+            return false;
+        }
+        else if (StartsWithNumberOrSymbol(word))
+        {
+            StartCoroutine(StartsWithNumber());
+            return false;
+        }
+        else if (IsOnlyNumbersOrSymbols(word))
+        {
+            StartCoroutine(AllNumber());
+            return false;
+        }
+        else
+        {
+            Debug.Log("Username Allowed");
+            return true;
+        }
+
+
+    }
 }
 
